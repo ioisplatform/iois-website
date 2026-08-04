@@ -1,221 +1,143 @@
-/* ==========================================================================
-   IOIS Platform - Universal Master Script (Indian Online Income Supporting System)
-   ========================================================================== */
-
-// 1. UNIVERSAL MOBILE HAMBURGER MENU TOGGLE
-window.toggleMobileMenu = function () {
-    const mobileMenu = document.getElementById("mobile-menu");
-    if (mobileMenu) {
-        mobileMenu.classList.toggle("hidden");
-    }
-};
-
-// 2. AUTO-DETECT REFERRAL CODE FROM URL (?ref=IOIS12345)
+// Auto Detect Refer Code from URL
 document.addEventListener("DOMContentLoaded", function () {
     try {
         const urlParams = new URLSearchParams(window.location.search);
         const refCode = urlParams.get('ref');
-
         if (refCode) {
             const sponsorField = document.getElementById("reg-sponsor-id");
             if (sponsorField) {
                 sponsorField.value = refCode.trim();
-                sponsorField.classList.add("border-amber-400", "text-amber-400", "font-bold");
             }
         }
     } catch (e) {
-        console.log("URL Params Parse Error:", e);
+        console.log("Error parsing URL:", e);
     }
 });
 
-// 3. CLOSE ALL MODALS / POPUPS
-window.closeModals = function () {
-    document.getElementById("reg-modal")?.classList.add("hidden");
-    document.getElementById("payment-modal")?.classList.add("hidden");
-    document.getElementById("login-modal")?.classList.add("hidden");
-    document.getElementById("forgot-modal")?.classList.add("hidden");
-};
-
-// 4. MODAL OPEN TRIGGERS
-window.openRegistrationFlow = function () {
-    window.closeModals();
-    document.getElementById("reg-modal")?.classList.remove("hidden");
-};
-
-window.openLoginModal = function () {
-    window.closeModals();
-    document.getElementById("login-modal")?.classList.remove("hidden");
-};
-
-window.showForgotModal = function (type) {
-    window.closeModals();
-    const titleEl = document.getElementById("forgot-title");
-    if (titleEl) {
-        titleEl.innerText = (type === 'id') ? 'Forgot Username/ID Recovery' : 'Forgot Password Recovery';
+// Highlight Error Fields
+function highlightErrorField(elementId) {
+    const el = document.getElementById(elementId);
+    if (el) {
+        el.classList.add("border-red-500", "bg-red-950/40");
+        el.focus();
     }
-    document.getElementById("forgot-modal")?.classList.remove("hidden");
-};
+}
 
-// 5. FORM ERROR HIGHLIGHTING & RESET FUNCTIONS
 function resetFormErrors() {
     const fields = ["reg-name", "reg-email", "reg-phone", "reg-pass", "reg-address", "reg-upi", "reg-qr-file"];
     fields.forEach(id => {
         const el = document.getElementById(id);
-        if (el) {
-            el.classList.remove("border-red-500", "bg-red-950/40", "text-red-200");
-            el.classList.add("border-gray-700", "bg-[#080d1e]", "text-white");
-        }
+        if (el) el.classList.remove("border-red-500", "bg-red-950/40");
     });
 }
 
-function highlightErrorField(elementId) {
-    const el = document.getElementById(elementId);
-    if (el) {
-        el.classList.remove("border-gray-700", "bg-[#080d1e]");
-        el.classList.add("border-red-500", "bg-red-950/40", "text-red-200");
-        el.focus(); // गलत बॉक्स पर स्क्रीन ले जाएगा
-    }
-}
-
-// 6. STRICT REGISTRATION FORM VALIDATION & SUBMISSION
-window.handleDetailsSubmit = function (event) {
-    event.preventDefault(); // फ़ॉर्म रीलोड रोकेगा
+// Handle Form Submit
+function handleDetailsSubmit(event) {
+    event.preventDefault();
     resetFormErrors();
 
-    const nameEl = document.getElementById("reg-name");
-    const emailEl = document.getElementById("reg-email");
-    const phoneEl = document.getElementById("reg-phone");
-    const passEl = document.getElementById("reg-pass");
-    const addressEl = document.getElementById("reg-address");
-    const upiEl = document.getElementById("reg-upi");
-    const qrFileEl = document.getElementById("reg-qr-file");
+    const name = document.getElementById("reg-name")?.value.trim();
+    const email = document.getElementById("reg-email")?.value.trim();
+    const phone = document.getElementById("reg-phone")?.value.trim();
+    const pass = document.getElementById("reg-pass")?.value.trim();
+    const address = document.getElementById("reg-address")?.value.trim();
+    const upi = document.getElementById("reg-upi")?.value.trim();
+    const qrFiles = document.getElementById("reg-qr-file")?.files;
 
-    const name = nameEl ? nameEl.value.trim() : "";
-    const email = emailEl ? emailEl.value.trim() : "";
-    const phone = phoneEl ? phoneEl.value.trim() : "";
-    const pass = passEl ? passEl.value.trim() : "";
-    const address = addressEl ? addressEl.value.trim() : "";
-    const upi = upiEl ? upiEl.value.trim() : "";
-    const qrFiles = qrFileEl ? qrFileEl.files : [];
-
-    // 6.1 Validate Full Name
     if (!name || name.length < 2) {
         highlightErrorField("reg-name");
-        alert("⚠️ मिसटेक (Error Alert):\n\n[पूरा नाम अधूरा है]\nकृपया अपना सही और पूरा नाम दर्ज करें!");
+        alert("मिसटेक: कृपया अपना पूरा नाम दर्ज करें!");
         return;
     }
 
-    // 6.2 Validate Email Address
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailPattern.test(email)) {
+    if (!email || !email.includes("@")) {
         highlightErrorField("reg-email");
-        alert("⚠️ मिसटेक (Error Alert):\n\n[गलत ईमेल एड्रेस]\nकृपया सही ईमेल एड्रेस दर्ज करें! (उदाहरण: name@example.com)");
+        alert("मिसटेक: कृपया सही ईमेल एड्रेस दर्ज करें!");
         return;
     }
 
-    // 6.3 Validate Phone Number (10 digits)
-    const cleanPhone = phone.replace(/\D/g, '');
-    if (!phone || cleanPhone.length < 10) {
+    if (!phone || phone.replace(/\D/g, '').length < 10) {
         highlightErrorField("reg-phone");
-        alert("⚠️ मिसटेक (Error Alert):\n\n[गलत व्हाट्सएप नंबर]\nकृपया 10 अंकों का सही मोबाइल नंबर दर्ज करें!");
+        alert("मिसटेक: कृपया 10 अंकों का व्हाट्सएप नंबर दर्ज करें!");
         return;
     }
 
-    // 6.4 Validate Password (min 4 chars)
     if (!pass || pass.length < 4) {
         highlightErrorField("reg-pass");
-        alert("⚠️ मिसटेक (Error Alert):\n\n[कमज़ोर पासवर्ड]\nकृपया कम से कम 4 अक्षरों का पासवर्ड सेट करें!");
+        alert("मिसटेक: कृपया कम से कम 4 अंकों का पासवर्ड बनाएँ!");
         return;
     }
 
-    // 6.5 Validate Full Address
-    if (!address || address.length < 5) {
+    if (!address || address.length < 4) {
         highlightErrorField("reg-address");
-        alert("⚠️ मिसटेक (Error Alert):\n\n[पता अधूरा है]\nकृपया अपना पूरा पता (Address) दर्ज करें!");
+        alert("मिसटेक: कृपया अपना पूरा पता दर्ज करें!");
         return;
     }
 
-    // 6.6 Validate Real UPI ID (Flexibly accepts name@upi, 8877490845@spicepay, number@paytm, name@okaxis)
-    const upiPattern = /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/;
-    if (!upi || !upiPattern.test(upi)) {
+    if (!upi || !upi.includes("@")) {
         highlightErrorField("reg-upi");
-        alert("⚠️ मिसटेक (Error Alert):\n\n[गलत UPI ID Format]\nकृपया अपनी सही UPI ID दर्ज करें!\nउदाहरण: username@upi, 9876543210@paytm, 8877490845@spicepay");
+        alert("मिसटेक: कृपया सही UPI ID दर्ज करें! (उदा: 8877490845@spicepay, name@upi)");
         return;
     }
 
-    // 6.7 Validate Payment QR File Selection
     if (!qrFiles || qrFiles.length === 0) {
         highlightErrorField("reg-qr-file");
-        alert("⚠️ मिसटेक (Error Alert):\n\n[QR कोड फ़ाइल गायब है]\nकृपया अपना विथड्रॉल UPI QR कोड इमेज सेलेक्ट करें!");
+        alert("मिसटेक: कृपया अपना पेमेंट QR कोड फ़ोटो चुनें!");
         return;
     }
 
-    // Auto-Generate Fixed User ID / Refer Code
     const autoUserId = "IOIS" + Math.floor(100000 + Math.random() * 900000);
 
-    // Save strictly to local storage
     localStorage.setItem("iois_user_name", name);
     localStorage.setItem("iois_user_email", email);
-    localStorage.setItem("iois_user_phone", cleanPhone);
+    localStorage.setItem("iois_user_phone", phone);
     localStorage.setItem("iois_user_pass", pass);
     localStorage.setItem("iois_user_address", address);
     localStorage.setItem("iois_user_upi", upi);
     localStorage.setItem("iois_user_id", autoUserId);
 
-    alert(`✅ रजिस्ट्रेशन 100% सफल!\n\nआपकी स्थायी User ID/Refer Code है: [${autoUserId}]\n\nअब Step 2 में ₹10 की किट पेमेंट करें।`);
-    
+    alert(`रजिस्ट्रेशन सफल!\n\nआपकी User ID है: [${autoUserId}]\n\nअब Step 2 में ₹10 पे करें।`);
+
     document.getElementById("reg-modal")?.classList.add("hidden");
     document.getElementById("payment-modal")?.classList.remove("hidden");
-};
+}
 
-// 7. FILE SIZE VALIDATION (MAX 25 MB = 26,214,400 Bytes)
-window.validateFileSize = function (input) {
-    const file = input.files[0];
-    if (file) {
-        const maxSizeBytes = 25 * 1024 * 1024; // 25 MB
-        if (file.size > maxSizeBytes) {
-            highlightErrorField(input.id);
-            alert(`⚠️ मिसटेक (Error Alert):\n\n[फ़ाइल बहुत बड़ी है]\nआपकी फ़ाइल का साइज़ 25 MB से बड़ा है! (${(file.size / (1024 * 1024)).toFixed(2)} MB)\nकृपया 25 MB से कम की इमेज चुनें।`);
-            input.value = ""; 
-        } else {
-            input.classList.remove("border-red-500", "bg-red-950/40");
-            input.classList.add("border-gray-700", "bg-[#080d1e]");
+function validateFileSize(input) {
+    if (input.files && input.files[0]) {
+        if (input.files[0].size > 25 * 1024 * 1024) {
+            alert("फ़ाइल 25 MB से बड़ी है! कृपया छोटी फ़ाइल चुनें।");
+            input.value = "";
         }
     }
-};
+}
 
-// 8. SCREENSHOT SUBMIT TO ADMIN WHATSAPP
-window.handleScreenshotSubmit = function (event) {
+function handleScreenshotSubmit(event) {
     event.preventDefault();
     const name = localStorage.getItem("iois_user_name") || "User";
     const userid = localStorage.getItem("iois_user_id") || "ID";
 
-    const msg = `Hello IOIS Admin, Maine ₹10 ka payment kar diya hai.%0AName: ${name}%0AFixed User ID: ${userid}%0AKripya mera Digital Starter Kit aur Dashboard activate karein.`;
-    
-    alert("स्क्रीनशॉट सबमिट हो गया! वेरिफिकेशन के लिए अब WhatsApp खोलें।");
+    const msg = `Hello IOIS Admin, Maine ₹10 ka payment kar diya hai.%0AName: ${name}%0AUser ID: ${userid}%0AKripya mera Digital Starter Kit aur Dashboard activate karein.`;
+
+    alert("स्क्रीनशॉट सबमिट हो गया! अब वेरिफिकेशन के लिए WhatsApp खुल रहा है।");
     window.open(`https://wa.me/918877490845?text=${msg}`, "_blank");
-    window.closeModals();
-};
+    closeModals();
+}
 
-// 9. STRICT LOGIN VERIFICATION
-window.handleLoginSubmit = function (event) {
+function handleLoginSubmit(event) {
     event.preventDefault();
-    const useridInput = document.getElementById("login-userid").value.trim();
-    const passInput = document.getElementById("login-pass").value.trim();
+    const useridInput = document.getElementById("login-userid")?.value.trim();
+    const passInput = document.getElementById("login-pass")?.value.trim();
 
-    // Admin Login Check
     if (useridInput.toLowerCase() === "admin" && passInput === "admin123") {
-        alert("Admin Login Successful!");
         window.location.href = "admin.html";
         return;
     }
 
-    // User Login Check
     const savedUserId = localStorage.getItem("iois_user_id");
     const savedPass = localStorage.getItem("iois_user_pass");
 
     if (!savedUserId) {
-        alert("⚠️ कोई अकाउंट नहीं मिला! कृपया पहले 'Register' करके ₹10 किट खरीदें।");
+        alert("कोई अकाउंट नहीं मिला! कृपया पहले 'Register' करें।");
         return;
     }
 
@@ -223,43 +145,12 @@ window.handleLoginSubmit = function (event) {
         alert(`लॉगिन सफल! स्वागत है [${savedUserId}]`);
         window.location.href = "dashboard.html";
     } else {
-        alert("⚠️ गलत User ID या Password!");
+        alert("गलत User ID या Password!");
     }
-};
+}
 
-// 10. FORGOT RECOVERY SUBMIT
-window.handleForgotSubmit = function (event) {
+function handleForgotSubmit(event) {
     event.preventDefault();
-    alert("रिकवरी विवरण आपके दर्ज किए गए व्हाट्सएप / ईमेल पर भेज दिया गया है!");
-    window.closeModals();
-};
-
-// 11. USER LOGOUT
-window.userLogout = function () {
-    alert("Logged out successfully!");
-    window.location.href = "index.html";
-};
-
-// 12. REQUEST WITHDRAWAL TO ADMIN WHATSAPP
-window.requestWithdrawal = function () {
-    const userid = localStorage.getItem("iois_user_id") || "User";
-    const upi = localStorage.getItem("iois_user_upi") || "UPI";
-    const msg = `Hello Admin, Main [${userid}] apna referral withdrawal request kar raha hu. Mera UPI ID hai: ${upi}`;
-    window.open(`https://wa.me/918877490845?text=${msg}`, "_blank");
-};
-
-// 13. COPY REFERRAL LINK
-window.copyRefLink = function () {
-    const refInput = document.getElementById("ref-link");
-    if (refInput) {
-        navigator.clipboard.writeText(refInput.value);
-        alert("Aapka unique referral link copy ho gaya hai!");
-    }
-};
-
-// 14. COPY OFFICIAL UPI ID
-window.copyUPI = function () {
-    navigator.clipboard.writeText("8877490845@spicepay").then(() => {
-        alert("UPI ID (8877490845@spicepay) copied!");
-    });
-};
+    alert("रिकवरी जानकारी भेज दी गई है!");
+    closeModals();
+}
