@@ -1,3 +1,5 @@
+/* ===== IOIS Professional Theme ===== */
+
 *{
     margin:0;
     padding:0;
@@ -5,35 +7,38 @@
 }
 
 body{
-    font-family:Arial, sans-serif;
-    background:#f4f7fb;
-    color:#333;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f5f7fb;
+    color:#222;
+    line-height:1.6;
 }
 
 header{
-    background:#0d47a1;
-    color:white;
-    text-align:center;
+    background:#0b3d91;
+    color:#fff;
     padding:20px;
+    text-align:center;
 }
 
 header h1{
-    font-size:36px;
+    font-size:40px;
 }
 
 header p{
-    margin-top:10px;
+    margin-top:8px;
+    font-size:18px;
 }
 
 nav{
-    margin-top:15px;
+    margin-top:20px;
 }
 
 nav a{
-    color:white;
+    color:#fff;
     text-decoration:none;
-    margin:0 10px;
+    margin:0 12px;
     font-weight:bold;
+    transition:0.3s;
 }
 
 nav a:hover{
@@ -42,37 +47,94 @@ nav a:hover{
 
 .hero{
     text-align:center;
-    padding:60px 20px;
+    padding:70px 20px;
 }
 
 .hero h2{
-    font-size:40px;
-    color:#0d47a1;
+    font-size:42px;
+    color:#0b3d91;
 }
 
 .hero p{
+    max-width:700px;
+    margin:20px auto;
     font-size:18px;
-    margin:20px 0;
-}
+}/* ===== Buttons ===== */
 
 button{
-    background:#0d47a1;
-    color:white;
+    background:#0b3d91;
+    color:#fff;
     border:none;
-    padding:12px 25px;
-    border-radius:5px;
-    cursor:pointer;
+    padding:12px 28px;
+    border-radius:8px;
     font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
 }
 
 button:hover{
     background:#1565c0;
+    transform:translateY(-2px);
 }
 
-footer{
-    background:#0d47a1;
-    color:white;
-    text-align:center;
+/* ===== Cards ===== */
+
+.card{
+    background:#fff;
+    width:90%;
+    max-width:350px;
+    margin:20px auto;
     padding:20px;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.12);
+}
+
+.card h3{
+    color:#0b3d91;
+    margin-bottom:10px;
+}
+
+/* ===== Sections ===== */
+
+section{
+    padding:40px 20px;
+}
+
+section h2{
+    text-align:center;
+    margin-bottom:20px;
+}/* ===== Footer ===== */
+
+footer{
+    background:#0b3d91;
+    color:#fff;
+    text-align:center;
+    padding:25px;
     margin-top:40px;
+}
+
+/* ===== Responsive Design ===== */
+
+@media (max-width:768px){
+
+    header h1{
+        font-size:30px;
+    }
+
+    .hero h2{
+        font-size:30px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    nav a{
+        display:block;
+        margin:10px 0;
+    }
+
+    .card{
+        width:95%;
+    }
 }
