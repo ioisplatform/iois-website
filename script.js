@@ -1,4 +1,4 @@
-// Universal Mobile Hamburger Toggle
+// Universal Mobile Hamburger Menu Toggle
 function toggleMobileMenu() {
     const mobileMenu = document.getElementById("mobile-menu");
     if (mobileMenu) {
@@ -33,26 +33,98 @@ function showForgotModal(type) {
     document.getElementById("forgot-modal")?.classList.remove("hidden");
 }
 
-// STRICT FORM VALIDATION & REGISTRATION
-function handleDetailsSubmit(event) {
-    event.preventDefault();
-    
-    const name = document.getElementById("reg-name").value.trim();
-    const email = document.getElementById("reg-email").value.trim();
-    const phone = document.getElementById("reg-phone").value.trim();
-    const pass = document.getElementById("reg-pass").value.trim();
-    const address = document.getElementById("reg-address").value.trim();
-    const upi = document.getElementById("reg-upi").value.trim();
-    const qrFile = document.getElementById("reg-qr-file").files.length;
+// Reset Field Colors (रेड अलर्ट हटाने का फ़ंक्शन)
+function resetFormErrors() {
+    const fields = ["reg-name", "reg-email", "reg-phone", "reg-pass", "reg-address", "reg-upi", "reg-qr-file"];
+    fields.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.classList.remove("border-red-500", "bg-red-950/40", "text-red-200");
+            el.classList.add("border-gray-700", "bg-[#080d1e]", "text-white");
+        }
+    });
+}
 
-    // STRICT VALIDATION WRONG ALERT
-    if (!name || !email || !phone || !pass || !address || !upi || !qrFile) {
-        alert("⚠️ गलत या अधूरी एंट्री (Wrong Entry Alert)!\n\nकृपया सभी आवश्यक फ़ील्ड्स (Name, Email, Phone, Pass, Address, UPI ID, और QR File) सही-सही भरें!");
+// Highlight Specific Error Field in RED Color
+function highlightErrorField(elementId) {
+    const el = document.getElementById(elementId);
+    if (el) {
+        el.classList.remove("border-gray-700", "bg-[#080d1e]");
+        el.classList.add("border-red-500", "bg-red-950/40", "text-red-200");
+        el.focus(); // उसी बॉक्स पर स्क्रीन ले जाएगा
+    }
+}
+
+// STRICT FORM VALIDATION WITH POPUP & RED HIGHLIGHT
+function handleDetailsSubmit(event) {
+    event.preventDefault(); // फ़ॉर्म रीलोड होने से रोकेगा
+    resetFormErrors(); // पुराना रेड कलर साफ़ करेगा
+
+    const nameEl = document.getElementById("reg-name");
+    const emailEl = document.getElementById("reg-email");
+    const phoneEl = document.getElementById("reg-phone");
+    const passEl = document.getElementById("reg-pass");
+    const addressEl = document.getElementById("reg-address");
+    const upiEl = document.getElementById("reg-upi");
+    const qrFileEl = document.getElementById("reg-qr-file");
+
+    const name = nameEl ? nameEl.value.trim() : "";
+    const email = emailEl ? emailEl.value.trim() : "";
+    const phone = phoneEl ? phoneEl.value.trim() : "";
+    const pass = passEl ? passEl.value.trim() : "";
+    const address = addressEl ? addressEl.value.trim() : "";
+    const upi = upiEl ? upiEl.value.trim() : "";
+    const qrFiles = qrFileEl ? qrFileEl.files : [];
+
+    // 1. Validate Full Name
+    if (!name || name.length < 2) {
+        highlightErrorField("reg-name");
+        alert("⚠️ मिसटेक (Error Alert):\n\n[पूरा नाम अधूरा है]\nकृपया अपना सही और पूरा नाम दर्ज करें!");
         return;
     }
 
-    if (phone.length < 10) {
-        alert("⚠️ अमान्य मोबाइल नंबर! कृपया 10 अंकों का व्हाट्सएप नंबर दर्ज करें।");
+    // 2. Validate Email
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailPattern.test(email)) {
+        highlightErrorField("reg-email");
+        alert("⚠️ मिसटेक (Error Alert):\n\n[गलत ईमेल एड्रेस]\nकृपया सही ईमेल एड्रेस दर्ज करें! (उदाहरण: name@example.com)");
+        return;
+    }
+
+    // 3. Validate Phone (10 digits)
+    const phonePattern = /^[0-9]{10}$/;
+    if (!phone || !phonePattern.test(phone.replace(/\D/g, ''))) {
+        highlightErrorField("reg-phone");
+        alert("⚠️ मिसटेक (Error Alert):\n\n[गलत व्हाट्सएप नंबर]\nकृपया 10 अंकों का सही मोबाइल नंबर दर्ज करें!");
+        return;
+    }
+
+    // 4. Validate Password
+    if (!pass || pass.length < 4) {
+        highlightErrorField("reg-pass");
+        alert("⚠️ मिसटेक (Error Alert):\n\n[कमज़ोर पासवर्ड]\nकृपया कम से कम 4 अक्षरों का पासवर्ड सेट करें!");
+        return;
+    }
+
+    // 5. Validate Full Address
+    if (!address || address.length < 5) {
+        highlightErrorField("reg-address");
+        alert("⚠️ मिसटेक (Error Alert):\n\n[पता अधूरा है]\nकृपया अपना पूरा पता (Full Address) दर्ज करें!");
+        return;
+    }
+
+    // 6. Validate UPI ID (Flexibly accepts name@upi, number@paytm, 8877490845@spicepay, etc.)
+    const upiPattern = /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/;
+    if (!upi || !upiPattern.test(upi)) {
+        highlightErrorField("reg-upi");
+        alert("⚠️ मिसटेक (Error Alert):\n\n[गलत UPI ID Format]\nकृपया अपनी सही UPI ID दर्ज करें!\nउदाहरण: username@upi, 9876543210@paytm, 8877490845@spicepay");
+        return;
+    }
+
+    // 7. Validate Payment QR File Upload
+    if (!qrFiles || qrFiles.length === 0) {
+        highlightErrorField("reg-qr-file");
+        alert("⚠️ मिसटेक (Error Alert):\n\n[QR कोड फ़ाइल गायब है]\nकृपया अपना विथड्रॉल UPI QR कोड इमेज सेलेक्ट करें!");
         return;
     }
 
@@ -68,7 +140,7 @@ function handleDetailsSubmit(event) {
     localStorage.setItem("iois_user_upi", upi);
     localStorage.setItem("iois_user_id", autoUserId);
 
-    alert(`✅ रजिस्ट्रेशन सफल!\n\nआपकी स्थायी User ID/Refer Code है: [${autoUserId}]\n\nअब ₹10 की किट एक्टिवेट करने के लिए पेमेंट करें।`);
+    alert(`✅ रजिस्ट्रेशन 100% सफल!\n\nआपकी स्थायी User ID/Refer Code है: [${autoUserId}]\n\nअब Step 2 में ₹10 की किट पेमेंट करें।`);
     
     document.getElementById("reg-modal").classList.add("hidden");
     document.getElementById("payment-modal").classList.remove("hidden");
@@ -80,8 +152,12 @@ function validateFileSize(input) {
     if (file) {
         const maxSizeBytes = 25 * 1024 * 1024; // 25 MB
         if (file.size > maxSizeBytes) {
-            alert(`⚠️ फ़ाइल का साइज़ 25 MB से बड़ा है! (आपकी फ़ाइल: ${(file.size / (1024 * 1024)).toFixed(2)} MB)`);
+            highlightErrorField(input.id);
+            alert(`⚠️ मिसटेक (Error Alert):\n\n[फ़ाइल बहुत बड़ी है]\nआपकी फ़ाइल का साइज़ 25 MB से बड़ा है! (${(file.size / (1024 * 1024)).toFixed(2)} MB)\nकृपया 25 MB से कम साइज़ की इमेज चुनें।`);
             input.value = ""; 
+        } else {
+            input.classList.remove("border-red-500", "bg-red-950/40");
+            input.classList.add("border-gray-700", "bg-[#080d1e]");
         }
     }
 }
