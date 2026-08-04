@@ -3,156 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IOIS - Indian Online Income Supporting System</title>
+    <title>IOIS - User Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-[#0b1329] text-white font-sans flex flex-col min-h-screen">
+<body class="bg-[#0b1329] text-white font-sans flex flex-col min-h-screen" onload="loadDashboardData()">
 
-    <!-- Header / Navbar -->
+    <!-- Header -->
     <nav class="bg-[#080d1e] border-b border-gray-800 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-2">
                 <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/40'" alt="IOIS" class="w-10 h-10 rounded-full border border-amber-400 object-cover">
-                <span class="text-xl font-bold tracking-wide text-amber-400">IOIS</span>
+                <span class="text-xl font-bold tracking-wide text-amber-400">IOIS Portal</span>
             </a>
-
-            <!-- Desktop Navigation Links -->
-            <div class="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-300">
-                <a href="index.html" class="text-amber-400">Home</a>
-                <a href="membership.html" class="hover:text-amber-400">Plans</a>
-                <a href="about.html" class="hover:text-amber-400">About Us</a>
-                <a href="contact.html" class="hover:text-amber-400">Contact</a>
-            </div>
-
-            <!-- Header Action Buttons -->
-            <div class="hidden md:flex items-center gap-3">
-                <button onclick="openLoginModal()" class="px-3.5 py-1.5 border border-amber-400 text-amber-400 font-bold rounded-lg text-xs hover:bg-amber-400 hover:text-gray-950 transition">Login</button>
-                <button onclick="openRegistrationFlow()" class="px-3.5 py-1.5 bg-amber-400 text-gray-950 font-bold rounded-lg text-xs hover:bg-amber-500 transition">Register</button>
-            </div>
-
-            <!-- Mobile Hamburger Menu Icon -->
-            <button onclick="toggleMobileMenu()" class="md:hidden text-2xl text-amber-400 focus:outline-none p-1">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-        </div>
-
-        <!-- Mobile Dropdown Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-[#0e1938] px-4 py-4 border-t border-gray-800 space-y-3 font-medium">
-            <a href="index.html" class="block text-amber-400">Home</a>
-            <a href="membership.html" class="block text-gray-300">Plans</a>
-            <a href="about.html" class="block text-gray-300">About Us</a>
-            <a href="contact.html" class="block text-gray-300">Contact</a>
-            <div class="pt-3 border-t border-gray-700 flex flex-col gap-2">
-                <button onclick="openLoginModal()" class="w-full py-2 border border-amber-400 text-amber-400 font-bold rounded-lg text-sm">Login</button>
-                <button onclick="openRegistrationFlow()" class="w-full py-2 bg-amber-400 text-gray-950 font-bold rounded-lg text-sm">Register Now (@ ₹10)</button>
+            <div class="flex items-center gap-2">
+                <span id="user-display-id" class="text-xs bg-amber-500/20 text-amber-400 font-mono font-bold px-3 py-1 rounded-full border border-amber-500/40">ID: Guest</span>
+                <button onclick="clearAndLogout()" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs">Reset / Logout</button>
             </div>
         </div>
     </nav>
 
-    <!-- Cleaned Hero Section (Single Heading) -->
-    <section class="py-12 px-4 text-center max-w-4xl mx-auto flex-1">
-        <span class="inline-block bg-amber-500/10 text-amber-400 text-xs font-bold uppercase px-4 py-1.5 rounded-full border border-amber-500/30 mb-4">
-            CAREER-TRANSFORMING KIT
-        </span>
+    <!-- Main Dashboard -->
+    <main class="max-w-4xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
         
-        <h1 class="text-3xl md:text-5xl font-extrabold text-white leading-tight mb-3">
-            IOIS <span class="text-teal-400">Digital Starter Kit</span>
-        </h1>
-        
-        <p class="text-gray-300 text-sm md:text-base max-w-2xl mx-auto mb-8">
-            प्रोफेशनल Resume Templates, Cover Letters, AI Prompts और 70% Direct Referral Bonus – सब कुछ सिर्फ <span class="text-amber-400 font-bold">₹10</span> में!
-        </p>
+        <!-- Profile Card -->
+        <div class="bg-[#111c38] border border-gray-800 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+            <!-- Profile Photo -->
+            <div class="relative group">
+                <img id="profile-img" src="https://via.placeholder.com/100?text=User" alt="Profile" class="w-24 h-24 rounded-full object-cover border-2 border-amber-400 shadow-lg">
+                <label for="pic-upload" class="absolute bottom-0 right-0 bg-amber-400 text-gray-950 p-2 rounded-full cursor-pointer hover:bg-amber-500 text-xs font-bold shadow">
+                    <i class="fa-solid fa-camera"></i>
+                </label>
+                <input type="file" id="pic-upload" accept="image/*" class="hidden" onchange="uploadProfilePic(this)">
+            </div>
 
-        <!-- Pricing Card Box -->
-        <div class="p-6 bg-[#111c38] border border-teal-500/40 rounded-2xl max-w-md mx-auto shadow-2xl">
-            <div class="text-gray-400 text-xs uppercase font-bold tracking-wider">Special Launch Price</div>
-            <div class="text-5xl font-extrabold text-amber-400 my-2">₹10 <span class="text-sm text-gray-400 line-through font-normal">₹199</span></div>
-            <p class="text-teal-400 text-xs font-semibold mb-6"><i class="fa-solid fa-bolt"></i> Instant Google Drive Download Access</p>
-            
-            <button onclick="openRegistrationFlow()" class="w-full py-3.5 bg-gradient-to-r from-teal-400 to-emerald-500 hover:from-teal-500 text-gray-950 font-extrabold text-base rounded-xl shadow-lg transition">
-                Buy Kit Now @ ₹10
-            </button>
-            
-            <p class="text-xs text-gray-400 mt-3">UPI ID: <span class="text-gray-200 font-mono">8877490845@spicepay</span> (Vikas Kumar)</p>
-        </div>
-    </section>
-
-    <!-- What's Inside Section -->
-    <section class="py-10 bg-[#080d1e] px-4 border-t border-gray-800">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-2xl font-bold text-center mb-8 text-teal-400">Kit Me Kya-Kya Milega?</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                <div class="bg-[#111c38] p-5 rounded-xl border border-gray-800">
-                    <i class="fa-solid fa-file-invoice text-teal-400 text-3xl mb-3"></i>
-                    <h3 class="font-bold text-base mb-1">3 Resume Templates</h3>
-                    <p class="text-gray-400 text-xs">Freshers aur Experienced ke liye ATS Friendly Editable Formats.</p>
-                </div>
-                <div class="bg-[#111c38] p-5 rounded-xl border border-gray-800">
-                    <i class="fa-solid fa-envelope-open-text text-teal-400 text-3xl mb-3"></i>
-                    <h3 class="font-bold text-base mb-1">2 Cover Letters</h3>
-                    <p class="text-gray-400 text-xs">Job Apply karne ke liye ready-made professional cover letters.</p>
-                </div>
-                <div class="bg-[#111c38] p-5 rounded-xl border border-gray-800">
-                    <i class="fa-solid fa-robot text-teal-400 text-3xl mb-3"></i>
-                    <h3 class="font-bold text-base mb-1">10 AI Prompts</h3>
-                    <p class="text-gray-400 text-xs">Job Search aur Interview ki taiyari ke liye ChatGPT prompts (Hindi/English).</p>
-                </div>
+            <!-- Dynamic User Details -->
+            <div class="text-center md:text-left flex-1">
+                <h2 id="user-name" class="text-2xl font-bold text-white">Guest User</h2>
+                <p class="text-xs text-teal-400 font-mono mt-1">Fixed User ID: <span id="fixed-id" class="font-bold">Not Registered</span></p>
+                <p class="text-xs text-gray-400 mt-1">Registered UPI ID: <span id="user-upi" class="text-amber-400">Not Added</span></p>
             </div>
         </div>
-    </section>
 
-    <!-- Step 1: User Registration Modal -->
-    <div id="reg-modal" class="fixed inset-0 bg-black/85 flex items-center justify-center p-4 hidden z-50">
-        <div class="bg-[#111c38] border border-amber-500/50 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
-            <button onclick="closeModals()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
-            <h3 class="text-xl font-bold text-amber-400 mb-1 text-center">Step 1: Account Details</h3>
-            <form id="reg-form" onsubmit="handleDetailsSubmit(event)" class="space-y-3 mt-3">
-                <input type="text" id="reg-name" required placeholder="Full Name *" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2 text-sm text-white">
-                <input type="text" id="reg-contact" required placeholder="Mobile / Email *" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2 text-sm text-white">
-                <input type="text" id="reg-userid" required placeholder="Create Fixed User ID *" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2 text-sm text-white">
-                <input type="password" id="reg-pass" required placeholder="Set Password *" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2 text-sm text-white">
-                <input type="text" id="reg-upi" required placeholder="Your UPI ID (For ₹7 Bonus) *" class="w-full bg-[#080d1e] border border-amber-500/50 rounded-lg p-2 text-sm text-white">
-                <button type="submit" class="w-full py-2.5 bg-amber-400 font-bold text-gray-950 rounded-lg text-sm">Next: Proceed to Payment</button>
-            </form>
+        <!-- Earning & Downloads Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Wallet Card -->
+            <div class="bg-[#111c38] border border-amber-500/30 p-6 rounded-2xl">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-xs text-gray-400 uppercase font-bold">Total Referral Income</span>
+                    <i class="fa-solid fa-wallet text-amber-400 text-xl"></i>
+                </div>
+                <div class="text-4xl font-extrabold text-amber-400">₹<span id="wallet-balance">0</span></div>
+                <p class="text-xs text-teal-400 mt-2">₹7 Direct bonus per sale</p>
+                <button onclick="requestWithdrawal()" class="w-full mt-4 py-2.5 bg-amber-400 text-gray-950 font-bold rounded-xl text-xs hover:bg-amber-500">Request UPI Withdrawal</button>
+            </div>
+
+            <!-- Digital Kit Download -->
+            <div class="bg-[#111c38] border border-teal-500/30 p-6 rounded-2xl flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs text-teal-400 uppercase font-bold">Your Purchased Kit</span>
+                        <i class="fa-solid fa-box-open text-teal-400 text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-lg">IOIS Digital Starter Kit</h3>
+                    <p class="text-xs text-gray-400 mt-1">3 Resume Templates, 2 Cover Letters & 10 AI Prompts.</p>
+                </div>
+                <a href="https://drive.google.com" target="_blank" class="block text-center w-full mt-4 py-2.5 bg-teal-400 text-gray-950 font-bold rounded-xl text-xs hover:bg-teal-500">
+                    <i class="fa-solid fa-download mr-1"></i> Access Google Drive Kit
+                </a>
+            </div>
         </div>
-    </div>
 
-    <!-- Step 2: Payment & Screenshot Upload Modal -->
-    <div id="payment-modal" class="fixed inset-0 bg-black/85 flex items-center justify-center p-4 hidden z-50">
-        <div class="bg-[#111c38] border border-teal-500/50 rounded-2xl max-w-md w-full p-6 text-center relative shadow-2xl">
-            <button onclick="closeModals()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
-            <h3 class="text-xl font-bold text-teal-400 mb-2">Step 2: Pay ₹10 & Upload Proof</h3>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=8877490845@spicepay&pn=Vikas%20Kumar&am=10" alt="QR Code" class="w-36 h-36 mx-auto bg-white p-2 rounded-lg mb-2">
-            <p class="text-xs text-amber-400 font-mono font-bold">8877490845@spicepay (Vikas Kumar)</p>
-
-            <form onsubmit="handleScreenshotSubmit(event)" class="mt-4 text-left border-t border-gray-700 pt-3">
-                <label class="block text-xs font-bold text-gray-200 mb-1">Payment Screenshot (Max 25 MB):</label>
-                <input type="file" id="ss-file" accept="image/*" required onchange="validateFileSize(this)" class="w-full text-xs text-gray-300 bg-[#080d1e] border border-gray-700 rounded-lg p-2">
-                <button type="submit" class="w-full py-2.5 bg-teal-400 font-bold text-gray-950 rounded-lg text-sm mt-3">Submit & Access Kit</button>
-            </form>
+        <!-- Referral Link Box -->
+        <div class="bg-[#111c38] border border-gray-800 p-6 rounded-2xl text-center">
+            <h3 class="text-lg font-bold text-amber-400 mb-1">Your Unique Referral Link</h3>
+            <p class="text-xs text-gray-300 mb-3">Is link ko dosto ke sath share karein aur har sale par ₹7 kamayein!</p>
+            
+            <div class="flex gap-2 max-w-md mx-auto">
+                <input type="text" id="ref-link" readonly value="https://ioisplatform.github.io/iois-website/" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-teal-400 font-mono">
+                <button onclick="copyRefLink()" class="px-4 py-2.5 bg-amber-400 text-gray-950 font-bold text-xs rounded-lg whitespace-nowrap">Copy Link</button>
+            </div>
         </div>
-    </div>
 
-    <!-- Login Modal -->
-    <div id="login-modal" class="fixed inset-0 bg-black/85 flex items-center justify-center p-4 hidden z-50">
-        <div class="bg-[#111c38] border border-amber-500/50 rounded-2xl max-w-md w-full p-6 relative">
-            <button onclick="closeModals()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
-            <h3 class="text-xl font-bold text-amber-400 mb-3 text-center">Login</h3>
-            <form onsubmit="handleLoginSubmit(event)" class="space-y-3">
-                <input type="text" id="login-userid" required placeholder="User ID" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2 text-sm text-white">
-                <input type="password" id="login-pass" required placeholder="Password" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2 text-sm text-white">
-                <button type="submit" class="w-full py-2.5 bg-amber-400 font-bold text-gray-950 rounded-lg text-sm">Login</button>
-            </form>
-        </div>
-    </div>
+    </main>
 
-    <!-- Footer -->
-    <footer class="bg-[#080d1e] py-6 border-t border-gray-800 text-center text-xs text-gray-400 mt-auto">
-        <p>&copy; 2026 IOIS - Indian Online Income Supporting System</p>
-    </footer>
-
-    <!-- Script File Link -->
     <script src="script.js"></script>
+    <script>
+        // Load Real Logged In User Data
+        function loadDashboardData() {
+            const name = localStorage.getItem('iois_user_name');
+            const userid = localStorage.getItem('iois_user_id');
+            const upi = localStorage.getItem('iois_user_upi');
+
+            // If user has registered/logged in with real data:
+            if (name && userid) {
+                document.getElementById('user-name').innerText = name;
+                document.getElementById('fixed-id').innerText = userid;
+                document.getElementById('user-display-id').innerText = 'ID: ' + userid;
+                document.getElementById('user-upi').innerText = upi || 'Not Added';
+                document.getElementById('ref-link').value = `https://ioisplatform.github.io/iois-website/?ref=${userid}`;
+            } else {
+                // Default view if no user is registered/logged in
+                document.getElementById('user-name').innerText = "New User";
+                document.getElementById('fixed-id').innerText = "Guest";
+                document.getElementById('user-display-id').innerText = "ID: Guest";
+            }
+
+            // Load profile picture
+            if (userid) {
+                const savedPic = localStorage.getItem('iois_profile_pic_' + userid);
+                if (savedPic) {
+                    document.getElementById('profile-img').src = savedPic;
+                }
+            }
+        }
+
+        // Fully Clear Browser Memory & Logout
+        function clearAndLogout() {
+            localStorage.clear(); // Complete memory clear
+            alert("ब्राउज़र मेमोरी पूरी तरह साफ़ कर दी गई है!");
+            window.location.href = "index.html";
+        }
+
+        // Upload Profile Picture
+        function uploadProfilePic(input) {
+            const file = input.files[0];
+            const userid = localStorage.getItem('iois_user_id') || 'Guest';
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('profile-img').src = e.target.result;
+                    localStorage.setItem('iois_profile_pic_' + userid, e.target.result);
+                    alert("Profile picture updated!");
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
 </body>
 </html>
