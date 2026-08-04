@@ -17,21 +17,21 @@
                 <span class="text-xl font-bold tracking-wide text-amber-400">IOIS</span>
             </a>
 
-            <!-- Desktop Links -->
-            <div class="hidden md:flex items-center gap-5 text-sm font-semibold text-gray-300">
+            <!-- Desktop Navigation Links -->
+            <div class="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-300">
                 <a href="index.html" class="text-amber-400">Home</a>
                 <a href="membership.html" class="hover:text-amber-400">Plans</a>
                 <a href="about.html" class="hover:text-amber-400">About Us</a>
                 <a href="contact.html" class="hover:text-amber-400">Contact</a>
             </div>
 
-            <!-- Login / Register Buttons -->
+            <!-- Header Action Buttons -->
             <div class="hidden md:flex items-center gap-3">
                 <button onclick="openLoginModal()" class="px-3.5 py-1.5 border border-amber-400 text-amber-400 font-bold rounded-lg text-xs hover:bg-amber-400 hover:text-gray-950 transition">Login</button>
                 <button onclick="openRegistrationFlow()" class="px-3.5 py-1.5 bg-amber-400 text-gray-950 font-bold rounded-lg text-xs hover:bg-amber-500 transition">Register</button>
             </div>
 
-            <!-- Mobile Menu Button -->
+            <!-- Mobile Hamburger Menu Icon -->
             <button onclick="toggleMobileMenu()" class="md:hidden text-2xl text-amber-400 focus:outline-none p-1">
                 <i class="fa-solid fa-bars"></i>
             </button>
@@ -50,7 +50,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Cleaned Hero Section (Single Heading) -->
     <section class="py-12 px-4 text-center max-w-4xl mx-auto flex-1">
         <span class="inline-block bg-amber-500/10 text-amber-400 text-xs font-bold uppercase px-4 py-1.5 rounded-full border border-amber-500/30 mb-4">
             CAREER-TRANSFORMING KIT
@@ -64,7 +64,7 @@
             प्रोफेशनल Resume Templates, Cover Letters, AI Prompts और 70% Direct Referral Bonus – सब कुछ सिर्फ <span class="text-amber-400 font-bold">₹10</span> में!
         </p>
 
-        <!-- Buy Box -->
+        <!-- Pricing Card Box -->
         <div class="p-6 bg-[#111c38] border border-teal-500/40 rounded-2xl max-w-md mx-auto shadow-2xl">
             <div class="text-gray-400 text-xs uppercase font-bold tracking-wider">Special Launch Price</div>
             <div class="text-5xl font-extrabold text-amber-400 my-2">₹10 <span class="text-sm text-gray-400 line-through font-normal">₹199</span></div>
@@ -102,11 +102,11 @@
         </div>
     </section>
 
-    <!-- Step 1: Details Modal -->
+    <!-- Step 1: User Registration Modal -->
     <div id="reg-modal" class="fixed inset-0 bg-black/85 flex items-center justify-center p-4 hidden z-50">
         <div class="bg-[#111c38] border border-amber-500/50 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
             <button onclick="closeModals()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
-            <h3 class="text-xl font-bold text-amber-400 mb-1 text-center">Step 1: Details Bharein</h3>
+            <h3 class="text-xl font-bold text-amber-400 mb-1 text-center">Step 1: Account Details</h3>
             <form id="reg-form" onsubmit="handleDetailsSubmit(event)" class="space-y-3 mt-3">
                 <input type="text" id="reg-name" required placeholder="Full Name *" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2 text-sm text-white">
                 <input type="text" id="reg-contact" required placeholder="Mobile / Email *" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2 text-sm text-white">
@@ -152,6 +152,7 @@
         <p>&copy; 2026 IOIS - Indian Online Income Supporting System</p>
     </footer>
 
+    <!-- Script File Link -->
     <script src="script.js"></script>
 </body>
 </html>
