@@ -9,49 +9,75 @@
 </head>
 <body class="bg-[#0b1329] text-white font-sans flex flex-col min-h-screen">
 
-    <!-- Header -->
+    <!-- Header / Navbar -->
     <nav class="bg-[#080d1e] border-b border-gray-800 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-2">
                 <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/40'" alt="IOIS" class="w-10 h-10 rounded-full border border-amber-400 object-cover">
                 <span class="text-xl font-bold tracking-wide text-amber-400">IOIS</span>
             </a>
+
+            <!-- Desktop Links -->
             <div class="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-300">
                 <a href="index.html" class="hover:text-amber-400">Home</a>
-                <a href="membership.html" class="hover:text-amber-400">Membership Plans</a>
+                <a href="membership.html" class="hover:text-amber-400">Plans</a>
                 <a href="about.html" class="hover:text-amber-400">About Us</a>
                 <a href="contact.html" class="text-amber-400">Contact</a>
             </div>
-            <button id="menu-btn" class="md:hidden text-2xl text-amber-400"><i class="fa-solid fa-bars"></i></button>
+
+            <!-- Login / Register Buttons -->
+            <div class="hidden md:flex items-center gap-3">
+                <button onclick="openLoginModal()" class="px-3.5 py-1.5 border border-amber-400 text-amber-400 font-bold rounded-lg text-xs hover:bg-amber-400 hover:text-gray-950 transition">Login</button>
+                <button onclick="openRegistrationFlow()" class="px-3.5 py-1.5 bg-amber-400 text-gray-950 font-bold rounded-lg text-xs hover:bg-amber-500 transition">Register</button>
+            </div>
+
+            <!-- Mobile Hamburger Menu Button -->
+            <button onclick="toggleMobileMenu()" class="md:hidden text-2xl text-amber-400 focus:outline-none p-1">
+                <i class="fa-solid fa-bars"></i>
+            </button>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-[#0e1938] px-4 py-3 border-t border-gray-800 space-y-3 font-medium">
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#0e1938] px-4 py-4 border-t border-gray-800 space-y-3 font-medium">
             <a href="index.html" class="block text-gray-300">Home</a>
-            <a href="membership.html" class="block text-gray-300">Membership Plans</a>
+            <a href="membership.html" class="block text-gray-300">Plans</a>
             <a href="about.html" class="block text-gray-300">About Us</a>
             <a href="contact.html" class="block text-amber-400">Contact</a>
+            <div class="pt-3 border-t border-gray-700 flex flex-col gap-2">
+                <button onclick="openLoginModal()" class="w-full py-2 border border-amber-400 text-amber-400 font-bold rounded-lg text-sm">Login</button>
+                <button onclick="openRegistrationFlow()" class="w-full py-2 bg-amber-400 text-gray-950 font-bold rounded-lg text-sm">Register Now (@ ₹10)</button>
+            </div>
         </div>
     </nav>
 
-    <!-- Contact Content -->
-    <section class="py-12 px-4 max-w-3xl mx-auto flex-1 w-full">
-        <h1 class="text-3xl font-bold text-center text-amber-400 mb-8">Contact Support</h1>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Contact Section -->
+    <section class="py-12 px-4 max-w-4xl mx-auto flex-1 w-full">
+        <h1 class="text-3xl font-bold text-center text-amber-400 mb-8">Official Support & Contact</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <!-- WhatsApp Box -->
             <a href="https://wa.me/918877490845" target="_blank" class="bg-[#111c38] border border-green-500/40 p-6 rounded-2xl text-center hover:bg-[#162447] transition">
                 <i class="fa-brands fa-whatsapp text-green-400 text-4xl mb-3"></i>
                 <h3 class="font-bold text-lg text-white mb-1">WhatsApp Support</h3>
-                <p class="text-gray-300 text-xs">+91 8877490845</p>
-                <span class="inline-block mt-3 text-xs bg-green-600 text-white font-bold px-3 py-1 rounded-full">Chat Now</span>
+                <p class="text-gray-300 text-xs mb-3">+91 8877490845</p>
+                <span class="inline-block text-xs bg-green-600 text-white font-bold px-4 py-1.5 rounded-full">Chat on WhatsApp</span>
             </a>
 
             <!-- Email Box -->
             <a href="mailto:ioisplatform@gmail.com" class="bg-[#111c38] border border-amber-500/40 p-6 rounded-2xl text-center hover:bg-[#162447] transition">
                 <i class="fa-solid fa-envelope text-amber-400 text-4xl mb-3"></i>
                 <h3 class="font-bold text-lg text-white mb-1">Email Support</h3>
-                <p class="text-gray-300 text-xs">ioisplatform@gmail.com</p>
-                <span class="inline-block mt-3 text-xs bg-amber-500 text-gray-950 font-bold px-3 py-1 rounded-full">Send Email</span>
+                <p class="text-gray-300 text-xs mb-3">ioisplatform@gmail.com</p>
+                <span class="inline-block text-xs bg-amber-500 text-gray-950 font-bold px-4 py-1.5 rounded-full">Send Email</span>
             </a>
+        </div>
+
+        <!-- Official Payment Account Box -->
+        <div class="bg-[#111c38] border border-teal-500/40 p-6 rounded-2xl text-center">
+            <h3 class="font-bold text-teal-400 text-lg mb-2"><i class="fa-solid fa-building-columns mr-2"></i> Official Payment Details</h3>
+            <p class="text-xs text-gray-300 mb-1">Official UPI ID for Kit Purchase & Verification:</p>
+            <p class="text-lg font-mono text-amber-400 font-bold">8877490845@spicepay</p>
+            <p class="text-xs text-gray-400 mt-1">Account Holder Name: <strong>Vikas Kumar</strong></p>
         </div>
     </section>
 
@@ -61,12 +87,5 @@
     </footer>
 
     <script src="script.js"></script>
-</body>
-</html><footer>
-<p>© 2026 IOIS - Indian Online Income Supporting System</p>
-</footer>
-
-<script src="script.js"></script>
-
 </body>
 </html>
