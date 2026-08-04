@@ -3,136 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IOIS - Member Dashboard & ID Card</title>
+    <title>IOIS - Member Dashboard & Digital ID Card</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- HTML2Canvas Library for Downloading ID Card as Image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body class="bg-[#0b1329] text-white font-sans flex flex-col min-h-screen" onload="loadDashboardData()">
 
     <!-- Navigation Bar -->
-    <nav class="bg-[#080d1e] border-b border-gray-800 sticky top-0 z-50">
+    <nav class="bg-[#080d1e] border-b border-amber-500/30 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-2">
                 <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/40'" alt="IOIS" class="w-10 h-10 rounded-full border border-amber-400 object-cover">
                 <span class="text-xl font-bold tracking-wide text-amber-400">IOIS Portal</span>
             </a>
             <div class="flex items-center gap-2">
-                <a href="index.html" class="px-3 py-1 bg-gray-800 text-gray-300 font-bold rounded-lg text-xs hover:bg-gray-700">
+                <a href="index.html" class="px-3 py-1.5 bg-amber-400 text-gray-950 font-extrabold rounded-xl text-xs hover:bg-amber-500">
                     <i class="fa-solid fa-house"></i> Home
                 </a>
-                <button onclick="userLogout()" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs">Logout</button>
+                <button onclick="userLogout()" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-xs">Logout</button>
             </div>
         </div>
     </nav>
 
-    <!-- Main Dashboard -->
+    <!-- Main Dashboard Container -->
     <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full space-y-8">
         
-        <!-- SECTION 1: HIGH-TECH IOIS DIGITAL ID CARD -->
+        <!-- HEADER TITLE -->
         <div class="text-center">
-            <h2 class="text-2xl font-extrabold text-amber-400 mb-1">Your Digital IOIS Membership ID Card</h2>
-            <p class="text-xs text-gray-400">Official Verified Member Identity Badge</p>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-amber-400 mb-1">Official IOIS Digital ID Card</h2>
+            <p class="text-xs text-gray-400">Verified Member Identity Badge & Referral Access</p>
         </div>
 
-        <!-- ID CARD CONTAINER (Golden & Navy Blue Badge Theme) -->
-        <div class="max-w-md mx-auto bg-gradient-to-br from-[#080d1e] via-[#111c38] to-[#080d1e] border-2 border-amber-400/80 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
-            <!-- Background Badge Overlay -->
-            <div class="absolute -right-10 -bottom-10 opacity-10">
-                <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/150'" alt="Logo Watermark" class="w-48 h-48">
-            </div>
+        <!-- ULTRA-PREMIUM 3D GOLDEN DIGITAL ID CARD CARD ELEMENT -->
+        <div class="max-w-md mx-auto">
+            
+            <!-- TARGET FOR HTML2CANVAS DOWNLOAD -->
+            <div id="id-card-element" class="bg-gradient-to-b from-[#080d1e] via-[#111c38] to-[#040711] border-4 border-amber-400 rounded-3xl p-6 shadow-[0_0_30px_rgba(245,158,11,0.3)] relative overflow-hidden text-left">
+                
+                <!-- Metallic Gold Shimmer Gradient Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-tr from-amber-500/10 via-transparent to-teal-400/10 pointer-events-none"></div>
 
-            <!-- Card Header -->
-            <div class="flex justify-between items-center border-b border-amber-500/30 pb-3 mb-4">
-                <div class="flex items-center gap-2">
-                    <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/35'" alt="IOIS" class="w-8 h-8 rounded-full border border-amber-400">
-                    <div>
-                        <span class="text-amber-400 font-extrabold text-sm tracking-wider block">IOIS PLATFORM</span>
-                        <span class="text-[8px] text-teal-400 uppercase tracking-widest block">Verified Member</span>
+                <!-- Card Top Header -->
+                <div class="flex justify-between items-center border-b border-amber-500/40 pb-3 mb-4 relative z-10">
+                    <div class="flex items-center gap-2">
+                        <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/35'" alt="IOIS Logo" class="w-9 h-9 rounded-full border-2 border-amber-400 shadow">
+                        <div>
+                            <span class="text-amber-400 font-black text-sm tracking-widest block leading-none">IOIS PLATFORM</span>
+                            <span class="text-[8px] text-teal-400 font-bold uppercase tracking-wider block mt-0.5">Indian Online Income Supporting System</span>
+                        </div>
+                    </div>
+                    <!-- Verified Hologram Chip Badge -->
+                    <div class="bg-gradient-to-r from-amber-400 to-amber-600 text-gray-950 font-extrabold text-[9px] px-2.5 py-1 rounded-md shadow flex items-center gap-1">
+                        <i class="fa-solid fa-shield-halved"></i> VERIFIED
                     </div>
                 </div>
-                <span class="text-[10px] bg-amber-400 text-gray-950 font-bold px-2.5 py-0.5 rounded-full">ACTIVE</span>
+
+                <!-- Card Body -->
+                <div class="flex gap-4 items-center relative z-10">
+                    <!-- Photo with Metallic Ring -->
+                    <div class="relative flex-shrink-0">
+                        <img id="profile-img" src="https://via.placeholder.com/100?text=Member" alt="Member Photo" class="w-20 h-20 rounded-2xl object-cover border-2 border-amber-400 shadow-xl">
+                        <label for="pic-upload" class="absolute -bottom-1 -right-1 bg-amber-400 text-gray-950 p-1.5 rounded-full cursor-pointer hover:bg-amber-500 text-[10px] shadow-lg">
+                            <i class="fa-solid fa-camera"></i>
+                        </label>
+                        <input type="file" id="pic-upload" accept="image/*" class="hidden" onchange="uploadProfilePic(this)">
+                    </div>
+
+                    <!-- Details -->
+                    <div class="space-y-1 flex-1 min-w-0">
+                        <h3 id="card-name" class="font-black text-lg text-white truncate leading-snug">Guest Member</h3>
+                        <p class="text-xs text-amber-400 font-mono font-extrabold">Referral ID: <span id="card-id" class="text-white">---</span></p>
+                        <p class="text-[11px] text-gray-300 truncate"><i class="fa-solid fa-envelope text-amber-400 mr-1"></i><span id="card-email">---</span></p>
+                        <!-- Masked Privacy Phone -->
+                        <p class="text-[11px] text-teal-400 font-mono font-semibold"><i class="fa-solid fa-phone text-teal-400 mr-1"></i><span id="card-phone">+91 8877****45</span> <span class="text-[9px] bg-teal-500/20 text-teal-300 px-1.5 py-0.5 rounded ml-1">Protected</span></p>
+                    </div>
+                </div>
+
+                <!-- Card Footer & QR Code -->
+                <div class="mt-5 pt-3 border-t border-amber-500/30 flex justify-between items-center relative z-10">
+                    <div class="text-left">
+                        <span class="text-[8px] text-gray-400 block uppercase font-bold tracking-wider">Registered Withdrawal UPI</span>
+                        <span id="card-upi" class="text-xs font-mono text-amber-400 font-bold">---</span>
+                    </div>
+                    <!-- Verification QR Code -->
+                    <div class="bg-white p-1 rounded-lg shadow-md border border-amber-400">
+                        <img id="card-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=IOIS_MEMBER" alt="Verification QR" class="w-10 h-10">
+                    </div>
+                </div>
             </div>
 
-            <!-- Card Body -->
-            <div class="flex gap-4 items-center">
-                <!-- User Profile Photo Upload -->
-                <div class="relative flex-shrink-0">
-                    <img id="profile-img" src="https://via.placeholder.com/100?text=User" alt="Member Photo" class="w-20 h-20 rounded-xl object-cover border-2 border-amber-400 shadow-md">
-                    <label for="pic-upload" class="absolute -bottom-1 -right-1 bg-amber-400 text-gray-950 p-1.5 rounded-full cursor-pointer hover:bg-amber-500 text-[10px] shadow">
-                        <i class="fa-solid fa-camera"></i>
-                    </label>
-                    <input type="file" id="pic-upload" accept="image/*" class="hidden" onchange="uploadProfilePic(this)">
-                </div>
-
-                <!-- User Details -->
-                <div class="text-left space-y-1 flex-1">
-                    <h3 id="card-name" class="font-extrabold text-lg text-white">Guest User</h3>
-                    <p class="text-xs text-amber-400 font-mono font-bold">ID / Refer: <span id="card-id">---</span></p>
-                    <p class="text-[11px] text-gray-300 truncate">Email: <span id="card-email">---</span></p>
-                    <!-- Privacy Masked Phone Number -->
-                    <p class="text-[11px] text-teal-400 font-mono">Mobile: <span id="card-phone">+91 8877****45</span> <i class="fa-solid fa-user-shield ml-1 text-gray-400"></i></p>
-                </div>
-            </div>
-
-            <!-- Card Footer & QR Code -->
-            <div class="mt-4 pt-3 border-t border-amber-500/30 flex justify-between items-center">
-                <div class="text-left">
-                    <span class="text-[9px] text-gray-400 block uppercase">UPI ID for Bonus</span>
-                    <span id="card-upi" class="text-xs font-mono text-amber-400 font-bold">---</span>
-                </div>
-                <!-- Dynamic Verification QR -->
-                <div class="bg-white p-1 rounded-lg">
-                    <img id="card-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=IOIS" alt="User QR" class="w-10 h-10">
-                </div>
-            </div>
+            <!-- DOWNLOAD ID CARD BUTTON -->
+            <button onclick="downloadIDCard()" class="w-full mt-4 py-3 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-500 hover:to-amber-600 text-gray-950 font-extrabold rounded-xl shadow-xl transition flex items-center justify-center gap-2 text-sm">
+                <i class="fa-solid fa-file-arrow-down text-base"></i> Download Digital ID Card (PNG Image)
+            </button>
         </div>
 
-        <!-- SECTION 2: REFERRAL & EARNING METRICS -->
+        <!-- WALLET & REFERRAL SECTION -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Wallet Card -->
-            <div class="bg-[#111c38] border border-amber-500/30 p-6 rounded-2xl">
+            <div class="bg-[#111c38] border border-amber-500/30 p-6 rounded-2xl shadow-xl">
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs text-gray-400 uppercase font-bold">Referral Balance</span>
+                    <span class="text-xs text-gray-400 uppercase font-bold">Referral Wallet Balance</span>
                     <i class="fa-solid fa-wallet text-amber-400 text-xl"></i>
                 </div>
                 <div class="text-4xl font-extrabold text-amber-400">₹<span id="wallet-balance">0</span></div>
                 <p class="text-xs text-teal-400 mt-2">₹7 Direct bonus per successful referral sale</p>
-                <button onclick="requestWithdrawal()" class="w-full mt-4 py-2.5 bg-amber-400 text-gray-950 font-bold rounded-xl text-xs hover:bg-amber-500">Request UPI Withdrawal</button>
+                <button onclick="requestWithdrawal()" class="w-full mt-4 py-2.5 bg-amber-400 text-gray-950 font-bold rounded-xl text-xs hover:bg-amber-500 shadow">
+                    Request UPI Payout Withdrawal
+                </button>
             </div>
 
-            <!-- Digital Kit Download -->
-            <div class="bg-[#111c38] border border-teal-500/30 p-6 rounded-2xl flex flex-col justify-between">
+            <!-- Digital Kit Access -->
+            <div class="bg-[#111c38] border border-teal-500/30 p-6 rounded-2xl flex flex-col justify-between shadow-xl">
                 <div>
                     <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs text-teal-400 uppercase font-bold">Purchased Kit</span>
+                        <span class="text-xs text-teal-400 uppercase font-bold">Purchased Product Access</span>
                         <i class="fa-solid fa-box-open text-teal-400 text-xl"></i>
                     </div>
                     <h3 class="font-bold text-white text-lg">IOIS Digital Starter Kit</h3>
-                    <p class="text-xs text-gray-400 mt-1">3 Resume Templates, 2 Cover Letters & 10 AI Prompts.</p>
+                    <p class="text-xs text-gray-400 mt-1">3 ATS Resume Templates, 2 Cover Letters & 10 AI Prompts.</p>
                 </div>
-                <a href="https://drive.google.com" target="_blank" class="block text-center w-full mt-4 py-2.5 bg-teal-400 text-gray-950 font-bold rounded-xl text-xs hover:bg-teal-500">
+                <a href="https://drive.google.com" target="_blank" class="block text-center w-full mt-4 py-2.5 bg-teal-400 text-gray-950 font-bold rounded-xl text-xs hover:bg-teal-500 shadow">
                     <i class="fa-solid fa-download mr-1"></i> Access Google Drive Kit
                 </a>
             </div>
         </div>
 
-        <!-- SECTION 3: REFERRAL LINK GENERATOR -->
-        <div class="bg-[#111c38] border border-gray-800 p-6 rounded-2xl text-center">
+        <!-- REFERRAL LINK GENERATOR BOX -->
+        <div class="bg-[#111c38] border border-gray-800 p-6 rounded-2xl text-center shadow-xl">
             <h3 class="text-lg font-bold text-amber-400 mb-1">Your Unique Professional Referral Link</h3>
-            <p class="text-xs text-gray-300 mb-3">दोस्तों के साथ लिंक शेयर करें और हर सेल पर ₹7 कमाएँ!</p>
+            <p class="text-xs text-gray-300 mb-3">Is link ko share karein aur har sale par ₹7 kamayein!</p>
             
             <div class="flex gap-2 max-w-md mx-auto">
                 <input type="text" id="ref-link" readonly value="https://ioisplatform.github.io/iois-website/" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-teal-400 font-mono">
-                <button onclick="copyRefLink()" class="px-4 py-2.5 bg-amber-400 text-gray-950 font-bold text-xs rounded-lg whitespace-nowrap">Copy Link</button>
-            </div>
-        </div>
-
-        <!-- SECTION 4: UPDATE UPI ID ONLY -->
-        <div class="bg-[#111c38] border border-gray-800 p-6 rounded-2xl max-w-md mx-auto">
-            <h3 class="text-sm font-bold text-teal-400 mb-2 text-center"><i class="fa-solid fa-gear mr-1"></i> Update Wallet UPI Details</h3>
-            <div class="flex gap-2">
-                <input type="text" id="edit-upi" placeholder="New UPI ID" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2 text-xs text-white">
-                <button onclick="updateUPIOnly()" class="px-3 py-2 bg-teal-400 text-gray-950 font-bold text-xs rounded-lg whitespace-nowrap">Update UPI</button>
+                <button onclick="copyRefLink()" class="px-4 py-2.5 bg-amber-400 text-gray-950 font-bold text-xs rounded-lg whitespace-nowrap hover:bg-amber-500 shadow">Copy Link</button>
             </div>
         </div>
 
@@ -146,19 +152,18 @@
     <script src="script.js"></script>
     <script>
         function loadDashboardData() {
-            const name = localStorage.getItem('iois_user_name') || 'Guest Member';
+            const name = localStorage.getItem('iois_user_name') || 'Member User';
             const userid = localStorage.getItem('iois_user_id') || 'IOIS-1001';
             const email = localStorage.getItem('iois_user_email') || 'member@iois.in';
             const phone = localStorage.getItem('iois_user_phone') || '8877490845';
             const upi = localStorage.getItem('iois_user_upi') || 'Not Added';
 
-            // Mask phone number for privacy
+            // Mask phone number for privacy (+91 8877****45)
             let maskedPhone = phone;
             if (phone.length >= 10) {
                 maskedPhone = "+91 " + phone.substring(0, 4) + "****" + phone.substring(8);
             }
 
-            // Fill ID Card Elements
             document.getElementById('card-name').innerText = name;
             document.getElementById('card-id').innerText = userid;
             document.getElementById('card-email').innerText = email;
@@ -166,16 +171,33 @@
             document.getElementById('card-upi').innerText = upi;
 
             // Generate User QR
-            document.getElementById('card-qr').src = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=IOIS_MEMBER_${userid}`;
+            document.getElementById('card-qr').src = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://ioisplatform.github.io/iois-website/?ref=${userid}`;
 
             // Referral Link
             document.getElementById('ref-link').value = `https://ioisplatform.github.io/iois-website/?ref=${userid}`;
 
-            // Load saved photo
+            // Load saved profile picture
             const savedPic = localStorage.getItem('iois_profile_pic_' + userid);
             if (savedPic) {
                 document.getElementById('profile-img').src = savedPic;
             }
+        }
+
+        // DOWNLOAD DIGITAL ID CARD AS HIGH QUALITY IMAGE
+        function downloadIDCard() {
+            const cardEl = document.getElementById('id-card-element');
+            alert("आपका Digital ID Card तैयार हो रहा है... डाउनलोडिंग शुरू हो रही है!");
+            
+            html2canvas(cardEl, {
+                scale: 3, // High Resolution Image
+                useCORS: true,
+                backgroundColor: "#080d1e"
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `IOIS_Digital_ID_Card.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
         }
 
         // Upload Profile Picture
@@ -187,22 +209,10 @@
                 reader.onload = function (e) {
                     document.getElementById('profile-img').src = e.target.result;
                     localStorage.setItem('iois_profile_pic_' + userid, e.target.result);
-                    alert("Profile picture updated!");
+                    alert("Profile Picture Updated Successfully!");
                 };
                 reader.readAsDataURL(file);
             }
-        }
-
-        // Update UPI Only
-        function updateUPIOnly() {
-            const newUPI = document.getElementById('edit-upi').value.trim();
-            if (!newUPI) {
-                alert("कृपया नया UPI ID दर्ज करें!");
-                return;
-            }
-            localStorage.setItem('iois_user_upi', newUPI);
-            document.getElementById('card-upi').innerText = newUPI;
-            alert("UPI ID सफलतापूर्वक अपडेट हो गया!");
         }
     </script>
 </body>
