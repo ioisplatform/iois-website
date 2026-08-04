@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IOIS - User Dashboard</title>
+    <title>IOIS - Member Dashboard & ID Card</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-[#0b1329] text-white font-sans flex flex-col min-h-screen" onload="loadDashboardData()">
 
-    <!-- Header -->
+    <!-- Navigation Bar -->
     <nav class="bg-[#080d1e] border-b border-gray-800 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-2">
@@ -17,44 +17,86 @@
                 <span class="text-xl font-bold tracking-wide text-amber-400">IOIS Portal</span>
             </a>
             <div class="flex items-center gap-2">
-                <span id="user-display-id" class="text-xs bg-amber-500/20 text-amber-400 font-mono font-bold px-3 py-1 rounded-full border border-amber-500/40">ID: Guest</span>
-                <button onclick="clearAndLogout()" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs">Reset / Logout</button>
+                <a href="index.html" class="px-3 py-1 bg-gray-800 text-gray-300 font-bold rounded-lg text-xs hover:bg-gray-700">
+                    <i class="fa-solid fa-house"></i> Home
+                </a>
+                <button onclick="userLogout()" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs">Logout</button>
             </div>
         </div>
     </nav>
 
     <!-- Main Dashboard -->
-    <main class="max-w-4xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full space-y-8">
         
-        <!-- Profile Card -->
-        <div class="bg-[#111c38] border border-gray-800 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
-            <!-- Profile Photo -->
-            <div class="relative group">
-                <img id="profile-img" src="https://via.placeholder.com/100?text=User" alt="Profile" class="w-24 h-24 rounded-full object-cover border-2 border-amber-400 shadow-lg">
-                <label for="pic-upload" class="absolute bottom-0 right-0 bg-amber-400 text-gray-950 p-2 rounded-full cursor-pointer hover:bg-amber-500 text-xs font-bold shadow">
-                    <i class="fa-solid fa-camera"></i>
-                </label>
-                <input type="file" id="pic-upload" accept="image/*" class="hidden" onchange="uploadProfilePic(this)">
+        <!-- SECTION 1: HIGH-TECH IOIS DIGITAL ID CARD -->
+        <div class="text-center">
+            <h2 class="text-2xl font-extrabold text-amber-400 mb-1">Your Digital IOIS Membership ID Card</h2>
+            <p class="text-xs text-gray-400">Official Verified Member Identity Badge</p>
+        </div>
+
+        <!-- ID CARD CONTAINER (Golden & Navy Blue Badge Theme) -->
+        <div class="max-w-md mx-auto bg-gradient-to-br from-[#080d1e] via-[#111c38] to-[#080d1e] border-2 border-amber-400/80 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+            <!-- Background Badge Overlay -->
+            <div class="absolute -right-10 -bottom-10 opacity-10">
+                <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/150'" alt="Logo Watermark" class="w-48 h-48">
             </div>
 
-            <!-- Dynamic User Details -->
-            <div class="text-center md:text-left flex-1">
-                <h2 id="user-name" class="text-2xl font-bold text-white">Guest User</h2>
-                <p class="text-xs text-teal-400 font-mono mt-1">Fixed User ID: <span id="fixed-id" class="font-bold">Not Registered</span></p>
-                <p class="text-xs text-gray-400 mt-1">Registered UPI ID: <span id="user-upi" class="text-amber-400">Not Added</span></p>
+            <!-- Card Header -->
+            <div class="flex justify-between items-center border-b border-amber-500/30 pb-3 mb-4">
+                <div class="flex items-center gap-2">
+                    <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/35'" alt="IOIS" class="w-8 h-8 rounded-full border border-amber-400">
+                    <div>
+                        <span class="text-amber-400 font-extrabold text-sm tracking-wider block">IOIS PLATFORM</span>
+                        <span class="text-[8px] text-teal-400 uppercase tracking-widest block">Verified Member</span>
+                    </div>
+                </div>
+                <span class="text-[10px] bg-amber-400 text-gray-950 font-bold px-2.5 py-0.5 rounded-full">ACTIVE</span>
+            </div>
+
+            <!-- Card Body -->
+            <div class="flex gap-4 items-center">
+                <!-- User Profile Photo Upload -->
+                <div class="relative flex-shrink-0">
+                    <img id="profile-img" src="https://via.placeholder.com/100?text=User" alt="Member Photo" class="w-20 h-20 rounded-xl object-cover border-2 border-amber-400 shadow-md">
+                    <label for="pic-upload" class="absolute -bottom-1 -right-1 bg-amber-400 text-gray-950 p-1.5 rounded-full cursor-pointer hover:bg-amber-500 text-[10px] shadow">
+                        <i class="fa-solid fa-camera"></i>
+                    </label>
+                    <input type="file" id="pic-upload" accept="image/*" class="hidden" onchange="uploadProfilePic(this)">
+                </div>
+
+                <!-- User Details -->
+                <div class="text-left space-y-1 flex-1">
+                    <h3 id="card-name" class="font-extrabold text-lg text-white">Guest User</h3>
+                    <p class="text-xs text-amber-400 font-mono font-bold">ID / Refer: <span id="card-id">---</span></p>
+                    <p class="text-[11px] text-gray-300 truncate">Email: <span id="card-email">---</span></p>
+                    <!-- Privacy Masked Phone Number -->
+                    <p class="text-[11px] text-teal-400 font-mono">Mobile: <span id="card-phone">+91 8877****45</span> <i class="fa-solid fa-user-shield ml-1 text-gray-400"></i></p>
+                </div>
+            </div>
+
+            <!-- Card Footer & QR Code -->
+            <div class="mt-4 pt-3 border-t border-amber-500/30 flex justify-between items-center">
+                <div class="text-left">
+                    <span class="text-[9px] text-gray-400 block uppercase">UPI ID for Bonus</span>
+                    <span id="card-upi" class="text-xs font-mono text-amber-400 font-bold">---</span>
+                </div>
+                <!-- Dynamic Verification QR -->
+                <div class="bg-white p-1 rounded-lg">
+                    <img id="card-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=IOIS" alt="User QR" class="w-10 h-10">
+                </div>
             </div>
         </div>
 
-        <!-- Earning & Downloads Grid -->
+        <!-- SECTION 2: REFERRAL & EARNING METRICS -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Wallet Card -->
             <div class="bg-[#111c38] border border-amber-500/30 p-6 rounded-2xl">
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs text-gray-400 uppercase font-bold">Total Referral Income</span>
+                    <span class="text-xs text-gray-400 uppercase font-bold">Referral Balance</span>
                     <i class="fa-solid fa-wallet text-amber-400 text-xl"></i>
                 </div>
                 <div class="text-4xl font-extrabold text-amber-400">₹<span id="wallet-balance">0</span></div>
-                <p class="text-xs text-teal-400 mt-2">₹7 Direct bonus per sale</p>
+                <p class="text-xs text-teal-400 mt-2">₹7 Direct bonus per successful referral sale</p>
                 <button onclick="requestWithdrawal()" class="w-full mt-4 py-2.5 bg-amber-400 text-gray-950 font-bold rounded-xl text-xs hover:bg-amber-500">Request UPI Withdrawal</button>
             </div>
 
@@ -62,7 +104,7 @@
             <div class="bg-[#111c38] border border-teal-500/30 p-6 rounded-2xl flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs text-teal-400 uppercase font-bold">Your Purchased Kit</span>
+                        <span class="text-xs text-teal-400 uppercase font-bold">Purchased Kit</span>
                         <i class="fa-solid fa-box-open text-teal-400 text-xl"></i>
                     </div>
                     <h3 class="font-bold text-white text-lg">IOIS Digital Starter Kit</h3>
@@ -74,10 +116,10 @@
             </div>
         </div>
 
-        <!-- Referral Link Box -->
+        <!-- SECTION 3: REFERRAL LINK GENERATOR -->
         <div class="bg-[#111c38] border border-gray-800 p-6 rounded-2xl text-center">
-            <h3 class="text-lg font-bold text-amber-400 mb-1">Your Unique Referral Link</h3>
-            <p class="text-xs text-gray-300 mb-3">Is link ko dosto ke sath share karein aur har sale par ₹7 kamayein!</p>
+            <h3 class="text-lg font-bold text-amber-400 mb-1">Your Unique Professional Referral Link</h3>
+            <p class="text-xs text-gray-300 mb-3">दोस्तों के साथ लिंक शेयर करें और हर सेल पर ₹7 कमाएँ!</p>
             
             <div class="flex gap-2 max-w-md mx-auto">
                 <input type="text" id="ref-link" readonly value="https://ioisplatform.github.io/iois-website/" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-teal-400 font-mono">
@@ -85,51 +127,61 @@
             </div>
         </div>
 
+        <!-- SECTION 4: UPDATE UPI ID ONLY -->
+        <div class="bg-[#111c38] border border-gray-800 p-6 rounded-2xl max-w-md mx-auto">
+            <h3 class="text-sm font-bold text-teal-400 mb-2 text-center"><i class="fa-solid fa-gear mr-1"></i> Update Wallet UPI Details</h3>
+            <div class="flex gap-2">
+                <input type="text" id="edit-upi" placeholder="New UPI ID" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2 text-xs text-white">
+                <button onclick="updateUPIOnly()" class="px-3 py-2 bg-teal-400 text-gray-950 font-bold text-xs rounded-lg whitespace-nowrap">Update UPI</button>
+            </div>
+        </div>
+
     </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-[#080d1e] py-6 border-t border-gray-800 text-center text-xs text-gray-400 mt-auto">
+        <p>&copy; 2026 IOIS Platform. All rights reserved.</p>
+    </footer>
 
     <script src="script.js"></script>
     <script>
-        // Load Real Logged In User Data
         function loadDashboardData() {
-            const name = localStorage.getItem('iois_user_name');
-            const userid = localStorage.getItem('iois_user_id');
-            const upi = localStorage.getItem('iois_user_upi');
+            const name = localStorage.getItem('iois_user_name') || 'Guest Member';
+            const userid = localStorage.getItem('iois_user_id') || 'IOIS-1001';
+            const email = localStorage.getItem('iois_user_email') || 'member@iois.in';
+            const phone = localStorage.getItem('iois_user_phone') || '8877490845';
+            const upi = localStorage.getItem('iois_user_upi') || 'Not Added';
 
-            // If user has registered/logged in with real data:
-            if (name && userid) {
-                document.getElementById('user-name').innerText = name;
-                document.getElementById('fixed-id').innerText = userid;
-                document.getElementById('user-display-id').innerText = 'ID: ' + userid;
-                document.getElementById('user-upi').innerText = upi || 'Not Added';
-                document.getElementById('ref-link').value = `https://ioisplatform.github.io/iois-website/?ref=${userid}`;
-            } else {
-                // Default view if no user is registered/logged in
-                document.getElementById('user-name').innerText = "New User";
-                document.getElementById('fixed-id').innerText = "Guest";
-                document.getElementById('user-display-id').innerText = "ID: Guest";
+            // Mask phone number for privacy
+            let maskedPhone = phone;
+            if (phone.length >= 10) {
+                maskedPhone = "+91 " + phone.substring(0, 4) + "****" + phone.substring(8);
             }
 
-            // Load profile picture
-            if (userid) {
-                const savedPic = localStorage.getItem('iois_profile_pic_' + userid);
-                if (savedPic) {
-                    document.getElementById('profile-img').src = savedPic;
-                }
-            }
-        }
+            // Fill ID Card Elements
+            document.getElementById('card-name').innerText = name;
+            document.getElementById('card-id').innerText = userid;
+            document.getElementById('card-email').innerText = email;
+            document.getElementById('card-phone').innerText = maskedPhone;
+            document.getElementById('card-upi').innerText = upi;
 
-        // Fully Clear Browser Memory & Logout
-        function clearAndLogout() {
-            localStorage.clear(); // Complete memory clear
-            alert("ब्राउज़र मेमोरी पूरी तरह साफ़ कर दी गई है!");
-            window.location.href = "index.html";
+            // Generate User QR
+            document.getElementById('card-qr').src = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=IOIS_MEMBER_${userid}`;
+
+            // Referral Link
+            document.getElementById('ref-link').value = `https://ioisplatform.github.io/iois-website/?ref=${userid}`;
+
+            // Load saved photo
+            const savedPic = localStorage.getItem('iois_profile_pic_' + userid);
+            if (savedPic) {
+                document.getElementById('profile-img').src = savedPic;
+            }
         }
 
         // Upload Profile Picture
         function uploadProfilePic(input) {
             const file = input.files[0];
             const userid = localStorage.getItem('iois_user_id') || 'Guest';
-            
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
@@ -139,6 +191,18 @@
                 };
                 reader.readAsDataURL(file);
             }
+        }
+
+        // Update UPI Only
+        function updateUPIOnly() {
+            const newUPI = document.getElementById('edit-upi').value.trim();
+            if (!newUPI) {
+                alert("कृपया नया UPI ID दर्ज करें!");
+                return;
+            }
+            localStorage.setItem('iois_user_upi', newUPI);
+            document.getElementById('card-upi').innerText = newUPI;
+            alert("UPI ID सफलतापूर्वक अपडेट हो गया!");
         }
     </script>
 </body>
