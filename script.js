@@ -1,4 +1,4 @@
-// Mobile Hamburger Menu Toggle
+// Mobile Hamburger Menu Toggle (For ALL Pages)
 function toggleMobileMenu() {
     const mobileMenu = document.getElementById("mobile-menu");
     if (mobileMenu) {
@@ -37,70 +37,75 @@ function handleDetailsSubmit(event) {
     event.preventDefault();
     const name = document.getElementById("reg-name").value;
     const userid = document.getElementById("reg-userid").value;
+    const upi = document.getElementById("reg-upi").value;
 
-    alert(`Welcome ${name}! Your Fixed User ID is [${userid}]. Now please proceed to payment.`);
+    // Save details locally
+    localStorage.setItem("iois_user_name", name);
+    localStorage.setItem("iois_user_id", userid);
+    localStorage.setItem("iois_user_upi", upi);
+
+    alert(`Welcome ${name}! Your Fixed User ID is [${userid}]. Now please pay ₹10 and upload screenshot.`);
     
-    // Close Step 1, Open Step 2
     document.getElementById("reg-modal").classList.add("hidden");
     document.getElementById("payment-modal").classList.remove("hidden");
 }
 
-// File Size Validation (Max 25 MB = 26214400 Bytes)
+// File Size Validation (Max 25 MB)
 function validateFileSize(input) {
     const file = input.files[0];
-    const msgEl = document.getElementById("file-msg");
-    
     if (file) {
-        const maxSizeMB = 25;
-        const maxSizeBytes = maxSizeMB * 1024 * 1024; // 25 MB
-
+        const maxSizeBytes = 25 * 1024 * 1024; // 25 MB
         if (file.size > maxSizeBytes) {
-            alert(`फ़ाइल का साइज़ बहुत बड़ा है! कृपया 25 MB से कम साइज़ की इमेज अपलोड करें। (आपकी फ़ाइल: ${(file.size / (1024 * 1024)).toFixed(2)} MB)`);
-            input.value = ""; // Reset input
-            if (msgEl) msgEl.innerText = "Error: File size exceeds 25 MB!";
-        } else {
-            if (msgEl) msgEl.innerText = `Selected File: ${file.name} (${(file.size / (1024 * 1024)).toFixed(2)} MB)`;
+            alert(`फ़ाइल का साइज़ 25 MB से बड़ा है! (आपकी फ़ाइल: ${(file.size / (1024 * 1024)).toFixed(2)} MB)`);
+            input.value = ""; 
         }
     }
 }
 
-// Handle Screenshot Form Submission
+// Handle Screenshot Submission (Redirects to WhatsApp for Instant Admin Verification)
 function handleScreenshotSubmit(event) {
     event.preventDefault();
-    const fileInput = document.getElementById("ss-file");
+    const name = localStorage.getItem("iois_user_name") || "User";
+    const userid = localStorage.getItem("iois_user_id") || "ID";
 
-    if (!fileInput.files.length) {
-        alert("कृपया पेमेंट का स्क्रीनशॉट अपलोड करें!");
-        return;
-    }
-
-    alert("आपका स्क्रीनशॉट और डिटेल्स सफलतापूर्वक सबमिट हो गए हैं! वेरिफिकेशन के बाद आपको Google Drive का एक्सेस मिल जाएगा।");
+    const msg = `Hello IOIS Admin, Maine ₹10 ka payment kar diya hai.%0AName: ${name}%0AFixed User ID: ${userid}%0AKripya mera Digital Starter Kit aur Dashboard activate karein.`;
     
-    // Redirect or WhatsApp Notification
-    window.open("https://wa.me/918877490845?text=Hello%20IOIS%20Admin,%20maine%20%E2%82%B910%20ka%20payment%20karke%20screenshot%20submit%20kar%20diya%20hai.", "_blank");
+    alert("आपका डेटा सबमिट हो गया है! वेरिफिकेशन के लिए अब WhatsApp पर मैसेज और स्क्रीनशॉट भेजें।");
+    window.open(`https://wa.me/918877490845?text=${msg}`, "_blank");
     closeModals();
 }
 
-// Handle Login Submit
+// Handle Login Submit -> Redirects to Dashboard
 function handleLoginSubmit(event) {
     event.preventDefault();
     const userid = document.getElementById("login-userid").value;
-    alert(`Logged in as [${userid}]. Accessing IOIS Portal...`);
-    closeModals();
+    
+    if (userid.toLowerCase() === "admin") {
+        window.location.href = "admin.html";
+    } else {
+        alert(`Login Successful as [${userid}]! Opening Dashboard...`);
+        window.location.href = "dashboard.html";
+    }
 }
 
-// Handle Forgot Submit
-function handleForgotSubmit(event) {
-    event.preventDefault();
-    const contact = document.getElementById("forgot-contact").value;
-    alert(`Recovery details sent to [${contact}]. Fixed User ID cannot be changed, Password reset link sent!`);
-    closeModals();
+// User Logout
+function userLogout() {
+    alert("Logged out successfully!");
+    window.location.href = "index.html";
+}
+
+// Copy Referral Link
+function copyRefLink() {
+    const refInput = document.getElementById("ref-link");
+    if (refInput) {
+        navigator.clipboard.writeText(refInput.value);
+        alert("Referral link copied successfully!");
+    }
 }
 
 // Copy UPI ID Function
 function copyUPI() {
-    const upiID = "8877490845@spicepay";
-    navigator.clipboard.writeText(upiID).then(() => {
-        alert("UPI ID (8877490845@spicepay) copied successfully!");
+    navigator.clipboard.writeText("8877490845@spicepay").then(() => {
+        alert("UPI ID (8877490845@spicepay) copied!");
     });
 }
