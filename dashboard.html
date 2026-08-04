@@ -7,17 +7,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-[#0b1329] text-white font-sans flex flex-col min-h-screen">
+<body class="bg-[#0b1329] text-white font-sans flex flex-col min-h-screen" onload="loadDashboardData()">
 
     <!-- Header -->
     <nav class="bg-[#080d1e] border-b border-gray-800 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-2">
                 <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/40'" alt="IOIS" class="w-10 h-10 rounded-full border border-amber-400 object-cover">
-                <span class="text-xl font-bold tracking-wide text-amber-400">IOIS Dashboard</span>
+                <span class="text-xl font-bold tracking-wide text-amber-400">IOIS Portal</span>
             </a>
             <div class="flex items-center gap-3">
-                <span id="user-display-id" class="text-xs bg-amber-500/20 text-amber-400 font-mono font-bold px-3 py-1 rounded-full border border-amber-500/40">ID: User123</span>
+                <span id="user-display-id" class="text-xs bg-amber-500/20 text-amber-400 font-mono font-bold px-3 py-1 rounded-full border border-amber-500/40">ID: User</span>
                 <button onclick="userLogout()" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs">Logout</button>
             </div>
         </div>
@@ -30,17 +30,18 @@
         <div class="bg-[#111c38] border border-gray-800 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
             <!-- Profile Photo Upload -->
             <div class="relative group">
-                <img id="profile-img" src="https://via.placeholder.com/100" alt="Profile" class="w-24 h-24 rounded-full object-cover border-2 border-amber-400 shadow-lg">
+                <img id="profile-img" src="https://via.placeholder.com/100?text=User" alt="Profile" class="w-24 h-24 rounded-full object-cover border-2 border-amber-400 shadow-lg">
                 <label for="pic-upload" class="absolute bottom-0 right-0 bg-amber-400 text-gray-950 p-2 rounded-full cursor-pointer hover:bg-amber-500 text-xs font-bold shadow">
                     <i class="fa-solid fa-camera"></i>
                 </label>
                 <input type="file" id="pic-upload" accept="image/*" class="hidden" onchange="uploadProfilePic(this)">
             </div>
 
+            <!-- Dynamic User Details -->
             <div class="text-center md:text-left flex-1">
-                <h2 id="user-name" class="text-2xl font-bold text-white">Rahul Sharma</h2>
-                <p class="text-xs text-teal-400 font-mono mt-1">Fixed User ID: <span id="fixed-id" class="font-bold">rahul123</span> (Permanent)</p>
-                <p class="text-xs text-gray-400 mt-1">UPI ID: <span id="user-upi" class="text-amber-400">rahul@upi</span></p>
+                <h2 id="user-name" class="text-2xl font-bold text-white">Loading Name...</h2>
+                <p class="text-xs text-teal-400 font-mono mt-1">Fixed User ID: <span id="fixed-id" class="font-bold">...</span> (Permanent)</p>
+                <p class="text-xs text-gray-400 mt-1">Registered UPI ID: <span id="user-upi" class="text-amber-400">...</span></p>
             </div>
         </div>
 
@@ -52,7 +53,7 @@
                     <span class="text-xs text-gray-400 uppercase font-bold">Total Referral Income</span>
                     <i class="fa-solid fa-wallet text-amber-400 text-xl"></i>
                 </div>
-                <div class="text-4xl font-extrabold text-amber-400">₹<span id="wallet-balance">14</span></div>
+                <div class="text-4xl font-extrabold text-amber-400">₹<span id="wallet-balance">0</span></div>
                 <p class="text-xs text-teal-400 mt-2">₹7 Direct bonus per sale</p>
                 <button onclick="requestWithdrawal()" class="w-full mt-4 py-2.5 bg-amber-400 text-gray-950 font-bold rounded-xl text-xs hover:bg-amber-500">Request UPI Withdrawal</button>
             </div>
@@ -76,38 +77,4 @@
         <!-- Referral Link Box -->
         <div class="bg-[#111c38] border border-gray-800 p-6 rounded-2xl text-center">
             <h3 class="text-lg font-bold text-amber-400 mb-1">Your Unique Referral Link</h3>
-            <p class="text-xs text-gray-300 mb-3">Is link ko dosto ke sath share karein aur har sale par ₹7 kamayein!</p>
-            
-            <div class="flex gap-2 max-w-md mx-auto">
-                <input type="text" id="ref-link" readonly value="https://ioisplatform.github.io/iois-website/?ref=rahul123" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-teal-400 font-mono">
-                <button onclick="copyRefLink()" class="px-4 py-2.5 bg-amber-400 text-gray-950 font-bold text-xs rounded-lg whitespace-nowrap">Copy Link</button>
-            </div>
-        </div>
-
-    </main>
-
-    <script src="script.js"></script>
-    <script>
-        // Profile Pic Local Storage Logic
-        function uploadProfilePic(input) {
-            const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById('profile-img').src = e.target.result;
-                    localStorage.setItem('iois_profile_pic', e.target.result);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        // Load saved profile pic on load
-        window.onload = function() {
-            const savedPic = localStorage.getItem('iois_profile_pic');
-            if (savedPic) {
-                document.getElementById('profile-img').src = savedPic;
-            }
-        }
-    </script>
-</body>
-</html>
+            <p class="text-xs text-gray-300 mb-3">Is link ko dosto ke sath share karein aur har sale par
