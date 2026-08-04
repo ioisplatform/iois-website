@@ -30,16 +30,16 @@
 
             <!-- Login / Register Action Buttons -->
             <div class="hidden md:flex items-center gap-3">
-                <button onclick="openLoginModal()" class="px-4 py-1.5 border border-amber-400 text-amber-400 font-bold rounded-xl text-xs hover:bg-amber-400 hover:text-gray-950 transition">
+                <button type="button" onclick="openLoginModal()" class="px-4 py-1.5 border border-amber-400 text-amber-400 font-bold rounded-xl text-xs hover:bg-amber-400 hover:text-gray-950 transition">
                     <i class="fa-solid fa-right-to-bracket"></i> Login
                 </button>
-                <button onclick="openRegistrationFlow()" class="px-4 py-1.5 bg-gradient-to-r from-amber-400 to-amber-500 text-gray-950 font-extrabold rounded-xl text-xs hover:shadow-lg transition">
+                <button type="button" onclick="openRegistrationFlow()" class="px-4 py-1.5 bg-gradient-to-r from-amber-400 to-amber-500 text-gray-950 font-extrabold rounded-xl text-xs hover:shadow-lg transition">
                     <i class="fa-solid fa-user-plus"></i> Join IOIS @ ₹10
                 </button>
             </div>
 
             <!-- Mobile Hamburger Button -->
-            <button onclick="toggleMobileMenu()" class="md:hidden text-2xl text-amber-400 focus:outline-none p-1">
+            <button type="button" onclick="toggleMobileMenu()" class="md:hidden text-2xl text-amber-400 focus:outline-none p-1">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
@@ -51,8 +51,8 @@
             <a href="about.html" class="block text-gray-300">About IOIS</a>
             <a href="contact.html" class="block text-gray-300">Contact / Helpline</a>
             <div class="pt-3 border-t border-gray-700 flex flex-col gap-2">
-                <button onclick="openLoginModal()" class="w-full py-2.5 border border-amber-400 text-amber-400 font-bold rounded-xl text-sm">Login to Portal</button>
-                <button onclick="openRegistrationFlow()" class="w-full py-2.5 bg-amber-400 text-gray-950 font-bold rounded-xl text-sm">Register Now (@ ₹10)</button>
+                <button type="button" onclick="openLoginModal()" class="w-full py-2.5 border border-amber-400 text-amber-400 font-bold rounded-xl text-sm">Login to Portal</button>
+                <button type="button" onclick="openRegistrationFlow()" class="w-full py-2.5 bg-amber-400 text-gray-950 font-bold rounded-xl text-sm">Register Now (@ ₹10)</button>
             </div>
         </div>
     </nav>
@@ -73,12 +73,11 @@
 
         <!-- Buy Box Offer -->
         <div class="p-6 bg-[#111c38] border border-teal-500/40 rounded-2xl max-w-md mx-auto shadow-2xl relative overflow-hidden">
-            <div class="absolute -top-10 -right-10 w-24 h-24 bg-amber-500/10 rounded-full blur-xl"></div>
             <div class="text-gray-400 text-xs uppercase font-bold tracking-wider">Launch Price Offer</div>
             <div class="text-5xl font-extrabold text-amber-400 my-2">₹10 <span class="text-sm text-gray-400 line-through font-normal">₹199</span></div>
             <p class="text-teal-400 text-xs font-semibold mb-6"><i class="fa-solid fa-bolt mr-1"></i> Lifetime Access & Instant Google Drive Delivery</p>
             
-            <button onclick="openRegistrationFlow()" class="w-full py-3.5 bg-gradient-to-r from-amber-400 to-teal-400 hover:from-amber-500 hover:to-teal-500 text-gray-950 font-extrabold text-base rounded-xl shadow-xl transition transform hover:scale-[1.02]">
+            <button type="button" onclick="openRegistrationFlow()" class="w-full py-3.5 bg-gradient-to-r from-amber-400 to-teal-400 text-gray-950 font-extrabold text-base rounded-xl shadow-xl transition">
                 Start Registration @ ₹10
             </button>
             <p class="text-xs text-gray-400 mt-3">Official Pay UPI: <span class="text-gray-200 font-mono">8877490845@spicepay</span> (Vikas Kumar)</p>
@@ -92,24 +91,199 @@
             <p class="text-gray-400 text-center text-xs md:text-sm mb-10">₹10 की किट में करियर सफलता और इनकम के पूरे डिजिटल टूल्स:</p>
             
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
-                <div class="bg-[#111c38] p-6 rounded-2xl border border-gray-800 hover:border-amber-500/50 transition">
+                <div class="bg-[#111c38] p-6 rounded-2xl border border-gray-800">
                     <i class="fa-solid fa-file-invoice text-teal-400 text-3xl mb-3"></i>
                     <h3 class="font-bold text-base mb-2 text-amber-400">3 Resume Templates</h3>
-                    <p class="text-gray-300 text-xs">Freshers और Professionals के लिए 100% ATS Friendly मोबाइल & पीसी एडिटेबल फॉर्मेट्स।</p>
+                    <p class="text-gray-300 text-xs">Freshers और Professionals के लिए 100% ATS Friendly एडिटेबल फॉर्मेट्स।</p>
                 </div>
-
-                <div class="bg-[#111c38] p-6 rounded-2xl border border-gray-800 hover:border-amber-500/50 transition">
+                <div class="bg-[#111c38] p-6 rounded-2xl border border-gray-800">
                     <i class="fa-solid fa-envelope-open-text text-teal-400 text-3xl mb-3"></i>
                     <h3 class="font-bold text-base mb-2 text-amber-400">2 Cover Letters</h3>
-                    <p class="text-gray-300 text-xs">जॉब एप्लीकेशन में तुरंत इस्तेमाल के लिए रेडी-टू-यूज़ प्रोफेशनल कवर लेटर्स।</p>
+                    <p class="text-gray-300 text-xs">रेडी-टू-यूज़ प्रोफेशनल कवर लेटर्स।</p>
                 </div>
-
-                <div class="bg-[#111c38] p-6 rounded-2xl border border-gray-800 hover:border-amber-500/50 transition">
+                <div class="bg-[#111c38] p-6 rounded-2xl border border-gray-800">
                     <i class="fa-solid fa-robot text-teal-400 text-3xl mb-3"></i>
                     <h3 class="font-bold text-base mb-2 text-amber-400">10 AI Prompts</h3>
-                    <p class="text-gray-300 text-xs">ChatGPT से बेस्ट जॉब्स खोजने और इंटरव्यू तैयारी के लिए Bilingual (हिंदी/English) प्रॉम्ट्स।</p>
+                    <p class="text-gray-300 text-xs">ChatGPT प्रॉम्ट्स (हिंदी/English)।</p>
+                </div>
+                <div class="bg-[#111c38] p-6 rounded-2xl border border-gray-800">
+                    <i class="fa-solid fa-id-card text-teal-400 text-3xl mb-3"></i>
+                    <h3 class="font-bold text-base mb-2 text-amber-400">Digital ID Card & ₹7 Refer</h3>
+                    <p class="text-gray-300 text-xs">डिजिटल ID कार्ड और ₹7 प्रति रेफरल अर्निंग।</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STEP 1: REGISTRATION MODAL -->
+    <div id="reg-modal" class="fixed inset-0 bg-black/85 flex items-center justify-center p-4 hidden z-50 overflow-y-auto">
+        <div class="bg-[#111c38] border border-amber-500/50 rounded-2xl max-w-lg w-full p-6 relative shadow-2xl my-8">
+            <button type="button" onclick="closeModals()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
+            
+            <h3 class="text-xl font-bold text-amber-400 mb-1 text-center"><i class="fa-solid fa-user-plus mr-1"></i> IOIS User Registration</h3>
+            <p class="text-xs text-gray-300 mb-4 text-center">कृपया सभी फ़ील्ड्स सही-सही भरें:</p>
+            
+            <form id="reg-form" novalidate onsubmit="handleDetailsSubmit(event)" class="space-y-3">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-gray-300 mb-1">Full Name *</label>
+                        <input type="text" id="reg-name" placeholder="आपका पूरा नाम" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white focus:border-amber-400 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-300 mb-1">Email Address *</label>
+                        <input type="email" id="reg-email" placeholder="email@example.com" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white focus:border-amber-400 outline-none">
+                    </div>
                 </div>
 
-                <div class="bg-[#111c38] p-6 rounded-2xl border border-gray-800 hover:border-amber-500/50 transition">
-                    <i class="fa-solid fa-id-card text-teal-400 text-3xl mb-3"></i>
-                    <h3 class="font-bold text-base mb-2 text-amber-400">Digital ID Card & ₹7 Refe
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-gray-300 mb-1">WhatsApp Mobile No. *</label>
+                        <input type="tel" id="reg-phone" placeholder="10-digit WhatsApp No." class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white focus:border-amber-400 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-300 mb-1">Set Account Password *</label>
+                        <input type="password" id="reg-pass" placeholder="पासवर्ड बनाएँ" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white focus:border-amber-400 outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs text-gray-300 mb-1">Full Address *</label>
+                    <textarea id="reg-address" rows="2" placeholder="अपना पूरा पता दर्ज करें" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2 text-xs text-white focus:border-amber-400 outline-none"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-gray-300 mb-1">Sponsor Name (Optional)</label>
+                        <input type="text" id="reg-sponsor-name" placeholder="Sponsor Full Name" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white focus:border-amber-400 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-300 mb-1">Sponsor ID (Optional)</label>
+                        <input type="text" id="reg-sponsor-id" placeholder="Sponsor Referral ID" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white focus:border-amber-400 outline-none">
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-700 pt-3">
+                    <label class="block text-xs text-amber-400 font-bold mb-1">Your Real UPI ID (For ₹7 Referral Income) *</label>
+                    <input type="text" id="reg-upi" placeholder="e.g. username@upi, 8877490845@spicepay" class="w-full bg-[#080d1e] border border-amber-500/50 rounded-lg p-2.5 text-xs text-white focus:border-amber-400 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs text-amber-400 font-bold mb-1">Upload Your Payment QR Code (Max 25 MB) *</label>
+                    <input type="file" id="reg-qr-file" accept="image/*" onchange="validateFileSize(this)" class="w-full text-xs text-gray-300 bg-[#080d1e] border border-gray-700 rounded-lg p-2">
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-amber-400 text-gray-950 font-extrabold rounded-xl text-sm mt-2">
+                    Proceed to Step 2: Payment <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- STEP 2: PAYMENT & SCREENSHOT MODAL -->
+    <div id="payment-modal" class="fixed inset-0 bg-black/85 flex items-center justify-center p-4 hidden z-50 overflow-y-auto">
+        <div class="bg-[#111c38] border border-teal-500/50 rounded-2xl max-w-md w-full p-6 text-center relative shadow-2xl my-8">
+            <button type="button" onclick="closeModals()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
+            <h3 class="text-xl font-bold text-teal-400 mb-1">Step 2: Pay ₹10 & Activate Kit</h3>
+            <p class="text-xs text-gray-300 mb-3">स्कैन करके ₹10 पे करें और स्क्रीनशॉट अपलोड करें:</p>
+
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=8877490845@spicepay&pn=Vikas%20Kumar&am=10" alt="QR Code" class="w-36 h-36 mx-auto bg-white p-2 rounded-xl mb-2">
+            <p class="text-xs text-amber-400 font-mono font-bold">8877490845@spicepay (Vikas Kumar)</p>
+
+            <button type="button" onclick="copyUPI()" class="my-2 px-3 py-1 bg-gray-800 text-xs rounded-lg border border-gray-600 text-amber-400 font-bold">
+                <i class="fa-solid fa-copy"></i> Copy UPI ID
+            </button>
+
+            <form onsubmit="handleScreenshotSubmit(event)" class="mt-4 text-left border-t border-gray-700 pt-3">
+                <label class="block text-xs font-bold text-gray-200 mb-1">Upload Payment Screenshot (Max 25 MB) *</label>
+                <input type="file" id="ss-file" accept="image/*" required onchange="validateFileSize(this)" class="w-full text-xs text-gray-300 bg-[#080d1e] border border-gray-700 rounded-lg p-2">
+                <button type="submit" class="w-full py-3 bg-teal-400 font-extrabold text-gray-950 rounded-xl text-sm mt-3">Submit Payment Proof & Access Kit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- LOGIN MODAL -->
+    <div id="login-modal" class="fixed inset-0 bg-black/85 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-[#111c38] border border-amber-500/50 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
+            <button type="button" onclick="closeModals()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
+            <h3 class="text-xl font-bold text-amber-400 mb-4 text-center"><i class="fa-solid fa-lock"></i> IOIS Portal Login</h3>
+            
+            <form onsubmit="handleLoginSubmit(event)" class="space-y-3">
+                <input type="text" id="login-userid" placeholder="Enter Your User ID" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
+                <input type="password" id="login-pass" placeholder="Enter Password" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
+
+                <div class="flex justify-between items-center text-xs pt-1">
+                    <button type="button" onclick="showForgotModal('id')" class="text-teal-400 hover:underline">Forgot Username/ID?</button>
+                    <button type="button" onclick="showForgotModal('pass')" class="text-amber-400 hover:underline">Forgot Password?</button>
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-amber-400 font-extrabold text-gray-950 rounded-xl text-sm mt-2">Login to Dashboard</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FORGOT RECOVERY MODAL -->
+    <div id="forgot-modal" class="fixed inset-0 bg-black/85 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-[#111c38] border border-teal-500/50 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
+            <button type="button" onclick="closeModals()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
+            <h3 id="forgot-title" class="text-lg font-bold text-teal-400 mb-2 text-center">Account Recovery</h3>
+            
+            <form onsubmit="handleForgotSubmit(event)" class="space-y-3 mt-3">
+                <input type="text" id="forgot-input" required placeholder="Enter WhatsApp No. or Email" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
+                <button type="submit" class="w-full py-2.5 bg-teal-400 font-bold text-gray-950 rounded-xl text-sm">Send Recovery Info</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Global Footer -->
+    <footer class="bg-[#080d1e] py-8 border-t border-gray-800 text-center text-xs text-gray-400 mt-auto">
+        <p>&copy; 2026 IOIS Platform. All rights reserved.</p>
+    </footer>
+
+    <!-- INLINE GUARANTEED BUTTON HANDLERS (बटन कभी फेल नहीं होंगे) -->
+    <script>
+        function toggleMobileMenu() {
+            var menu = document.getElementById("mobile-menu");
+            if (menu) menu.classList.toggle("hidden");
+        }
+
+        function closeModals() {
+            var ids = ["reg-modal", "payment-modal", "login-modal", "forgot-modal"];
+            ids.forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) el.classList.add("hidden");
+            });
+        }
+
+        function openRegistrationFlow() {
+            closeModals();
+            var modal = document.getElementById("reg-modal");
+            if (modal) modal.classList.remove("hidden");
+        }
+
+        function openLoginModal() {
+            closeModals();
+            var modal = document.getElementById("login-modal");
+            if (modal) modal.classList.remove("hidden");
+        }
+
+        function showForgotModal(type) {
+            closeModals();
+            var titleEl = document.getElementById("forgot-title");
+            if (titleEl) {
+                titleEl.innerText = (type === 'id') ? 'Forgot Username/ID Recovery' : 'Forgot Password Recovery';
+            }
+            var modal = document.getElementById("forgot-modal");
+            if (modal) modal.classList.remove("hidden");
+        }
+
+        function copyUPI() {
+            navigator.clipboard.writeText("8877490845@spicepay").then(function() {
+                alert("UPI ID (8877490845@spicepay) copied!");
+            });
+        }
+    </script>
+
+    <!-- External Logic Script -->
+    <script src="script.js"></script>
+</body>
+</html>
