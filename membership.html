@@ -3,67 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IOIS - Membership Plans</title>
+    <title>IOIS - 3D Tiranga ID Card Plans</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .tiranga-text {
+            background: linear-gradient(90deg, #f97316 0%, #ffffff 50%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
 </head>
 <body class="bg-[#0b1329] text-white font-sans flex flex-col min-h-screen">
 
-    <!-- Header / Navbar -->
+    <!-- Navbar -->
     <nav class="bg-[#080d1e] border-b border-gray-800 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-2">
-                <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/40'" alt="IOIS" class="w-10 h-10 rounded-full border border-amber-400 object-cover">
-                <span class="text-xl font-bold tracking-wide text-amber-400">IOIS</span>
+                <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/40'" alt="IOIS Logo" class="w-10 h-10 rounded-full border border-amber-400 object-cover">
+                <span class="text-xl font-bold tracking-wide tiranga-text">IOIS PLATFORM</span>
             </a>
 
-            <!-- Desktop Links -->
+            <!-- Navigation Links -->
             <div class="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-300">
-                <a href="index.html" class="hover:text-amber-400">Home</a>
-                <a href="membership.html" class="text-amber-400">Plans</a>
+                <a href="index.html" class="hover:text-amber-400"><i class="fa-solid fa-house mr-1"></i> Home</a>
+                <a href="membership.html" class="text-amber-400">Card Tiers</a>
                 <a href="about.html" class="hover:text-amber-400">About Us</a>
-                <a href="contact.html" class="hover:text-amber-400">Contact</a>
+                <a href="contact.html" class="hover:text-amber-400">Helpline</a>
             </div>
 
             <!-- Login / Register Buttons -->
             <div class="hidden md:flex items-center gap-3">
-                <button onclick="openLoginModal()" class="px-3.5 py-1.5 border border-amber-400 text-amber-400 font-bold rounded-lg text-xs hover:bg-amber-400 hover:text-gray-950 transition">Login</button>
-                <button onclick="openRegistrationFlow()" class="px-3.5 py-1.5 bg-amber-400 text-gray-950 font-bold rounded-lg text-xs hover:bg-amber-500 transition">Register</button>
+                <button type="button" onclick="openLoginModal()" class="px-3.5 py-1.5 border border-amber-400 text-amber-400 font-bold rounded-xl text-xs hover:bg-amber-400 hover:text-gray-950 transition">Login</button>
+                <button type="button" onclick="openRegistrationFlow()" class="px-3.5 py-1.5 bg-amber-400 text-gray-950 font-bold rounded-xl text-xs hover:bg-amber-500 transition">Register @ ₹10</button>
             </div>
 
-            <!-- Mobile Hamburger Menu Button -->
-            <button onclick="toggleMobileMenu()" class="md:hidden text-2xl text-amber-400 focus:outline-none p-1">
-                <i class="fa-solid fa-bars"></i>
-            </button>
+            <button type="button" onclick="toggleMobileMenu()" class="md:hidden text-2xl text-amber-400"><i class="fa-solid fa-bars"></i></button>
         </div>
 
-        <!-- Mobile Dropdown Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-[#0e1938] px-4 py-4 border-t border-gray-800 space-y-3 font-medium">
-            <a href="index.html" class="block text-gray-300">Home</a>
-            <a href="membership.html" class="block text-amber-400">Plans</a>
-            <a href="about.html" class="block text-gray-300">About Us</a>
-            <a href="contact.html" class="block text-gray-300">Contact</a>
+            <a href="index.html" class="block text-gray-300"><i class="fa-solid fa-house mr-2"></i> Home</a>
+            <a href="membership.html" class="block text-amber-400">Card Tiers & Plans</a>
+            <a href="about.html" class="block text-gray-300">About IOIS</a>
+            <a href="contact.html" class="block text-gray-300">Helpline & Support</a>
             <div class="pt-3 border-t border-gray-700 flex flex-col gap-2">
-                <button onclick="openLoginModal()" class="w-full py-2 border border-amber-400 text-amber-400 font-bold rounded-lg text-sm">Login</button>
-                <button onclick="openRegistrationFlow()" class="w-full py-2 bg-amber-400 text-gray-950 font-bold rounded-lg text-sm">Register Now (@ ₹10)</button>
+                <button type="button" onclick="openLoginModal()" class="w-full py-2 border border-amber-400 text-amber-400 font-bold rounded-lg text-sm">Login</button>
+                <button type="button" onclick="openRegistrationFlow()" class="w-full py-2 bg-amber-400 text-gray-950 font-bold rounded-lg text-sm">Register @ ₹10</button>
             </div>
         </div>
     </nav>
 
-    <!-- Plans Content -->
-    <section class="py-12 px-4 max-w-5xl mx-auto flex-1 w-full">
-        <h1 class="text-3xl font-extrabold text-center text-amber-400 mb-2">IOIS Membership Plans</h1>
-        <p class="text-gray-300 text-center text-xs md:text-sm mb-10">अपने करियर और ऑनलाइन अर्निंग को बढ़ाने के लिए उपयुक्त प्लान चुनें।</p>
+    <!-- Content -->
+    <section class="py-12 px-4 max-w-6xl mx-auto flex-1 w-full">
+        <div class="text-center mb-10">
+            <span class="inline-block bg-amber-500/10 text-amber-400 text-xs font-bold uppercase px-4 py-1.5 rounded-full border border-amber-500/30 mb-3">
+                <i class="fa-solid fa-id-card mr-1"></i> Official Identity & Membership Ecosystem
+            </span>
+            <h1 class="text-3xl md:text-5xl font-extrabold text-white">IOIS <span class="tiranga-text">3D Tiranga Digital Card Plans</span></h1>
+            <p class="text-gray-300 text-xs md:text-sm mt-3 max-w-2xl mx-auto">अपनी ज़रूरत और अर्निंग लक्ष्य के अनुसार कार्ड टियर चुनें। हर कार्ड में 3D डिज़ाइन, प्राइवेसी सुरक्षा और मुफ़्त करियर टूल्स शामिल हैं।</p>
+        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Active Plan 1 -->
-            <div class="bg-[#111c38] border-2 border-teal-400 p-6 rounded-2xl relative shadow-xl">
-                <span class="bg-teal-400 text-gray-950 font-extrabold text-xs px-3 py-1 rounded-full absolute top-4 right-4">POPULAR / ACTIVE</span>
-                <h3 class="text-2xl font-bold text-white mb-1">Digital Starter Kit</h3>
-                <div class="text-4xl font-extrabold text-amber-400 my-3">₹10 <span class="text-xs text-gray-400 font-normal">One time fee</span></div>
-                
-                <ul class="text-sm text-gray-300 space-y-3 mb-6">
-                    <li><i class="fa-solid fa-check text-teal-400 mr-2"></i> 3 ATS Resume Templates (Editable)</li>
-                    <li><i class="fa-solid fa-check text-teal-400 mr-2"></i> 2 Professional Cover Letters</li>
-                    <li><i class="fa-solid fa-check text-teal-400 mr-2"></i> 10 AI ChatGPT Prompts (Bilingual)</li>
-                    <l
+        <!-- 4 Card Tiers Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- Tier 1: Silver Card (ACTIVE) -->
+            <div class="bg-[#111c38] border-2 border-amber-400 p-6 rounded-2xl relative shadow-2xl flex flex-col justify-between transform hover:scale-[1.02] transition">
+                <span class="bg-amber-400 text-gray-950 font-extrabold text-[10px] px-3 py-1 rounded-full absolute top-4 right-4">POPULAR / ACTIVE</span>
+                <div>
+                    <div class="text-amber-400 text-2xl mb-2"><i class="fa-solid fa-id-card"></i></div>
+                    <h3 class="text-xl font-extrabold text-white">Tiranga Silver Card</h3>
+                    <p class="text-xs text-teal-400 font-semibold mb-3">Digital Starter Kit</p>
+                    
+                    <div class="text-3xl font-black text-amber-400 my-2">₹10 <span class="text-xs text-gray-400 font-normal line-through">₹199</span></div>
+                    <p class="text-[11px] text-teal-300 font-bold mb-4"><i class="fa-solid fa-hand-holding-dollar mr-1"></i> Earn ₹7 per referral sale</p>
+
+                    <ul class="text-xs text-gray-300 space-y-2.5 mb-6 border-t border-gray-800 pt-4">
+                        <li><i class="fa-solid fa-check text-amber-400 mr-1.5"></i> 3D Tiranga Silver Digital ID Card</li>
+                        <li><i class="fa-solid fa-check text-amber-400 mr-1.5"></i> Protected Masked Phone Number</li>
+                        <li><i class="fa-solid fa-check text-amber-400 mr-1.5"></i> 3 ATS Resumes + 2 Cover Letters</li>
+                        <li><i class="fa-solid fa-check text-amber-400 mr-1.5"></i> 10 AI ChatGPT Prompts</li>
+                        <li><i class="fa-solid fa-check text-amber-400 mr-1.5"></i> JPG Image & Printable PDF Downloads</li>
+                    </ul>
+                </div>
+                <button type="button" onclick="openRegistrationFlow()" class="w-full py-3 bg-gradient-to-r from-amber-400 to-amber-500 text-gray-950 font-extrabold rounded-xl text-xs shadow-lg hover:from-amber-500">
+                    Get Silver Card @ ₹10
+                </button>
+            </div>
+
+            <!-- Tier 2: Gold Card (COMING SOON) -->
+            <div class="bg-[#111c38] border border-gray-800 p-6 rounded-2xl relative shadow-xl opacity-80 flex flex-col justify-between">
+                <span class="bg-gray-800 text-gray-400 font-bold text-[10px] px-3 py-1 rounded-full absolute top-4 right-4">LAUNCHING SOON</span>
+                <div>
+                    <div class="text-yellow-500 text-2xl mb-2"><i class="fa-solid fa-award"></i></div>
+                    <h3 class="text-xl font-extrabold text-gray-200">Tiranga Gold Card</h3>
+                    <p class="text-xs text-amber-400 font-semibold mb-3">Pro Career Kit</p>
+                    
+                    <div class="text-3xl font-black text-gray-400 my-2">₹49</div>
+                    <p class="text-[11px] text-teal-400 font-bold mb-4"><i class="fa-solid fa-hand-holding-dollar mr-1"></i> Earn ₹35 per referral sale</p>
+
+                    <ul class="text-xs text-gray-400 space-y-2.5 mb-6 border-t border-gray-800 pt-4">
+                        <li><i class="fa-solid fa-clock text-gray-500 mr-1.5"></i> 3D Shiny Gold Tiranga ID Card</li>
+                        <li><i class="fa-solid fa-clock text-gray-500 mr-1.5"></i> 25 ATS Resumes + 10 Cover Letters</li>
+                        <li><i class="fa-solid fa-clock text-gray-500 mr-1.5"></i> 50 AI ChatGPT Prompts</li>
+                        <li><i class="fa-solid fa-clock text-gray-500 mr-1.5"></i> Priority Daily WFH Job Alerts</li>
+                    </ul>
+                </div>
+                <button disabled class="w-full py-3 bg-gray-800 text-gray-500 font-bold rounded-xl text-xs cursor-not-allowed">
+                    Launching Soon
+                </button>
+            </div>
+
+            <!-- Tier 3: Platinum Card (COMING SOON) -->
+            <div class="bg-[#111c38] border border-gray-800 p-6 rounded-2xl relative shadow-xl opacity-80 flex flex-col justify-between">
+                <span class="bg-gray-800 text-gray-400 font-bold text-[10px] px-3 py-1 rounded-full absolute top-4 right-4">LAUNCHING SOON</span>
+                <div>
+                    <div class="text-slate-300 text-2xl mb-2"><i class="fa-solid fa-crown"></i></div>
+                    <h3 class="text-xl font-extrabold text-gray-200">Tiranga Platinum</h3>
+                    <p class="text-xs text-amber-400 font-semibold mb-3">Executive Kit</p>
+                    
+                    <div class="text-3xl font-black text-gray-400 my-2">₹99</div>
+                    <p class="text-[11px] text-teal-400 font-bold mb-4"><i class="fa-solid fa-hand-holding-dollar mr-1"></i> Earn ₹70 per referral sale</p>
+
+                    <ul class="text-xs text-gray-400 space-y-2.5 mb-6 border-t border-gray-800 pt-4">
+                        <li><i class="fa-solid fa-clock text-gray-500 mr-1.5"></i> Executive Platinum Tiranga Card</li>
+                        <li><i class="fa-solid fa-clock text-gray-500 mr-1.5"></i> 100 ATS Resumes + 200 Prompts</li>
+                        <li><i class="fa-solid fa-clock text-gray-500 mr-1.5"></i> Direct HR Contact Directory</li>
+                    </ul>
+                </div>
+                <button disabled class="w-full py-3 bg-gray-800 text-gray-500 font-bold rounded-xl text-xs cursor-not-allowed">
+                    Launching Soon
+                </button>
+            </div>
+
+            <!-- Tier 4: Crystal Card (COMING SOON) -->
+            <div class="bg-[#111c38] border border-gray-800 p-6 rounded-2xl relative shadow-xl opacity-80 flex flex-col justify-between">
+                <span class="bg-gray-800 text-gray-400 font-bold text-[10px] px-3 py-1 rounded-full absolute top-4 right-4">LAUNCHING SOON</span>
+                <div>
+                    <div class="text-cyan-400 text-2xl mb-2"><i class="fa-solid fa-gem"></i></div>
+                    <h3 class="text-xl font-extrabold text-gray-200">Tiranga Crystal</h3>
+                    <p class="text-xs text-amber-400 font-semibold mb-3">VIP Master Partner</p>
+                    
+                    <div class="text-3xl font-black text-gray-400 my-2">₹199</div>
+                    <p class="text-[11px] text-teal-400 font-bold mb-4"><i class="fa-solid fa-hand-holding-dollar mr-1"></i> Earn ₹145 per referral sale</p>
+
+                    <ul class="text-xs text-gray-400 space-y-2.5 mb-6 border-t border-gray-800 pt-4">
+                        <li><i class="fa-solid fa-clock text-gray-500 mr-1.5"></i> VIP Crystal Diamond Tiranga Card</li>
+                        <li><i class="fa-solid fa-clock text-gray-500 mr-1.5"></i> Unlimited Resume Library</li>
+                        <li><i class="fa-solid fa-clock text-gray-500 mr-1.5"></i> Personal Career Desk Support</li>
+                    </ul>
+                </div>
+                <button disabled class="w-full py-3 bg-gray-800 text-gray-500 font-bold rounded-xl text-xs cursor-not-allowed">
+                    Launching Soon
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#080d1e] py-6 border-t border-gray-800 text-center text-xs text-gray-400 mt-auto">
+        <p>&copy; 2026 IOIS Platform. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
