@@ -3,13 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IOIS - Admin Control Panel & Screenshot Viewer</title>
+    <title>IOIS - Secure Admin Control Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-950 text-white font-sans min-h-screen p-4 md:p-8" onload="loadAdminData()">
+<body class="bg-gray-950 text-white font-sans min-h-screen p-4 md:p-8" onload="checkAdminSession()">
 
-    <div class="max-w-7xl mx-auto space-y-8">
+    <!-- 🔒 1. SECRET ADMIN LOCK SCREEN (डिफ़ॉल्ट रूप से यह लॉक रहेगा) -->
+    <div id="admin-lock-screen" class="fixed inset-0 bg-gray-950/95 backdrop-blur-lg flex items-center justify-center p-4 z-50">
+        <div class="bg-gray-900 border-2 border-amber-500/50 rounded-3xl max-w-md w-full p-8 text-center shadow-2xl relative">
+            <div class="w-16 h-16 bg-amber-500/10 border border-amber-400 text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl shadow-lg">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            
+            <h2 class="text-2xl font-black text-amber-400 mb-1">IOIS Admin Security</h2>
+            <p class="text-xs text-gray-400 mb-6">Enter Admin Credentials to access System Data</p>
+
+            <form onsubmit="verifyAdminLogin(event)" class="space-y-4 text-left">
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-1">Admin User ID *</label>
+                    <input type="text" id="admin-user-input" required placeholder="Enter Admin User ID" class="w-full bg-gray-950 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-amber-400 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-1">Admin Password *</label>
+                    <input type="password" id="admin-pass-input" required placeholder="Enter Admin Password" class="w-full bg-gray-950 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-amber-400 outline-none">
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-amber-400 to-amber-500 text-gray-950 font-extrabold rounded-xl text-sm shadow-xl transition hover:from-amber-500">
+                    <i class="fa-solid fa-lock-open mr-1"></i> Unlock Admin Panel
+                </button>
+            </form>
+
+            <a href="index.html" class="inline-block mt-4 text-xs text-gray-500 hover:text-gray-300"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+        </div>
+    </div>
+
+    <!-- 📊 2. MAIN ADMIN DASHBOARD CONTENT (पासवर्ड डालने के बाद ही दिखेगा) -->
+    <div id="admin-content" class="max-w-7xl mx-auto space-y-8 hidden">
         
         <!-- TOP BAR -->
         <div class="flex flex-col md:flex-row justify-between items-center gap-4 bg-gray-900 border border-amber-500/30 p-5 rounded-2xl shadow-xl">
@@ -19,7 +49,7 @@
                     <h1 class="text-2xl font-extrabold text-amber-400 flex items-center gap-2">
                         <i class="fa-solid fa-shield-halved text-amber-400"></i> IOIS Admin Panel
                     </h1>
-                    <p class="text-xs text-gray-400">Indian Online Income Supporting System - Management Portal</p>
+                    <p class="text-xs text-gray-400">Indian Online Income Supporting System - Secured Portal</p>
                 </div>
             </div>
             
@@ -27,8 +57,8 @@
                 <a href="index.html" class="px-4 py-2 bg-amber-400 text-gray-950 font-extrabold rounded-xl text-xs hover:bg-amber-500">
                     <i class="fa-solid fa-house"></i> View Website
                 </a>
-                <button onclick="adminLogout()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-xs">
-                    Logout Admin
+                <button onclick="adminLogout()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-xs flex items-center gap-1">
+                    <i class="fa-solid fa-lock"></i> Lock Admin Panel
                 </button>
             </div>
         </div>
@@ -76,7 +106,7 @@
             </div>
         </div>
 
-        <!-- DYNAMIC REGISTERED MEMBERS TABLE WITH SCREENSHOT VIEWER -->
+        <!-- DYNAMIC REGISTERED MEMBERS TABLE -->
         <div class="bg-gray-900 rounded-2xl border border-gray-800 p-6 shadow-xl">
             <div class="flex justify-between items-center mb-6">
                 <div>
@@ -133,11 +163,47 @@
         </div>
     </div>
 
+    <!-- STRICT SECURITY SCRIPT -->
     <script>
+        // Check Session on Load
+        function checkAdminSession() {
+            var session = sessionStorage.getItem('iois_admin_logged_in');
+            if (session === 'true') {
+                document.getElementById('admin-lock-screen').classList.add('hidden');
+                document.getElementById('admin-content').classList.remove('hidden');
+                loadAdminData();
+            } else {
+                document.getElementById('admin-lock-screen').classList.remove('hidden');
+                document.getElementById('admin-content').classList.add('hidden');
+            }
+        }
+
+        // Verify Admin Login Credentials
+        function verifyAdminLogin(e) {
+            e.preventDefault();
+            var userid = document.getElementById('admin-user-input').value.trim();
+            var pass = document.getElementById('admin-pass-input').value.trim();
+
+            if (userid === "admin" && pass === "admin123") {
+                sessionStorage.setItem('iois_admin_logged_in', 'true');
+                alert("✅ Admin Login Successful! Access Granted.");
+                checkAdminSession();
+            } else {
+                alert("⚠️ Unauthorized Access Denied!\n\nगलत Admin User ID या Password।");
+            }
+        }
+
+        // Logout Admin
+        function adminLogout() {
+            sessionStorage.removeItem('iois_admin_logged_in');
+            alert("Admin Panel Locked!");
+            checkAdminSession();
+        }
+
+        // Load Admin Data
         function loadAdminData() {
             let members = JSON.parse(localStorage.getItem('iois_all_members') || "[]");
             
-            // अगर सिंगल यूज़र सेव्ड है
             const singleUserId = localStorage.getItem('iois_user_id');
             const singleUserName = localStorage.getItem('iois_user_name');
             const singleEmail = localStorage.getItem('iois_user_email');
@@ -158,7 +224,6 @@
                 });
             }
 
-            // Stats Count
             const total = members.length;
             const approved = members.filter(m => m.status === "Activated").length;
             const pending = total - approved;
@@ -202,7 +267,6 @@
             });
         }
 
-        // VIEW SCREENSHOT MODAL POPUP
         function viewScreenshot(index) {
             let members = JSON.parse(localStorage.getItem('iois_all_members') || "[]");
             const m = members[index];
@@ -250,16 +314,11 @@
         }
 
         function clearAllData() {
-            if (confirm("सावधानी: यह सभी टेस्ट मेंबर्स की जानकारी डिलीट कर देगा। क्या आप आगे बढ़ना चाहते हैं?")) {
+            if (confirm("सावधानी: यह सभी मेंबर्स की जानकारी डिलीट कर देगा। क्या आप आगे बढ़ना चाहते हैं?")) {
                 localStorage.removeItem('iois_all_members');
                 localStorage.removeItem('iois_user_id');
                 loadAdminData();
             }
-        }
-
-        function adminLogout() {
-            alert("Admin logged out!");
-            window.location.href = "index.html";
         }
     </script>
 </body>
