@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 sponsorField.value = refCode.trim();
                 sponsorField.classList.add("border-amber-400", "text-amber-400", "font-bold");
             }
-            // ऑटोमैटिक रजिस्ट्रेशन फ़ॉर्म खोलें अगर रेफरल लिंक से आए हैं
+            // ऑटोमैटिक रजिस्ट्रेशन फ़ॉर्म खोलें अगर यूज़र रेफरल लिंक से आया है
             if (typeof window.openRegistrationFlow === "function") {
                 window.openRegistrationFlow();
             }
@@ -80,13 +80,13 @@ function highlightErrorField(elementId) {
     if (el) {
         el.classList.remove("border-gray-700", "bg-[#080d1e]");
         el.classList.add("border-red-500", "bg-red-950/40", "text-red-200");
-        el.focus(); // गलत बॉक्स पर स्क्रीन ले जाएगा
+        el.focus(); // गलत वाले इनपुट बॉक्स पर स्क्रीन ले जाएगा
     }
 }
 
 // 6. STRICT REGISTRATION FORM VALIDATION & SUBMISSION
 window.handleDetailsSubmit = function (event) {
-    event.preventDefault(); // फ़ॉर्म रीलोड रोकेगा
+    event.preventDefault(); // फ़ॉर्म रीलोड होने से रोकेगा
     resetFormErrors();
 
     const nameEl = document.getElementById("reg-name");
@@ -96,6 +96,7 @@ window.handleDetailsSubmit = function (event) {
     const addressEl = document.getElementById("reg-address");
     const upiEl = document.getElementById("reg-upi");
     const qrFileEl = document.getElementById("reg-qr-file");
+    const cardTierEl = document.getElementById("reg-card-tier");
 
     const name = nameEl ? nameEl.value.trim() : "";
     const email = emailEl ? emailEl.value.trim() : "";
@@ -104,6 +105,7 @@ window.handleDetailsSubmit = function (event) {
     const address = addressEl ? addressEl.value.trim() : "";
     const upi = upiEl ? upiEl.value.trim() : "";
     const qrFiles = qrFileEl ? qrFileEl.files : [];
+    const cardTier = cardTierEl ? cardTierEl.value : "Tiranga Silver Card (₹10)";
 
     // 6.1 Validate Full Name
     if (!name || name.length < 2) {
@@ -142,7 +144,7 @@ window.handleDetailsSubmit = function (event) {
         return;
     }
 
-    // 6.6 Validate Real UPI ID (Flexibly accepts name@upi, 8877490845@spicepay, number@paytm, name@okaxis)
+    // 6.6 Validate Real UPI ID
     const upiPattern = /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/;
     if (!upi || !upiPattern.test(upi)) {
         highlightErrorField("reg-upi");
@@ -169,6 +171,21 @@ window.handleDetailsSubmit = function (event) {
     localStorage.setItem("iois_user_upi", upi);
     localStorage.setItem("iois_user_id", autoUserId);
 
+    // Save to Global Members List for Admin Panel
+    let members = JSON.parse(localStorage.getItem('iois_all_members') || "[]");
+    members.unshift({
+        name: name,
+        email: email,
+        phone: cleanPhone,
+        address: address,
+        upi: upi,
+        userid: autoUserId,
+        cardTier: cardTier,
+        screenshot: null,
+        status: "Pending Verification"
+    });
+    localStorage.setItem('iois_all_members', JSON.stringify(members));
+
     alert(`✅ रजिस्ट्रेशन 100% सफल!\n\nआपकी स्थायी User ID है: [${autoUserId}]\n\nअब Step 2 में ₹10 की किट पेमेंट करें।`);
     
     document.getElementById("reg-modal")?.classList.add("hidden");
@@ -191,15 +208,32 @@ window.validateFileSize = function (input) {
     }
 };
 
-// 8. SCREENSHOT SUBMIT TO ADMIN WHATSAPP
+// 8. SCREENSHOT SUBMIT WITH BASE64 IMAGE CONVERSION FOR ADMIN PANEL
 window.handleScreenshotSubmit = function (event) {
     event.preventDefault();
     const name = localStorage.getItem("iois_user_name") || "User";
     const userid = localStorage.getItem("iois_user_id") || "ID";
+    const ssInput = document.getElementById("ss-file");
+
+    // Convert Screenshot file to Base64 Image String for Admin Panel Viewer
+    if (ssInput && ssInput.files && ssInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const ssBase64 = e.target.result;
+            localStorage.setItem("iois_user_screenshot", ssBase64);
+
+            let members = JSON.parse(localStorage.getItem('iois_all_members') || "[]");
+            if (members.length > 0) {
+                members[0].screenshot = ssBase64;
+                localStorage.setItem('iois_all_members', JSON.stringify(members));
+            }
+        };
+        reader.readAsDataURL(ssInput.files[0]);
+    }
 
     const msg = `Hello IOIS Admin, Maine ₹10 ka payment kar diya hai.%0AName: ${name}%0AFixed User ID: ${userid}%0AKripya mera Digital Starter Kit aur Dashboard activate karein.`;
     
-    alert("स्क्रीनशॉट सबमिट हो गया! वेरिफिकेशन के लिए अब WhatsApp खोलें।");
+    alert("पेमेंट स्क्रीनशॉट सबमिट हो गया है! अब एडमिन वेरिफिकेशन के लिए WhatsApp खुल रहा है।");
     window.open(`https://wa.me/918877490845?text=${msg}`, "_blank");
     window.closeModals();
 };
@@ -217,7 +251,7 @@ window.handleLoginSubmit = function (event) {
         return;
     }
 
-    // 9.2 User Login Check
+    // 9.2 Regular User Login Check
     const savedUserId = localStorage.getItem("iois_user_id");
     const savedPass = localStorage.getItem("iois_user_pass");
 
