@@ -10,10 +10,54 @@
     <!-- High Quality Canvas & PDF Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
+
     <style>
-        .tiranga-border {
-            border-image: linear-gradient(180deg, #f97316, #ffffff, #10b981) 1;
+        /* Exact Non-Clipping 3D Tiranga Card Design */
+        .tiranga-card-container {
+            width: 500px;
+            height: 315px;
+            background: linear-gradient(160deg, #d97706 0%, #ff9933 22%, #ffffff 50%, #10b981 78%, #047857 100%);
+            border: 4px solid #f59e0b;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+            color: #000000;
+            font-family: 'Arial', sans-serif;
+            box-sizing: border-box;
+            padding: 16px;
+            margin: 0 auto;
+        }
+
+        .gloss-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.25) 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .chakra-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 160px;
+            color: rgba(0, 0, 128, 0.08);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 3;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
     </style>
 </head>
@@ -42,63 +86,81 @@
             <p class="text-xs text-gray-400">Verified Member Badge & Referral Access</p>
         </div>
 
-        <!-- 3D TIRANGA DIGITAL ID CARD ELEMENT -->
-        <div class="max-w-md mx-auto">
-            <div id="id-card-element" class="bg-gradient-to-b from-orange-950/60 via-slate-900 to-emerald-950/60 border-4 border-amber-400 rounded-3xl p-6 shadow-[0_0_35px_rgba(245,158,11,0.4)] relative overflow-hidden text-left">
-                
-                <!-- Card Top Header -->
-                <div class="flex justify-between items-center border-b border-amber-500/40 pb-3 mb-4">
-                    <div class="flex items-center gap-2">
-                        <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/35'" alt="IOIS Logo" class="w-9 h-9 rounded-full border-2 border-amber-400 shadow">
-                        <div>
-                            <span class="text-amber-400 font-black text-sm tracking-widest block leading-none">IOIS PLATFORM</span>
-                            <span class="text-[8px] text-teal-300 font-bold uppercase tracking-wider block mt-0.5">Indian Online Income Supporting System</span>
+        <!-- 3D TIRANGA METALLIC DIGITAL ID CARD (FIXED NO-CLIPPING DESIGN) -->
+        <div class="max-w-lg mx-auto overflow-x-auto p-2">
+            
+            <div id="id-card-element" class="tiranga-card-container">
+                <!-- Glossy Overlay & Ashoka Chakra Watermark -->
+                <div class="gloss-overlay"></div>
+                <div class="chakra-watermark"><i class="fa-solid fa-dharmachakra"></i></div>
+
+                <div class="card-content">
+                    <!-- Top Header -->
+                    <div style="display: flex; justify-content: space-between; items-center; border-bottom: 2px solid #d97706; padding-bottom: 8px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/40'" style="width: 36px; height: 36px; border-radius: 50%; border: 2px solid #ffffff; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
+                            <div>
+                                <span style="font-size: 15px; font-weight: 900; color: #080d1e; tracking-wide: 1px; display: block; line-height: 1;">IOIS PLATFORM</span>
+                                <span style="font-size: 8px; font-weight: 800; color: #000000; text-transform: uppercase;">Indian Online Income Supporting System</span>
+                            </div>
+                        </div>
+                        <span style="background: linear-gradient(90deg, #d97706, #f59e0b); color: #ffffff; font-size: 9px; font-weight: 900; padding: 4px 10px; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); height: max-content;">
+                            TIRANGA SILVER
+                        </span>
+                    </div>
+
+                    <!-- Middle Body -->
+                    <div style="display: flex; align-items: center; gap: 14px; margin-top: 4px; margin-bottom: 4px;">
+                        <!-- Member Photo -->
+                        <div style="position: relative; flex-shrink: 0;">
+                            <img id="profile-img" src="https://via.placeholder.com/100?text=Member" style="width: 85px; height: 85px; border-radius: 12px; object-fit: cover; border: 3px solid #080d1e; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                            <label for="pic-upload" style="position: absolute; bottom: -4px; right: -4px; background: #f59e0b; color: #000; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.4);">
+                                <i class="fa-solid fa-camera"></i>
+                            </label>
+                            <input type="file" id="pic-upload" accept="image/*" class="hidden" onchange="uploadProfilePic(this)">
+                        </div>
+
+                        <!-- Member Info -->
+                        <div style="flex: 1; min-width: 0; line-height: 1.3;">
+                            <h3 id="card-name" style="font-size: 17px; font-weight: 900; color: #080d1e; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Guest Member</h3>
+                            
+                            <p style="font-size: 12px; font-weight: 800; color: #7c2d12; margin: 2px 0;">
+                                Fixed User ID: <span id="card-id" style="color: #000000; font-family: monospace; font-size: 13px; font-weight: 900;">---</span>
+                            </p>
+                            
+                            <p style="font-size: 11px; font-weight: 700; color: #0f172a; margin: 2px 0;">
+                                <i class="fa-solid fa-envelope" style="color: #d97706;"></i> <span id="card-email">---</span>
+                            </p>
+                            
+                            <p style="font-size: 11px; font-weight: 800; color: #064e3b; margin: 2px 0;">
+                                <i class="fa-solid fa-phone" style="color: #047857;"></i> <span id="card-phone">+91 8877****45</span>
+                                <span style="background: #065f46; color: #ffffff; font-size: 8px; padding: 2px 6px; border-radius: 4px; font-weight: 800; margin-left: 4px;">Protected</span>
+                            </p>
                         </div>
                     </div>
-                    <!-- Card Tier Badge -->
-                    <span id="card-tier-badge" class="bg-gradient-to-r from-amber-400 to-amber-600 text-gray-950 font-extrabold text-[9px] px-2.5 py-1 rounded-md shadow flex items-center gap-1">
-                        <i class="fa-solid fa-shield-halved"></i> TIRANGA SILVER
-                    </span>
-                </div>
 
-                <!-- Card Body -->
-                <div class="flex gap-4 items-center">
-                    <div class="relative flex-shrink-0">
-                        <img id="profile-img" src="https://via.placeholder.com/100?text=Member" alt="Member Photo" class="w-20 h-20 rounded-2xl object-cover border-2 border-amber-400 shadow-xl">
-                        <label for="pic-upload" class="absolute -bottom-1 -right-1 bg-amber-400 text-gray-950 p-1.5 rounded-full cursor-pointer hover:bg-amber-500 text-[10px] shadow-lg">
-                            <i class="fa-solid fa-camera"></i>
-                        </label>
-                        <input type="file" id="pic-upload" accept="image/*" class="hidden" onchange="uploadProfilePic(this)">
-                    </div>
+                    <!-- Bottom Footer -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #047857; padding-top: 6px;">
+                        <div>
+                            <span style="font-size: 8px; font-weight: 800; color: #064e3b; display: block; text-transform: uppercase;">REGISTERED WITHDRAWAL UPI</span>
+                            <span id="card-upi" style="font-size: 12px; font-family: monospace; font-weight: 900; color: #000000;">---</span>
+                        </div>
 
-                    <div class="space-y-1 flex-1 min-w-0">
-                        <h3 id="card-name" class="font-black text-lg text-white truncate leading-snug">Guest Member</h3>
-                        <p class="text-xs text-amber-400 font-mono font-extrabold">Fixed User ID: <span id="card-id" class="text-white">---</span></p>
-                        <p class="text-[11px] text-gray-300 truncate"><i class="fa-solid fa-envelope text-amber-400 mr-1"></i><span id="card-email">---</span></p>
-                        <!-- Masked Privacy Phone -->
-                        <p class="text-[11px] text-teal-400 font-mono font-semibold"><i class="fa-solid fa-phone text-teal-400 mr-1"></i><span id="card-phone">+91 8877****45</span> <span class="text-[9px] bg-teal-500/20 text-teal-300 px-1.5 py-0.5 rounded ml-1">Protected</span></p>
-                    </div>
-                </div>
-
-                <!-- Card Footer & QR Code -->
-                <div class="mt-5 pt-3 border-t border-amber-500/30 flex justify-between items-center">
-                    <div class="text-left">
-                        <span class="text-[8px] text-gray-400 block uppercase font-bold tracking-wider">Registered Withdrawal UPI</span>
-                        <span id="card-upi" class="text-xs font-mono text-amber-400 font-bold">---</span>
-                    </div>
-                    <div class="bg-white p-1 rounded-lg shadow-md border border-amber-400">
-                        <img id="card-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=IOIS" alt="QR" class="w-10 h-10">
+                        <!-- Verification QR Code -->
+                        <div style="background: #ffffff; padding: 3px; border-radius: 6px; border: 1px solid #047857;">
+                            <img id="card-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=IOIS" style="width: 42px; height: 42px; display: block;">
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- DUAL DOWNLOAD BUTTONS (JPG & PDF) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+            <!-- DUAL DOWNLOAD BUTTONS (NO-TEXT CLIPPING) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-5">
                 <button onclick="downloadIDCardJPG()" class="py-3 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-gray-950 font-extrabold rounded-xl shadow-xl transition flex items-center justify-center gap-2 text-xs">
-                    <i class="fa-solid fa-file-image text-base"></i> Download Image (JPG)
+                    <i class="fa-solid fa-file-image text-base"></i> Download 3D Card Image (JPG)
                 </button>
                 <button onclick="downloadIDCardPDF()" class="py-3 bg-gradient-to-r from-teal-400 to-emerald-500 hover:from-teal-500 hover:to-emerald-600 text-gray-950 font-extrabold rounded-xl shadow-xl transition flex items-center justify-center gap-2 text-xs">
-                    <i class="fa-solid fa-file-pdf text-base"></i> Download Document (PDF)
+                    <i class="fa-solid fa-file-pdf text-base"></i> Download Print Document (PDF)
                 </button>
             </div>
         </div>
@@ -203,86 +265,4 @@
             document.getElementById('edit-phone').value = phone;
             document.getElementById('edit-upi').value = upi;
 
-            document.getElementById('card-qr').src = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://ioisplatform.github.io/iois-website/?ref=${userid}`;
-            document.getElementById('ref-link').value = `https://ioisplatform.github.io/iois-website/?ref=${userid}`;
-
-            const savedPic = localStorage.getItem('iois_profile_pic_' + userid);
-            if (savedPic) {
-                document.getElementById('profile-img').src = savedPic;
-            }
-        }
-
-        // 1. DOWNLOAD ID CARD AS HIGH QUALITY JPG IMAGE
-        function downloadIDCardJPG() {
-            const cardEl = document.getElementById('id-card-element');
-            alert("आपका 3D ID Card JPG इमेज फॉर्मेट में डाउनलोड हो रहा है...");
-            
-            html2canvas(cardEl, {
-                scale: 3, // High Resolution
-                useCORS: true,
-                backgroundColor: "#080d1e"
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = `IOIS_Tiranga_ID_Card.jpg`;
-                link.href = canvas.toDataURL('image/jpeg', 1.0);
-                link.click();
-            });
-        }
-
-        // 2. DOWNLOAD ID CARD AS PRINTABLE PDF DOCUMENT
-        function downloadIDCardPDF() {
-            const cardEl = document.getElementById('id-card-element');
-            alert("आपका 3D ID Card PDF डॉक्यूमेंट फॉर्मेट में तैयार हो रहा है...");
-
-            html2canvas(cardEl, {
-                scale: 3,
-                useCORS: true,
-                backgroundColor: "#080d1e"
-            }).then(canvas => {
-                const imgData = canvas.toDataURL('image/png');
-                const { jsPDF } = window.jspdf;
-                
-                // Standard CR80 ID Card dimensions (85.6mm x 54mm or landscape 100mm x 65mm)
-                const pdf = new jsPDF({
-                    orientation: 'landscape',
-                    unit: 'mm',
-                    format: [100, 65]
-                });
-
-                pdf.addImage(imgData, 'PNG', 0, 0, 100, 65);
-                pdf.save(`IOIS_Tiranga_ID_Card.pdf`);
-            });
-        }
-
-        function uploadProfilePic(input) {
-            const file = input.files[0];
-            const userid = localStorage.getItem('iois_user_id') || 'Guest';
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById('profile-img').src = e.target.result;
-                    localStorage.setItem('iois_profile_pic_' + userid, e.target.result);
-                    alert("Profile Picture Updated!");
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function updateUserProfileDetails(e) {
-            e.preventDefault();
-            const newName = document.getElementById('edit-name').value.trim();
-            const newEmail = document.getElementById('edit-email').value.trim();
-            const newPhone = document.getElementById('edit-phone').value.trim();
-            const newUPI = document.getElementById('edit-upi').value.trim();
-
-            if (newName) localStorage.setItem('iois_user_name', newName);
-            if (newEmail) localStorage.setItem('iois_user_email', newEmail);
-            if (newPhone) localStorage.setItem('iois_user_phone', newPhone);
-            if (newUPI) localStorage.setItem('iois_user_upi', newUPI);
-
-            alert("प्रोफ़ाइल जानकारी सफलतापूर्वक अपडेट हो गई!");
-            loadDashboardData();
-        }
-    </script>
-</body>
-</html>
+            document.getElementById('card-qr').src = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://ioisplatform.github.io/iois-website/?
