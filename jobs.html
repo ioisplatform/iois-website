@@ -3,59 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IOIS - सत्यापित लाइव जॉब्स भर्ती बोर्ड</title>
+    <title>IOIS - सत्यापित लाइव जॉब्स एवं भर्ती बोर्ड</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .tiranga-text {
+            background: linear-gradient(90deg, #f97316 0%, #ffffff 50%, #10b981 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .job-card { transition: all 0.2s ease; }
+        .job-card:hover { border-color: #f59e0b; transform: translateY(-2px); }
+    </style>
 </head>
-<body class="bg-[#030712] text-white font-sans flex flex-col min-h-screen">
+<body class="bg-[#030712] text-white font-sans flex flex-col min-h-screen" onload="initJobBoard()">
 
+    <!-- Navbar -->
     <nav class="bg-[#080d1e] border-b border-gray-800 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-            <span class="text-xl font-bold text-amber-400">IOIS Verified Job Board</span>
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/40'" alt="IOIS" class="w-10 h-10 rounded-full border border-amber-400">
+                <span class="text-xl font-bold tiranga-text">IOIS Verified Job Portal</span>
+            </a>
             <a href="index.html" class="px-3.5 py-1.5 bg-amber-400 text-gray-950 font-bold rounded-xl text-xs"><i class="fa-solid fa-house"></i> Home</a>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
+        
+        <!-- Header Title -->
         <div class="text-center">
-            <span class="bg-teal-500/20 text-teal-400 text-[10px] font-bold px-3 py-1 rounded-full uppercase border border-teal-500/40">VERIFIED OPENINGS</span>
-            <h1 class="text-3xl font-extrabold text-amber-400 mt-2">आज की लाइव वर्क-फ्रॉम-होम एवं प्राइवेट नौकरियां</h1>
-            <p class="text-xs text-gray-400 mt-1">Direct HR Contact & Immediate Joining Jobs</p>
+            <span class="bg-teal-500/20 text-teal-400 text-[10px] font-bold px-3.5 py-1 rounded-full uppercase border border-teal-500/40">
+                <i class="fa-solid fa-circle-check text-emerald-400 mr-1"></i> VERIFIED OPENINGS ONLY
+            </span>
+            <h1 class="text-3xl md:text-4xl font-extrabold tiranga-text mt-2">आज की लाइव वर्क-फ्रॉम-होम एवं प्राइवेट नौकरियां</h1>
+            <p class="text-xs text-gray-400 mt-1">100% निशुल्क आवेदन - डायरेक्ट HR व्हाट्सएप सपोर्ट</p>
         </div>
 
-        <div class="space-y-4 text-xs md:text-sm">
-            <!-- Job 1 -->
-            <div class="bg-[#111c38] border border-amber-500/40 p-5 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <div class="flex items-center gap-2 mb-1">
-                        <span class="bg-teal-400 text-gray-950 font-black text-[10px] px-2 py-0.5 rounded">WORK FROM HOME</span>
-                        <span class="text-[10px] text-gray-400"><i class="fa-solid fa-clock mr-1"></i> Posted Today at 08:30 AM</span>
-                    </div>
-                    <h3 class="text-base font-bold text-white">Data Entry & Back Office Assistant</h3>
-                    <p class="text-gray-300 text-xs mt-1">Salary: ₹15,000 - ₹22,000/month | Typing Speed: 35+ WPM</p>
-                </div>
-                <a href="https://wa.me/918877490845?text=Applying%20for%20Data%20Entry%20WFH%20Job" target="_blank" class="w-full md:w-auto px-5 py-2.5 bg-amber-400 text-gray-950 font-extrabold text-xs rounded-xl text-center hover:bg-amber-500">
-                    Apply on WhatsApp <i class="fa-solid fa-arrow-right ml-1"></i>
-                </a>
+        <!-- SEARCH BAR & CATEGORY FILTERS -->
+        <div class="bg-[#111c38] border border-gray-800 p-5 rounded-3xl shadow-2xl space-y-4">
+            <!-- Search Box -->
+            <div class="flex gap-2">
+                <input type="text" id="job-search-input" onkeyup="filterJobs()" placeholder="नौकरी का नाम या स्किल लिखें (उदा: Data Entry, Chat Support, WFH)..." class="flex-1 bg-[#080d1e] border border-gray-700 rounded-xl p-3 text-xs text-white outline-none focus:border-amber-400">
+                <button onclick="filterJobs()" class="px-5 py-3 bg-amber-400 text-gray-950 font-extrabold rounded-xl text-xs">Search</button>
             </div>
 
-            <!-- Job 2 -->
-            <div class="bg-[#111c38] border border-gray-800 p-5 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <div class="flex items-center gap-2 mb-1">
-                        <span class="bg-blue-500 text-white font-bold text-[10px] px-2 py-0.5 rounded">FULL TIME / REMOTE</span>
-                        <span class="text-[10px] text-gray-400"><i class="fa-solid fa-clock mr-1"></i> Posted Today at 07:15 AM</span>
-                    </div>
-                    <h3 class="text-base font-bold text-white">Customer Support & Chat Executive</h3>
-                    <p class="text-gray-300 text-xs mt-1">Salary: ₹18,000/month | Qualification: 12th Pass / Graduate</p>
-                </div>
-                <a href="https://wa.me/918877490845?text=Applying%20for%20Chat%20Support%20Job" target="_blank" class="w-full md:w-auto px-5 py-2.5 bg-amber-400 text-gray-950 font-extrabold text-xs rounded-xl text-center hover:bg-amber-500">
-                    Apply on WhatsApp <i class="fa-solid fa-arrow-right ml-1"></i>
-                </a>
+            <!-- Category Filter Buttons -->
+            <div class="flex flex-wrap gap-2 text-xs font-bold">
+                <button onclick="setCategoryFilter('all')" class="px-3 py-1.5 bg-amber-400 text-gray-950 rounded-lg">All Jobs</button>
+                <button onclick="setCategoryFilter('WFH')" class="px-3 py-1.5 bg-[#080d1e] border border-gray-700 hover:border-amber-400 rounded-lg">Work From Home</button>
+                <button onclick="setCategoryFilter('Data Entry')" class="px-3 py-1.5 bg-[#080d1e] border border-gray-700 hover:border-amber-400 rounded-lg">Data Entry</button>
+                <button onclick="setCategoryFilter('Support')" class="px-3 py-1.5 bg-[#080d1e] border border-gray-700 hover:border-amber-400 rounded-lg">Chat & Support</button>
+                <button onclick="setCategoryFilter('Govt')" class="px-3 py-1.5 bg-[#080d1e] border border-gray-700 hover:border-amber-400 rounded-lg">Govt Alerts</button>
             </div>
         </div>
+
+        <!-- JOBS LISTINGS CONTAINER -->
+        <div id="jobs-container" class="space-y-4 text-xs md:text-sm">
+            <!-- Loaded Dynamically via JS -->
+        </div>
+
     </main>
 
-    <footer class="bg-[#080d1e] py-6 text-center text-xs text-gray-400 mt-auto">&copy; 2026 IOIS Platform</footer>
+    <footer class="bg-[#080d1e] py-6 border-t border-gray-800 text-center text-xs text-gray-400 mt-auto">&copy; 2026 IOIS Platform</footer>
+
+    <script src="script.js"></script>
+    <script>
+        var masterJobsData = [
+            {
+                title: "Data Entry & Back Office Assistant",
+                type: "WFH",
+                salary: "₹15,000 - ₹22,000/month",
+                qual: "12th Pass / Graduate | Typing 35 WPM",
+                time: "Posted Today at 08:30 AM",
+                category: "Data Entry WFH"
+            },
+            {
+                title: "Customer Support & Chat Executive",
+                type: "WFH / Remote",
+                salary: "₹18,000/month",
+                qual: "Fluent Hindi / English Communication",
+                time: "Posted Today at 07:15 AM",
+                category: "Support WFH"
+            },
+            {
+                title: "Digital Telecaller & Sales Associate",
+                type: "Work From Home",
+                salary: "₹14,000 + Daily Incentives",
+                qual: "10th / 12th Pass | Good Calling Skills",
+                time: "Posted Today at 09:00 AM",
+                category: "Support WFH"
+            },
+            {
+                title: "SSC & Railway Govt Exam Vacancy Alert",
+                type: "Govt Job Alert",
+                salary: "₹25,500 - ₹81,100 (Level 4)",
+                qual: "10th/12th/Graduate Official Notification",
+                time: "Updated Today at 06:00 AM",
+                category: "Govt"
+            },
+            {
+                title: "Content Writer & ChatGPT Prompt Associate",
+                type: "WFH Part-Time",
+                salary: "₹12,000/month | 3 Hours Daily",
+                qual: "Basic AI Knowledge & English Writing",
+                time: "Posted Today at 09:45 AM",
+                category: "WFH"
+            }
+        ];
+
+        function initJobBoard() {
+            renderJobList(masterJobsData);
+        }
+
+        function renderJobList(jobs) {
+            var container = document.getElementById('jobs-container');
+            container.innerHTML = "";
+
+            if (jobs.length === 0) {
+                container.innerHTML = `<div class="p-8 text-center text-gray-400 font-bold bg-[#111c38] rounded-2xl">कोई जॉब नहीं मिली। कृपया दूसरा कीवर्ड सर्च करें।</div>`;
+                return;
+            }
+
+            jobs.forEach(j => {
+                container.innerHTML += `
+                    <div class="job-card bg-[#111c38] border border-gray-800 p-5 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="bg-teal-400 text-gray-950 font-black text-[10px] px-2 py-0.5 rounded">${j.type}</span>
+                                <span class="text-[10px] text-gray-400 font-bold"><i class="fa-solid fa-clock mr-1"></i> ${j.time}</span>
+                            </div>
+                            <h3 class="text-base font-bold text-white">${j.title}</h3>
+                            <p class="text-gray-300 text-xs mt-1">Salary: <strong class="text-amber-400">${j.salary}</strong> | ${j.qual}</p>
+                        </div>
+                        <a href="https://wa.me/918877490845?text=Hello%20IOIS,%20I%20want%20to%20apply%20for%20${encodeURIComponent(j.title)}" target="_blank" class="w-full md:w-auto px-5 py-2.5 bg-amber-400 text-gray-950 font-extrabold text-xs rounded-xl text-center shadow-lg hover:bg-amber-500 transition">
+                            Apply on WhatsApp <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                `;
+            });
+        }
+
+        function filterJobs() {
+            var query = document.getElementById('job-search-input').value.toLowerCase().trim();
+            var filtered = masterJobsData.filter(j => j.title.toLowerCase().includes(query) || j.category.toLowerCase().includes(query) || j.type.toLowerCase().includes(query));
+            renderJobList(filtered);
+        }
+
+        function setCategoryFilter(cat) {
+            if (cat === 'all') { renderJobList(masterJobsData); return; }
+            var filtered = masterJobsData.filter(j => j.category.toLowerCase().includes(cat.toLowerCase()) || j.type.toLowerCase().includes(cat.toLowerCase()));
+            renderJobList(filtered);
+        }
+    </script>
 </body>
 </html>
