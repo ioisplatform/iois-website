@@ -3,119 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IOIS - Secure Admin Control Panel</title>
+    <title>IOIS - Secure Connected Admin Control Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-950 text-white font-sans min-h-screen p-4 md:p-8" onload="checkAdminSession()">
 
-    <!-- 🔒 1. SECRET ADMIN LOCK SCREEN (डिफ़ॉल्ट रूप से यह लॉक रहेगा) -->
+    <!-- LOCK SCREEN -->
     <div id="admin-lock-screen" class="fixed inset-0 bg-gray-950/95 backdrop-blur-lg flex items-center justify-center p-4 z-50">
         <div class="bg-gray-900 border-2 border-amber-500/50 rounded-3xl max-w-md w-full p-8 text-center shadow-2xl relative">
             <div class="w-16 h-16 bg-amber-500/10 border border-amber-400 text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl shadow-lg">
                 <i class="fa-solid fa-user-shield"></i>
             </div>
-            
             <h2 class="text-2xl font-black text-amber-400 mb-1">IOIS Admin Security</h2>
             <p class="text-xs text-gray-400 mb-6">Enter Admin Credentials to access System Data</p>
 
             <form onsubmit="verifyAdminLogin(event)" class="space-y-4 text-left">
-                <div>
-                    <label class="block text-xs font-bold text-gray-300 mb-1">Admin User ID *</label>
-                    <input type="text" id="admin-user-input" required placeholder="Enter Admin User ID" class="w-full bg-gray-950 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-amber-400 outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-300 mb-1">Admin Password *</label>
-                    <input type="password" id="admin-pass-input" required placeholder="Enter Admin Password" class="w-full bg-gray-950 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-amber-400 outline-none">
-                </div>
-
-                <button type="submit" class="w-full py-3 bg-gradient-to-r from-amber-400 to-amber-500 text-gray-950 font-extrabold rounded-xl text-sm shadow-xl transition hover:from-amber-500">
-                    <i class="fa-solid fa-lock-open mr-1"></i> Unlock Admin Panel
-                </button>
+                <input type="text" id="admin-user-input" required placeholder="Admin User ID (admin)" class="w-full bg-gray-950 border border-gray-700 rounded-xl p-3 text-sm text-white">
+                <input type="password" id="admin-pass-input" required placeholder="Admin Password (admin123)" class="w-full bg-gray-950 border border-gray-700 rounded-xl p-3 text-sm text-white">
+                <button type="submit" class="w-full py-3 bg-amber-400 text-gray-950 font-extrabold rounded-xl text-sm shadow-xl">Unlock Admin Panel</button>
             </form>
-
-            <a href="index.html" class="inline-block mt-4 text-xs text-gray-500 hover:text-gray-300"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+            <a href="index.html" class="inline-block mt-4 text-xs text-gray-500"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
         </div>
     </div>
 
-    <!-- 📊 2. MAIN ADMIN DASHBOARD CONTENT (पासवर्ड डालने के बाद ही दिखेगा) -->
+    <!-- MAIN ADMIN DASHBOARD -->
     <div id="admin-content" class="max-w-7xl mx-auto space-y-8 hidden">
         
-        <!-- TOP BAR -->
         <div class="flex flex-col md:flex-row justify-between items-center gap-4 bg-gray-900 border border-amber-500/30 p-5 rounded-2xl shadow-xl">
             <div class="flex items-center gap-3">
                 <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/45'" alt="Logo" class="w-11 h-11 rounded-full border-2 border-amber-400">
                 <div>
                     <h1 class="text-2xl font-extrabold text-amber-400 flex items-center gap-2">
-                        <i class="fa-solid fa-shield-halved text-amber-400"></i> IOIS Admin Panel
+                        <i class="fa-solid fa-shield-halved text-amber-400"></i> IOIS Connected Admin Panel
                     </h1>
-                    <p class="text-xs text-gray-400">Indian Online Income Supporting System - Secured Portal</p>
+                    <p class="text-xs text-gray-400">Real-time Connected Management Portal</p>
                 </div>
             </div>
             
             <div class="flex items-center gap-3">
-                <a href="index.html" class="px-4 py-2 bg-amber-400 text-gray-950 font-extrabold rounded-xl text-xs hover:bg-amber-500">
-                    <i class="fa-solid fa-house"></i> View Website
-                </a>
-                <button onclick="adminLogout()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-xs flex items-center gap-1">
-                    <i class="fa-solid fa-lock"></i> Lock Admin Panel
-                </button>
+                <a href="index.html" class="px-4 py-2 bg-amber-400 text-gray-950 font-extrabold rounded-xl text-xs"><i class="fa-solid fa-house"></i> View Website</a>
+                <button onclick="adminLogout()" class="px-4 py-2 bg-red-600 text-white font-bold rounded-xl text-xs">Lock Admin</button>
             </div>
         </div>
 
         <!-- STATS ANALYTICS GRID -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800 shadow-lg">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="text-xs text-gray-400 font-bold uppercase">Total Members</p>
-                        <h3 id="stat-total-users" class="text-3xl font-extrabold text-amber-400 mt-1">0</h3>
-                    </div>
-                    <div class="p-3 bg-amber-500/10 text-amber-400 rounded-xl"><i class="fa-solid fa-users text-2xl"></i></div>
-                </div>
-            </div>
-
-            <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800 shadow-lg">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="text-xs text-gray-400 font-bold uppercase">Pending Activations</p>
-                        <h3 id="stat-pending" class="text-3xl font-extrabold text-red-400 mt-1">0</h3>
-                    </div>
-                    <div class="p-3 bg-red-500/10 text-red-400 rounded-xl"><i class="fa-solid fa-clock text-2xl"></i></div>
-                </div>
-            </div>
-
-            <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800 shadow-lg">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="text-xs text-gray-400 font-bold uppercase">Activated Members</p>
-                        <h3 id="stat-approved" class="text-3xl font-extrabold text-teal-400 mt-1">0</h3>
-                    </div>
-                    <div class="p-3 bg-teal-500/10 text-teal-400 rounded-xl"><i class="fa-solid fa-circle-check text-2xl"></i></div>
-                </div>
-            </div>
-
-            <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800 shadow-lg">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="text-xs text-gray-400 font-bold uppercase">Official Pay UPI</p>
-                        <h3 class="text-xs font-mono font-bold text-amber-400 mt-2">8877490845@spicepay</h3>
-                    </div>
-                    <div class="p-3 bg-teal-500/10 text-teal-400 rounded-xl"><i class="fa-solid fa-wallet text-2xl"></i></div>
-                </div>
-            </div>
+            <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800"><p class="text-xs text-gray-400 font-bold uppercase">Total Members</p><h3 id="stat-total-users" class="text-3xl font-extrabold text-amber-400 mt-1">0</h3></div>
+            <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800"><p class="text-xs text-gray-400 font-bold uppercase">Pending Activations</p><h3 id="stat-pending" class="text-3xl font-extrabold text-red-400 mt-1">0</h3></div>
+            <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800"><p class="text-xs text-gray-400 font-bold uppercase">Activated Members</p><h3 id="stat-approved" class="text-3xl font-extrabold text-teal-400 mt-1">0</h3></div>
+            <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800"><p class="text-xs text-gray-400 font-bold uppercase">Official Pay UPI</p><h3 class="text-xs font-mono font-bold text-amber-400 mt-2">8877490845@spicepay</h3></div>
         </div>
 
-        <!-- DYNAMIC REGISTERED MEMBERS TABLE -->
+        <!-- MEMBERS TABLE -->
         <div class="bg-gray-900 rounded-2xl border border-gray-800 p-6 shadow-xl">
             <div class="flex justify-between items-center mb-6">
-                <div>
-                    <h3 class="text-lg font-extrabold text-white">Registered Members & Payment Proofs</h3>
-                    <p class="text-xs text-gray-400">Click "View Screenshot" to verify payment before approving</p>
-                </div>
-                <button onclick="clearAllData()" class="px-3 py-1.5 bg-gray-800 text-red-400 hover:bg-gray-700 text-xs font-bold rounded-lg border border-red-500/30">
-                    <i class="fa-solid fa-trash mr-1"></i> Clear Test Data
-                </button>
+                <h3 class="text-lg font-extrabold text-white">Connected Registered Members</h3>
+                <button onclick="clearAllData()" class="px-3 py-1.5 bg-gray-800 text-red-400 text-xs font-bold rounded-lg border border-red-500/30">Clear Test Data</button>
             </div>
 
             <div class="overflow-x-auto">
@@ -126,46 +70,37 @@
                             <th class="p-3">Fixed User ID</th>
                             <th class="p-3">WhatsApp / Email</th>
                             <th class="p-3">Withdrawal UPI</th>
-                            <th class="p-3">Payment Proof</th>
+                            <th class="p-3">Proof</th>
                             <th class="p-3">Status</th>
                             <th class="p-3 text-right">Action</th>
                         </tr>
                     </thead>
-                    <tbody id="members-table-body" class="divide-y divide-gray-800 text-xs">
-                        <!-- Dynamic Rows Loaded Here -->
-                    </tbody>
+                    <tbody id="members-table-body" class="divide-y divide-gray-800 text-xs"></tbody>
                 </table>
             </div>
         </div>
 
     </div>
 
-    <!-- SCREENSHOT VIEWER MODAL POPUP -->
+    <!-- SCREENSHOT MODAL -->
     <div id="screenshot-modal" class="fixed inset-0 bg-black/90 flex items-center justify-center p-4 hidden z-50 overflow-y-auto">
         <div class="bg-gray-900 border border-amber-500/50 rounded-2xl max-w-lg w-full p-6 text-center relative shadow-2xl">
             <button onclick="closeScreenshotModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">&times;</button>
-            
-            <h3 class="text-lg font-bold text-amber-400 mb-1"><i class="fa-solid fa-image mr-1"></i> Uploaded Payment Screenshot</h3>
+            <h3 class="text-lg font-bold text-amber-400 mb-1">Payment Screenshot Proof</h3>
             <p id="ss-user-info" class="text-xs text-gray-300 mb-4">User: Loading...</p>
 
             <div class="bg-black p-2 rounded-xl border border-gray-800 mb-4 max-h-96 overflow-auto">
-                <img id="ss-img-preview" src="" alt="Payment Screenshot" class="w-full h-auto rounded-lg object-contain mx-auto">
+                <img id="ss-img-preview" src="" alt="Screenshot" class="w-full h-auto rounded-lg mx-auto">
             </div>
 
             <div class="flex gap-3">
-                <a id="ss-whatsapp-link" href="#" target="_blank" class="flex-1 py-2.5 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-1">
-                    <i class="fa-brands fa-whatsapp text-sm"></i> Verify on WhatsApp
-                </a>
-                <button id="ss-approve-btn" onclick="" class="flex-1 py-2.5 bg-teal-400 hover:bg-teal-500 text-gray-950 font-extrabold rounded-xl text-xs">
-                    Approve Payment
-                </button>
+                <a id="ss-whatsapp-link" href="#" target="_blank" class="flex-1 py-2.5 bg-green-600 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-1">Verify on WhatsApp</a>
+                <button id="ss-approve-btn" onclick="" class="flex-1 py-2.5 bg-teal-400 text-gray-950 font-extrabold rounded-xl text-xs">Approve & Activate</button>
             </div>
         </div>
     </div>
 
-    <!-- STRICT SECURITY SCRIPT -->
     <script>
-        // Check Session on Load
         function checkAdminSession() {
             var session = sessionStorage.getItem('iois_admin_logged_in');
             if (session === 'true') {
@@ -178,7 +113,6 @@
             }
         }
 
-        // Verify Admin Login Credentials
         function verifyAdminLogin(e) {
             e.preventDefault();
             var userid = document.getElementById('admin-user-input').value.trim();
@@ -186,43 +120,19 @@
 
             if (userid === "admin" && pass === "admin123") {
                 sessionStorage.setItem('iois_admin_logged_in', 'true');
-                alert("✅ Admin Login Successful! Access Granted.");
                 checkAdminSession();
             } else {
-                alert("⚠️ Unauthorized Access Denied!\n\nगलत Admin User ID या Password।");
+                alert("⚠️ Wrong Admin Credentials!");
             }
         }
 
-        // Logout Admin
         function adminLogout() {
             sessionStorage.removeItem('iois_admin_logged_in');
-            alert("Admin Panel Locked!");
             checkAdminSession();
         }
 
-        // Load Admin Data
         function loadAdminData() {
             let members = JSON.parse(localStorage.getItem('iois_all_members') || "[]");
-            
-            const singleUserId = localStorage.getItem('iois_user_id');
-            const singleUserName = localStorage.getItem('iois_user_name');
-            const singleEmail = localStorage.getItem('iois_user_email');
-            const singlePhone = localStorage.getItem('iois_user_phone');
-            const singleUPI = localStorage.getItem('iois_user_upi');
-            const singleSS = localStorage.getItem('iois_user_screenshot');
-
-            if (singleUserId && !members.some(m => m.userid === singleUserId)) {
-                members.unshift({
-                    name: singleUserName || "New Registered Member",
-                    userid: singleUserId,
-                    email: singleEmail || "member@iois.in",
-                    phone: singlePhone || "8877490845",
-                    upi: singleUPI || "Not Added",
-                    screenshot: singleSS || null,
-                    cardTier: "Tiranga Silver Card (₹10)",
-                    status: "Pending Verification"
-                });
-            }
 
             const total = members.length;
             const approved = members.filter(m => m.status === "Activated").length;
@@ -253,14 +163,12 @@
                     <td class="p-3 text-gray-300">${m.phone}<br><span class="text-[10px] text-gray-500">${m.email}</span></td>
                     <td class="p-3 font-mono text-teal-400 font-bold">${m.upi}</td>
                     <td class="p-3">
-                        <button onclick="viewScreenshot(${index})" class="px-2.5 py-1 bg-amber-500/20 text-amber-400 border border-amber-500/40 hover:bg-amber-500 hover:text-gray-950 font-bold rounded flex items-center gap-1">
-                            <i class="fa-solid fa-image"></i> View Screenshot
-                        </button>
+                        <button onclick="viewScreenshot(${index})" class="px-2 py-1 bg-amber-500/20 text-amber-400 border border-amber-500/40 font-bold rounded">View Proof</button>
                     </td>
                     <td class="p-3">${statusBadge}</td>
                     <td class="p-3 text-right space-x-2">
-                        <button onclick="approveMember(${index})" class="px-2.5 py-1 bg-teal-500 hover:bg-teal-600 text-gray-950 font-bold rounded">Approve</button>
-                        <button onclick="deleteMember(${index})" class="px-2.5 py-1 bg-red-600 hover:bg-red-700 text-white font-bold rounded">Delete</button>
+                        <button onclick="approveMember(${index})" class="px-2.5 py-1 bg-teal-500 text-gray-950 font-bold rounded">Approve</button>
+                        <button onclick="deleteMember(${index})" class="px-2.5 py-1 bg-red-600 text-white font-bold rounded">Delete</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -274,38 +182,38 @@
 
             document.getElementById('ss-user-info').innerText = `Name: ${m.name} | Fixed User ID: ${m.userid}`;
             const imgPreview = document.getElementById('ss-img-preview');
-            
-            if (m.screenshot) {
-                imgPreview.src = m.screenshot;
-            } else {
-                imgPreview.src = "https://via.placeholder.com/400x300?text=Screenshot+Sent+on+WhatsApp";
-            }
+            imgPreview.src = m.screenshot || "https://via.placeholder.com/400x300?text=Screenshot+Sent+on+WhatsApp";
 
             document.getElementById('ss-whatsapp-link').href = `https://wa.me/918877490845?text=Verifying%20Payment%20for%20${m.userid}`;
-            document.getElementById('ss-approve-btn').onclick = function() {
-                approveMember(index);
-                closeScreenshotModal();
-            };
+            document.getElementById('ss-approve-btn').onclick = function() { approveMember(index); closeScreenshotModal(); };
 
             document.getElementById('screenshot-modal').classList.remove('hidden');
         }
 
-        function closeScreenshotModal() {
-            document.getElementById('screenshot-modal').classList.add('hidden');
-        }
+        function closeScreenshotModal() { document.getElementById('screenshot-modal').classList.add('hidden'); }
 
         function approveMember(index) {
             let members = JSON.parse(localStorage.getItem('iois_all_members') || "[]");
             if (members[index]) {
+                const uid = members[index].userid;
                 members[index].status = "Activated";
                 localStorage.setItem('iois_all_members', JSON.stringify(members));
-                alert(`Member [${members[index].userid}] Activated!`);
+
+                // Update individual user object
+                let rawU = localStorage.getItem("iois_user_" + uid);
+                if (rawU) {
+                    let u = JSON.parse(rawU);
+                    u.status = "Activated";
+                    localStorage.setItem("iois_user_" + uid, JSON.stringify(u));
+                }
+
+                alert(`✅ Member [${uid}] is now ACTIVATED! When they login, their dashboard will show Activated status.`);
                 loadAdminData();
             }
         }
 
         function deleteMember(index) {
-            if (confirm("क्या आप वाकई इस मेंबर को हटाना चाहते हैं?")) {
+            if (confirm("क्या आप इस मेंबर को डिलीट करना चाहते हैं?")) {
                 let members = JSON.parse(localStorage.getItem('iois_all_members') || "[]");
                 members.splice(index, 1);
                 localStorage.setItem('iois_all_members', JSON.stringify(members));
@@ -315,8 +223,7 @@
 
         function clearAllData() {
             if (confirm("सावधानी: यह सभी मेंबर्स की जानकारी डिलीट कर देगा। क्या आप आगे बढ़ना चाहते हैं?")) {
-                localStorage.removeItem('iois_all_members');
-                localStorage.removeItem('iois_user_id');
+                localStorage.clear();
                 loadAdminData();
             }
         }
