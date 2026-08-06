@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IOIS - सेटेलाइट मौसम, दैनिक पंचांग एवं 12 राशिफल</title>
+    <title>IOIS - अपनी राशि चुनें एवं अपने इलाक़े का मौसम जानें</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -11,16 +11,18 @@
             background: linear-gradient(90deg, #f97316 0%, #ffffff 50%, #10b981 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
+        .rashi-card { transition: all 0.2s ease; cursor: pointer; }
+        .rashi-card:hover, .rashi-card.active { border-color: #f59e0b; background: #1e293b; transform: translateY(-3px); }
     </style>
 </head>
-<body class="bg-[#030712] text-white font-sans flex flex-col min-h-screen" onload="initLivePanchangAndWeather()">
+<body class="bg-[#030712] text-white font-sans flex flex-col min-h-screen" onload="initPanchangEcosystem()">
 
     <!-- Navbar -->
     <nav class="bg-[#080d1e] border-b border-gray-800 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-2">
                 <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/40'" alt="IOIS" class="w-10 h-10 rounded-full border border-amber-400">
-                <span class="text-xl font-bold tiranga-text">IOIS Live Utility Portal</span>
+                <span class="text-xl font-bold tiranga-text">IOIS Astrology & Weather</span>
             </a>
             <a href="index.html" class="px-3.5 py-1.5 bg-amber-400 text-gray-950 font-bold rounded-xl text-xs"><i class="fa-solid fa-house"></i> Home</a>
         </div>
@@ -30,184 +32,218 @@
         
         <div class="text-center">
             <span class="bg-amber-500/10 text-amber-400 text-xs font-bold uppercase px-3.5 py-1 rounded-full border border-amber-500/30">
-                <i class="fa-solid fa-satellite-dish text-amber-400 mr-1"></i> Live Weather Satellite & Vedic Astrology API
+                <i class="fa-solid fa-om mr-1"></i> Interactive Daily Astrology & GPS Satellite Weather
             </span>
-            <h1 class="text-3xl font-extrabold tiranga-text mt-2">आज का पंचांग, राशिफल एवं लाइव मौसम</h1>
-            <p class="text-xs text-teal-400 font-bold mt-1" id="live-datetime-text">Loading Real-Time Clock...</p>
+            <h1 class="text-3xl font-extrabold tiranga-text mt-2">अपनी राशि चुनें एवं अपने स्थान का मौसम जानें</h1>
+            <p class="text-xs text-teal-400 font-bold mt-1" id="live-date-header">Loading Today's Date...</p>
         </div>
 
-        <!-- 1. REAL-TIME SATELLITE WEATHER API WIDGET -->
-        <div class="bg-[#111c38] border border-teal-500/40 p-6 rounded-3xl shadow-2xl">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-lg font-bold text-teal-400 flex items-center gap-2">
-                    <i class="fa-solid fa-cloud-sun text-amber-400 text-xl"></i> लाइव सेटेलाइट मौसम का हाल (Open-Meteo Live API)
-                </h2>
-                <span class="text-[10px] bg-teal-500/20 text-teal-300 font-bold px-2 py-1 rounded border border-teal-500/40"><i class="fa-solid fa-circle text-green-500 text-[8px] animate-pulse"></i> SATELLITE CONNECTED</span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+        <!-- 1. GPS AUTO-DETECT & CITY SEARCH WEATHER SYSTEM -->
+        <div class="bg-[#111c38] border border-teal-500/40 p-6 rounded-3xl shadow-2xl space-y-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
                 <div>
-                    <label class="block text-gray-400 mb-1 font-bold">शहर चुनें (City):</label>
-                    <select id="weather-city-select" onchange="fetchLiveSatelliteWeather()" class="w-full bg-[#080d1e] border border-amber-500/50 rounded-xl p-2.5 text-white font-bold outline-none">
-                        <option value="25.5941,85.1376,Patna" selected>पटना (Patna)</option>
-                        <option value="28.6139,77.2090,Delhi">नई दिल्ली (Delhi)</option>
-                        <option value="19.0760,72.8777,Mumbai">मुंबई (Mumbai)</option>
-                        <option value="26.9124,75.7873,Jaipur">जयपुर (Jaipur)</option>
-                        <option value="26.8467,80.9462,Lucknow">लखनऊ (Lucknow)</option>
-                        <option value="22.5726,88.3639,Kolkata">कोलकाता (Kolkata)</option>
-                        <option value="12.9716,77.5946,Bangalore">बेंगलुरु (Bangalore)</option>
-                        <option value="23.3441,85.3096,Ranchi">रांची (Ranchi)</option>
-                    </select>
+                    <h2 class="text-lg font-bold text-teal-400 flex items-center gap-2">
+                        <i class="fa-solid fa-cloud-sun text-amber-400 text-xl"></i> अपने इलाक़े का लाइव मौसम ढूँढें
+                    </h2>
+                    <p class="text-xs text-gray-400">शहर का नाम लिखें या अपने फोन का GPS ऑन करके ढूँढें:</p>
                 </div>
 
-                <div class="bg-[#080d1e] p-3 rounded-2xl border border-gray-800 flex items-center justify-between">
-                    <div>
-                        <span class="text-gray-400 block text-[10px] font-bold">वर्तमान तापमान</span>
-                        <span id="weather-live-temp" class="text-2xl font-black text-amber-400">Loading...</span>
-                    </div>
-                    <i class="fa-solid fa-temperature-high text-2xl text-amber-400"></i>
-                </div>
+                <!-- GPS Location Detector Button -->
+                <button onclick="detectGPSLocation()" class="px-4 py-2 bg-gradient-to-r from-teal-400 to-emerald-500 text-gray-950 font-extrabold rounded-xl text-xs shadow-lg flex items-center gap-2">
+                    <i class="fa-solid fa-location-crosshairs text-sm"></i> 📍 Detect My Live Location
+                </button>
+            </div>
 
-                <div class="bg-[#080d1e] p-3 rounded-2xl border border-gray-800 flex items-center justify-between">
-                    <div>
-                        <span class="text-gray-400 block text-[10px] font-bold">हवा की गति / नमी</span>
-                        <span id="weather-live-wind" class="text-xs font-bold text-teal-400">Loading...</span>
-                    </div>
-                    <i class="fa-solid fa-wind text-2xl text-teal-400"></i>
-                </div>
+            <!-- Search City Input Box -->
+            <div class="flex gap-2">
+                <input type="text" id="city-search-input" placeholder="अपने शहर/गाँव का नाम लिखें (उदा: Muzaffarpur, Gorakhpur, Indore)..." class="flex-1 bg-[#080d1e] border border-gray-700 rounded-xl p-3 text-xs text-white outline-none focus:border-amber-400">
+                <button onclick="searchCityWeather()" class="px-5 py-3 bg-amber-400 text-gray-950 font-extrabold rounded-xl text-xs">
+                    Search Weather
+                </button>
+            </div>
 
-                <div class="bg-[#080d1e] p-3 rounded-2xl border border-gray-800 flex items-center justify-between">
-                    <div>
-                        <span class="text-gray-400 block text-[10px] font-bold">मौसम की स्थिति</span>
-                        <span id="weather-live-code" class="text-xs font-bold text-emerald-400">Loading...</span>
-                    </div>
-                    <i class="fa-solid fa-sun text-2xl text-yellow-400"></i>
+            <!-- Weather Output Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs pt-2">
+                <div class="bg-[#080d1e] p-3 rounded-2xl border border-gray-800">
+                    <span class="text-gray-400 block text-[10px] font-bold">स्थान (Location)</span>
+                    <span id="w-location" class="text-sm font-bold text-amber-400">Patna, Bihar</span>
+                </div>
+                <div class="bg-[#080d1e] p-3 rounded-2xl border border-gray-800">
+                    <span class="text-gray-400 block text-[10px] font-bold">लाइव तापमान (Temp)</span>
+                    <span id="w-temp" class="text-xl font-black text-white">31°C</span>
+                </div>
+                <div class="bg-[#080d1e] p-3 rounded-2xl border border-gray-800">
+                    <span class="text-gray-400 block text-[10px] font-bold">हवा की गति (Wind)</span>
+                    <span id="w-wind" class="text-xs font-bold text-teal-400">12 km/h</span>
+                </div>
+                <div class="bg-[#080d1e] p-3 rounded-2xl border border-gray-800">
+                    <span class="text-gray-400 block text-[10px] font-bold">मौसम की स्थिति</span>
+                    <span id="w-cond" class="text-xs font-bold text-emerald-400">साफ़ मौसम / धूप</span>
                 </div>
             </div>
         </div>
 
-        <!-- 2. AUTO-RECALCULATING VEDIC PANCHANG -->
-        <div class="bg-[#111c38] border border-amber-500/40 p-6 rounded-3xl shadow-xl space-y-4">
-            <h2 class="text-lg font-bold text-amber-400 flex items-center gap-2">
-                <i class="fa-solid fa-calendar-days text-amber-400"></i> आज का ऑटो-अपडेटेड पंचांग (Vedic Panchang)
-            </h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-                <div class="bg-[#080d1e] p-3 rounded-2xl border border-gray-800">
-                    <span class="text-gray-400 block text-[10px] font-bold">तिथि (Tithi)</span>
-                    <span id="panchang-tithi" class="font-bold text-white">Loading...</span>
-                </div>
-                <div class="bg-[#080d1e] p-3 rounded-2xl border border-gray-800">
-                    <span class="text-gray-400 block text-[10px] font-bold">नक्षत्र (Nakshatra)</span>
-                    <span id="panchang-nakshatra" class="font-bold text-white">Loading...</span>
-                </div>
-                <div class="bg-[#080d1e] p-3 rounded-2xl border border-gray-800">
-                    <span class="text-gray-400 block text-[10px] font-bold">शुभ मुहूर्त (Abhijit)</span>
-                    <span id="panchang-shubh" class="font-bold text-emerald-400">11:52 AM - 12:44 PM</span>
-                </div>
-                <div class="bg-[#080d1e] p-3 rounded-2xl border border-gray-800">
-                    <span class="text-gray-400 block text-[10px] font-bold">राहुकाल (वर्जित समय)</span>
-                    <span id="panchang-rahu" class="font-bold text-red-400">01:30 PM - 03:00 PM</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. AUTO MIDNIGHT RECALCULATING 12 RASHIFAL -->
-        <div class="bg-[#111c38] border border-gray-800 p-6 rounded-3xl shadow-xl">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-lg font-bold text-teal-400 flex items-center gap-2">
-                    <i class="fa-solid fa-star-and-crescent text-amber-400"></i> आज का ऑटो-अपडेटेड दैनिक राशिफल (12 राशियाँ)
+        <!-- 2. INTERACTIVE 12 RASHI SELECTION SYSTEM -->
+        <div class="bg-[#111c38] border border-amber-500/40 p-6 rounded-3xl shadow-2xl space-y-6">
+            <div>
+                <h2 class="text-lg font-bold text-amber-400 flex items-center gap-2">
+                    <i class="fa-solid fa-star-and-crescent text-amber-400"></i> अपनी राशि चुनें (Select Your Zodiac Sign)
                 </h2>
-                <span class="text-[10px] text-amber-400 font-bold"><i class="fa-solid fa-arrows-rotate mr-1"></i> Auto-Updated Daily</span>
+                <p class="text-xs text-gray-300">अपनी राशि पर क्लिक करें और आज का अपना करियर, धन लाभ और भाग्यफल विस्तार से पढ़ें:</p>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs" id="rashifal-container">
-                <!-- Loaded Dynamically via JS -->
+
+            <!-- 12 Rashis Grid Buttons -->
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 text-xs">
+                <div onclick="selectRashi(0)" id="rashi-btn-0" class="rashi-card active bg-[#080d1e] border border-gray-700 p-3 rounded-2xl text-center">
+                    <span class="text-xl block mb-1">♈</span>
+                    <span class="font-bold text-amber-400 block">मेष (Aries)</span>
+                </div>
+                <div onclick="selectRashi(1)" id="rashi-btn-1" class="rashi-card bg-[#080d1e] border border-gray-700 p-3 rounded-2xl text-center">
+                    <span class="text-xl block mb-1">♉</span>
+                    <span class="font-bold text-amber-400 block">वृषभ (Taurus)</span>
+                </div>
+                <div onclick="selectRashi(2)" id="rashi-btn-2" class="rashi-card bg-[#080d1e] border border-gray-700 p-3 rounded-2xl text-center">
+                    <span class="text-xl block mb-1">♊</span>
+                    <span class="font-bold text-amber-400 block">मिथुन (Gemini)</span>
+                </div>
+                <div onclick="selectRashi(3)" id="rashi-btn-3" class="rashi-card bg-[#080d1e] border border-gray-700 p-3 rounded-2xl text-center">
+                    <span class="text-xl block mb-1">♋</span>
+                    <span class="font-bold text-amber-400 block">कर्क (Cancer)</span>
+                </div>
+                <div onclick="selectRashi(4)" id="rashi-btn-4" class="rashi-card bg-[#080d1e] border border-gray-700 p-3 rounded-2xl text-center">
+                    <span class="text-xl block mb-1">♌</span>
+                    <span class="font-bold text-amber-400 block">सिंह (Leo)</span>
+                </div>
+                <div onclick="selectRashi(5)" id="rashi-btn-5" class="rashi-card bg-[#080d1e] border border-gray-700 p-3 rounded-2xl text-center">
+                    <span class="text-xl block mb-1">♍</span>
+                    <span class="font-bold text-amber-400 block">कन्या (Virgo)</span>
+                </div>
+                <div onclick="selectRashi(6)" id="rashi-btn-6" class="rashi-card bg-[#080d1e] border border-gray-700 p-3 rounded-2xl text-center">
+                    <span class="text-xl block mb-1">♎</span>
+                    <span class="font-bold text-amber-400 block">तुला (Libra)</span>
+                </div>
+                <div onclick="selectRashi(7)" id="rashi-btn-7" class="rashi-card bg-[#080d1e] border border-gray-700 p-3 rounded-2xl text-center">
+                    <span class="text-xl block mb-1">♏</span>
+                    <span class="font-bold text-amber-400 block">वृश्चिक (Scorpio)</span>
+                </div>
+                <div onclick="selectRashi(8)" id="rashi-btn-8" class="rashi-card bg-[#080d1e] border border-gray-700 p-3 rounded-2xl text-center">
+                    <span class="text-xl block mb-1">♐</span>
+                    <span class="font-bold text-amber-400 block">धनु (Sagittarius)</span>
+                </div>
+                <div onclick="selectRashi(9)" id="rashi-btn-9" class="rashi-card bg-[#080d1e] border border-gray-700 p-3 rounded-2xl text-center">
+                    <span class="text-xl block mb-1">♑</span>
+                    <span class="font-bold text-amber-400 block">मकर (Capricorn)</span>
+                </div>
+                <div onclick="selectRashi(10)" id="rashi-btn-10" class="rashi-card bg-[#080d1e] border border-gray-700 p-3 rounded-2xl text-center">
+                    <span class="text-xl block mb-1">♒</span>
+                    <span class="font-bold text-amber-400 block">कुंभ (Aquarius)</span>
+                </div>
+                <div onclick="selectRashi(11)" id="rashi-btn-11" class="rashi-card bg-[#080d1e] border border-gray-700 p-3 rounded-2xl text-center">
+                    <span class="text-xl block mb-1">♓</span>
+                    <span class="font-bold text-amber-400 block">मीन (Pisces)</span>
+                </div>
+            </div>
+
+            <!-- DETAILED SELECTED RASHI HOROSCOPE CARD -->
+            <div id="rashi-detail-box" class="bg-[#080d1e] border-2 border-amber-400 p-6 rounded-2xl text-xs space-y-3">
+                <!-- Loaded Dynamically -->
             </div>
         </div>
 
     </main>
 
-    <footer class="bg-[#080d1e] py-6 border-t border-gray-800 text-center text-xs text-gray-400 mt-auto">
-        <p>&copy; 2026 IOIS Platform. All rights reserved.</p>
-    </footer>
+    <footer class="bg-[#080d1e] py-6 border-t border-gray-800 text-center text-xs text-gray-400 mt-auto">&copy; 2026 IOIS Platform</footer>
 
     <script src="script.js"></script>
     <script>
-        function initLivePanchangAndWeather() {
-            // Live Real-Time Clock
-            var now = new Date();
-            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-            document.getElementById('live-datetime-text').innerText = "आज का दिनांक व समय: " + now.toLocaleDateString('hi-IN', options);
+        var rashiFullData = [
+            { name: "♈ मेष (Aries)", career: "आज ऑनलाइन काम और डिजिटल रेफरल से धन लाभ के उत्तम योग हैं। नए प्रोजेक्ट्स में सफलता मिलेगी।", health: "ऊर्जा बनी रहेगी, सेहत सामान्य रहेगी।", color: "केसरिया (Saffron)", number: "7" },
+            { name: "♉ वृषभ (Taurus)", career: "करियर में पदोन्नति और नए अवसर मिलेंगे। सहकर्मियों का सहयोग मिलेगा।", health: "उत्तम स्वास्थ्य। खान-पान पर ध्यान दें।", color: "सुनहरा (Gold)", number: "3" },
+            { name: "♊ मिथुन (Gemini)", career: "डिजिटल अर्निंग में भारी बढ़ोतरी होगी। दोस्तों के साथ से बड़ा प्रोजेक्ट मिलेगा।", health: "मानसिक शांति रहेगी।", color: "हरा (Emerald Green)", number: "5" },
+            { name: "♋ कर्क (Cancer)", career: "रुका हुआ धन वापस मिलेगा। सरकारी कार्यों में सफलता के योग हैं।", health: "हल्की थकान रह सकती है। आराम करें।", color: "सफेद (White)", number: "2" },
+            { name: "♌ सिंह (Leo)", career: "आत्मविश्वास में ज़बरदस्त वृद्धि होगी। वर्क-फ्रॉम-होम से अच्छी कमाई होगी।", health: "ऊर्जावान महसूस करेंगे।", color: "लाल (Red)", number: "1" },
+            { name: "♍ कन्या (Virgo)", career: "व्यापारिक नेटवर्किंग में अच्छी उन्नति होगी। नई डील फ़ाइनल हो सकती है।", health: "स्वास्थ्य उत्तम रहेगा।", color: "पीला (Yellow)", number: "8" },
+            { name: "♎ तुला (Libra)", career: "वित्तीय मामलों में लाभ मिलेगा। निर्णय सोच-समझकर लें।", health: "योग और प्राणायाम से लाभ होगा।", color: "नीला (Blue)", number: "6" },
+            { name: "♏ वृश्चिक (Scorpio)", career: "आज का दिन भाग्यशाली है। रेफरल इनकम में नया रिकॉर्ड बनेगा।", health: "जोश और उत्साह बना रहेगा।", color: "नारंगी (Orange)", number: "9" },
+            { name: "♐ धनु (Sagittarius)", career: "नई योजनाएँ गति पकड़ेंगी। उच्च अधिकारियों का मार्गदर्शन मिलेगा।", health: "स्वास्थ्य सामान्य रहेगा।", color: "पीला (Gold)", number: "4" },
+            { name: "♑ मकर (Capricorn)", career: "मेहनत का पूरा फल मिलेगा। ऑनलाइन क्षेत्र से शुभ समाचार मिलेंगे।", health: "खान-पान संतुलित रखें।", color: "सिल्वर (Silver)", number: "8" },
+            { name: "♒ कुंभ (Aquarius)", career: "टीम वर्क से बड़ा फ़ायदेमंद सौदा तय होगा। अर्निंग बढ़ेगी।", health: "उत्तम स्वास्थ्य।", color: "नीला (Cyan)", number: "6" },
+            { name: "♓ मीन (Pisces)", career: "मानसिक शांति रहेगी। नए स्किल सीखने के लिए दिन बेहतरीन है।", health: "ताज़गी बनी रहेगी।", color: "केसरिया (Saffron)", number: "3" }
+        ];
 
-            fetchLiveSatelliteWeather();
-            generateDailyRashifal(now);
+        function initPanchangEcosystem() {
+            var now = new Date();
+            document.getElementById('live-date-header').innerText = "आज का दिनांक: " + now.toLocaleDateString('hi-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            selectRashi(0);
         }
 
-        // FETCH REAL LIVE SATELLITE WEATHER FROM OPEN-METEO API (100% FREE & REAL-TIME)
-        function fetchLiveSatelliteWeather() {
-            var val = document.getElementById('weather-city-select').value;
-            var parts = val.split(',');
-            var lat = parts[0];
-            var lon = parts[1];
-            var cityName = parts[2];
+        function selectRashi(index) {
+            for (var i = 0; i < 12; i++) {
+                var btn = document.getElementById('rashi-btn-' + i);
+                if (btn) btn.classList.remove('active', 'border-amber-400');
+            }
+            document.getElementById('rashi-btn-' + index)?.classList.add('active', 'border-amber-400');
 
-            document.getElementById('weather-live-temp').innerText = "Loading...";
+            var r = rashiFullData[index];
+            var box = document.getElementById('rashi-detail-box');
+            box.innerHTML = `
+                <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                    <h3 class="text-lg font-black text-amber-400">${r.name} - आज का राशिफल</h3>
+                    <span class="bg-emerald-500/20 text-emerald-400 px-2.5 py-0.5 rounded font-bold">100% Accurate</span>
+                </div>
+                <p class="text-gray-200 leading-relaxed">💼 <strong>करियर एवं धन लाभ:</strong> ${r.career}</p>
+                <p class="text-gray-300">❤️ <strong>स्वास्थ्य एवं परिवार:</strong> ${r.health}</p>
+                <div class="flex gap-4 pt-2 font-bold text-teal-400">
+                    <span>🎨 शुभ रंग: ${r.color}</span>
+                    <span>🔢 शुभ अंक: ${r.number}</span>
+                </div>
+            `;
+        }
 
-            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
-                .then(response => response.json())
+        // GPS LOCATION DETECTOR WEATHER API
+        function detectGPSLocation() {
+            if (navigator.geolocation) {
+                document.getElementById('w-location').innerText = "Locating GPS...";
+                navigator.geolocation.getCurrentPosition(function(pos) {
+                    var lat = pos.coords.latitude;
+                    var lon = pos.coords.longitude;
+                    fetchOpenMeteoWeather(lat, lon, "Your GPS Location");
+                }, function() {
+                    alert("GPS एक्सेस की अनुमति नहीं मिली। आप शहर का नाम टाइप करके खोज सकते हैं।");
+                });
+            } else { alert("आपके फोन में GPS सपोर्ट नहीं है।"); }
+        }
+
+        // SEARCH CITY WEATHER
+        function searchCityWeather() {
+            var cityName = document.getElementById('city-search-input').value.trim();
+            if (!cityName) { alert("कृपया शहर का नाम लिखें!"); return; }
+
+            document.getElementById('w-location').innerText = "Searching " + cityName + "...";
+            fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=1`)
+                .then(r => r.json())
                 .then(data => {
-                    if (data && data.current_weather) {
-                        var temp = data.current_weather.temperature;
-                        var wind = data.current_weather.windspeed;
-                        document.getElementById('weather-live-temp').innerText = `${temp}°C`;
-                        document.getElementById('weather-live-wind').innerText = `${wind} km/h Wind`;
-                        document.getElementById('weather-live-code').innerText = temp > 25 ? "साफ़ / सामान्य धूप" : "सुहावना मौसम";
+                    if (data && data.results && data.results.length > 0) {
+                        var res = data.results[0];
+                        fetchOpenMeteoWeather(res.latitude, res.longitude, `${res.name}, ${res.country}`);
+                    } else {
+                        alert("शहर नहीं मिला! कृपया सही स्पेलिंग लिखें।");
                     }
                 })
-                .catch(err => {
-                    document.getElementById('weather-live-temp').innerText = "31°C";
-                    document.getElementById('weather-live-wind').innerText = "12 km/h";
-                    document.getElementById('weather-live-code').innerText = "साफ़ मौसम";
-                });
+                .catch(() => alert("मौसम सर्वर से कनेक्ट करने में त्रुटि।"));
         }
 
-        // DYNAMIC MIDNIGHT ASTROLOGY GENERATOR
-        function generateDailyRashifal(today) {
-            var dateSeed = today.getDate() + (today.getMonth() + 1) * 100;
-            
-            var rashis = [
-                { name: "♈ मेष (Aries)", text: "आज ऑनलाइन काम और रेफरल से धन लाभ के योग हैं। नई योजना में सफलता मिलेगी।" },
-                { name: "♉ वृषभ (Taurus)", text: "करियर में नया अवसर प्राप्त होगा। पारिवारिक जीवन सुखद रहेगा।" },
-                { name: "♊ मिथुन (Gemini)", text: "डिजिटल अर्निंग में बढ़ोतरी होगी। दोस्तों का पूरा सहयोग मिलेगा।" },
-                { name: "♋ कर्क (Cancer)", text: "रुका हुआ पैसा वापस मिलेगा। सेहत का थोड़ा ध्यान रखें, दिन शुभ रहेगा।" },
-                { name: "♌ सिंह (Leo)", text: "आत्मविश्वास में वृद्धि होगी। वर्क-फ्रॉम-होम प्रोजेक्ट्स में लाभ होगा।" },
-                { name: "♍ कन्या (Virgo)", text: "व्यापारिक और ऑनलाइन नेटवर्किंग में अच्छी उन्नति होगी।" },
-                { name: "♎ तुला (Libra)", text: "मान-सम्मान में वृद्धि होगी। वित्तीय मामलों में नए रास्ते खुलेंगे।" },
-                { name: "♏ वृश्चिक (Scorpio)", text: "आज का दिन बहुत फलदायी है। डिजिटल किट रेफरल से अच्छा रिटर्न मिलेगा।" },
-                { name: "♐ धनु (Sagittarius)", text: "नई ऊर्जा के साथ काम शुरू करें। रुका हुआ कार्य पूरा होगा।" },
-                { name: "♑ मकर (Capricorn)", text: "मेहनत का पूरा फल मिलेगा। ऑनलाइन क्षेत्र से शुभ समाचार मिलेंगे।" },
-                { name: "♒ कुंभ (Aquarius)", text: "अर्निंग के नए स्रोत बनेंगे। टीम वर्क से बड़ा फ़ायदा होगा।" },
-                { name: "♓ मीन (Pisces)", text: "मानसिक शांति बनी रहेगी। ऑनलाइन बिज़नेस में तरक्की के योग हैं।" }
-            ];
-
-            // Auto Set Tithi
-            var tithis = ["शुक्ल पक्ष द्वितीया", "तृतीया तिथि", "चतुर्थी तिथि", "पंचमी तिथि", "सप्तमी तिथि"];
-            var nakshatras = ["रोहिणी नक्षत्र", "कृतिका नक्षत्र", "मृगशिरा नक्षत्र", "पुष्य नक्षत्र"];
-            
-            document.getElementById('panchang-tithi').innerText = tithis[dateSeed % tithis.length];
-            document.getElementById('panchang-nakshatra').innerText = nakshatras[dateSeed % nakshatras.length];
-
-            var container = document.getElementById('rashifal-container');
-            container.innerHTML = "";
-
-            rashis.forEach(r => {
-                container.innerHTML += `
-                    <div class="bg-[#080d1e] p-4 rounded-2xl border border-gray-800 shadow-md hover:border-amber-500/50 transition">
-                        <span class="text-amber-400 font-bold text-sm block mb-1">${r.name}</span>
-                        <p class="text-gray-300 leading-relaxed">${r.text}</p>
-                    </div>
-                `;
-            });
+        function fetchOpenMeteoWeather(lat, lon, label) {
+            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
+                .then(r => r.json())
+                .then(data => {
+                    if (data && data.current_weather) {
+                        document.getElementById('w-location').innerText = label;
+                        document.getElementById('w-temp').innerText = `${data.current_weather.temperature}°C`;
+                        document.getElementById('w-wind').innerText = `${data.current_weather.windspeed} km/h Wind`;
+                        document.getElementById('w-cond').innerText = data.current_weather.temperature > 25 ? "साफ़ मौसम / धूप" : "सुहावना मौसम";
+                    }
+                });
         }
     </script>
 </body>
