@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOIS - Member Reviews & Feedback System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .tiranga-text {
+            background: linear-gradient(90deg, #f97316 0%, #ffffff 50%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-[#030712] text-white font-sans flex flex-col min-h-screen">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-[#080d1e] border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/40'" alt="IOIS" class="w-10 h-10 rounded-full border border-amber-400 object-cover">
+                <span class="text-xl font-bold tracking-wide tiranga-text">IOIS Feedback Portal</span>
+            </a>
+            <a href="index.html" class="px-3.5 py-1.5 bg-amber-400 text-gray-950 font-bold rounded-xl text-xs"><i class="fa-solid fa-house"></i> Home</a>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full space-y-8">
+        
+        <!-- HEADER TITLE -->
+        <div class="text-center">
+            <span class="bg-amber-500/10 text-amber-400 text-xs font-bold uppercase px-3.5 py-1 rounded-full border border-amber-500/30">
+                <i class="fa-solid fa-star text-amber-400 mr-1"></i> Member Satisfaction & Ratings
+            </span>
+            <h1 class="text-3xl md:text-4xl font-extrabold tiranga-text mt-2">सदस्य फ़ीडबैक एवं रेटिंग सिस्टम</h1>
+            <p class="text-xs text-gray-400 mt-1">आपकी राय हमारे लिए अत्यंत मूल्यवान है। अपना अनुभव साझा करें!</p>
+        </div>
+
+        <!-- OVERALL RATING SCORECARD -->
+        <div class="bg-[#111c38] border border-amber-500/40 p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row items-center justify-around gap-6 text-center md:text-left">
+            <div class="text-center">
+                <div class="text-5xl font-black text-amber-400">4.9 <span class="text-sm font-normal text-gray-400">/ 5</span></div>
+                <div class="text-amber-400 text-sm my-1">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="text-xs text-teal-400 font-bold">2,500+ Verified Member Reviews</p>
+            </div>
+
+            <div class="space-y-1 text-xs text-gray-300 w-full max-w-xs">
+                <div class="flex items-center gap-2"><span>5 Star</span> <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden"><div class="bg-amber-400 h-full w-[92%]"></div></div> <span>92%</span></div>
+                <div class="flex items-center gap-2"><span>4 Star</span> <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden"><div class="bg-amber-400 h-full w-[6%]"></div></div> <span>6%</span></div>
+                <div class="flex items-center gap-2"><span>3 Star</span> <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden"><div class="bg-amber-400 h-full w-[2%]"></div></div> <span>2%</span></div>
+            </div>
+        </div>
+
+        <!-- FEEDBACK FORM & LIVE REVIEWS GRID -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- 1. FEEDBACK SUBMISSION FORM -->
+            <div class="bg-[#111c38] border border-gray-800 p-6 rounded-3xl shadow-2xl space-y-4">
+                <h3 class="text-lg font-extrabold text-amber-400 flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square"></i> अपना फ़ीडबैक / रेटिंग दर्ज करें
+                </h3>
+
+                <form onsubmit="handleFeedbackFormSubmit(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-xs text-gray-300 mb-1">Your Name *</label>
+                        <input type="text" id="fb-name" required placeholder="अपना पूरा नाम लिखें" class="w-full bg-[#080d1e] border border-gray-700 rounded-xl p-2.5 text-xs text-white outline-none focus:border-amber-400">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-gray-300 mb-1">Fixed User ID / Refer Code *</label>
+                        <input type="text" id="fb-userid" required placeholder="उदा: IOIS349190" class="w-full bg-[#080d1e] border border-gray-700 rounded-xl p-2.5 text-xs text-white outline-none focus:border-amber-400">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-amber-400 font-bold mb-1">Select Star Rating *</label>
+                        <select id="fb-rating" class="w-full bg-[#080d1e] border border-amber-500 rounded-xl p-2.5 text-xs text-white font-bold outline-none">
+                            <option value="5 ⭐⭐⭐⭐⭐ (Excellent)" selected>5 Stars ⭐⭐⭐⭐⭐ (उत्कृष्ट अनुभव)</option>
+                            <option value="4 ⭐⭐⭐⭐ (Very Good)">4 Stars ⭐⭐⭐⭐ (बहुत अच्छा)</option>
+                            <option value="3 ⭐⭐⭐ (Good)">3 Stars ⭐⭐⭐ (अच्छा)</option>
+                            <option value="2 ⭐⭐ (Average)">2 Stars ⭐⭐ (औसत)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-gray-300 mb-1">Category / किस विषय में फ़ीडबैक है?</label>
+                        <select id="fb-category" class="w-full bg-[#080d1e] border border-gray-700 rounded-xl p-2.5 text-xs text-white outline-none">
+                            <option value="Referral Earnings & UPI Payout">रेफरल अर्निंग एवं UPI विथड्रॉल</option>
+                            <option value="Digital Kits & Resume Quality">डिजिटल किट एवं रेज़्यूमे क्वालिटी</option>
+                            <option value="3D Tiranga Digital ID Card">3D तिरंगा डिजिटल ID कार्ड</option>
+                            <option value="Overall Platform Support">प्लेटफ़ॉर्म सपोर्ट एवं सर्विसेज</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-gray-300 mb-1">Your Detailed Feedback Message *</label>
+                        <textarea id="fb-message" rows="3" required placeholder="अपना अनुभव, तारीफ या सुझाव यहाँ विस्तार से लिखें..." class="w-full bg-[#080d1e] border border-gray-700 rounded-xl p-2.5 text-xs text-white outline-none focus:border-amber-400"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-gray-950 font-black rounded-xl text-xs shadow-xl transition">
+                        <i class="fa-solid fa-paper-plane mr-1"></i> Submit Feedback (Google Sheet & Telegram Sync)
+                    </button>
+                </form>
+            </div>
+
+            <!-- 2. RECENT MEMBER TESTIMONIALS & REVIEWS SHOWCASE -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-extrabold text-teal-400 flex items-center gap-2">
+                    <i class="fa-solid fa-comments text-amber-400"></i> मेंबर्स के हालिया रिव्यूज (Recent Member Reviews)
+                </h3>
+
+                <div class="space-y-3 text-xs">
+                    <!-- Review Card 1 -->
+                    <div class="bg-[#111c38] border border-gray-800 p-4 rounded-2xl shadow-lg">
+                        <div class="flex justify-between items-center mb-2">
+                            <div>
+                                <span class="font-bold text-white text-sm">Rahul Sharma (Delhi)</span>
+                                <span class="text-[10px] text-amber-400 font-mono block">IOIS349190</span>
+                            </div>
+                            <div class="text-amber-400 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">"IOIS Platform बहुत ही लाजवाब है! मैंने ₹49 के गोल्ड प्लान से शुरुआत की थी और 2 ही दिन में ₹350 की अर्निंग कर ली। 2 घंटे में विथड्रॉल सीधे मेरे Paytm UPI में आ गया!"</p>
+                    </div>
+
+                    <!-- Review Card 2 -->
+                    <div class="bg-[#111c38] border border-gray-800 p-4 rounded-2xl shadow-lg">
+                        <div class="flex justify-between items-center mb-2">
+                            <div>
+                                <span class="font-bold text-white text-sm">Priya Singh (Jaipur)</span>
+                                <span class="text-[10px] text-amber-400 font-mono block">IOIS782103</span>
+                            </div>
+                            <div class="text-amber-400 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">"इसका 3D तिरंगा ID कार्ड और PDF डाउनलोडर फीचर बहुत ही शानदार है। कार्ड की प्रिंट क्वालिटी CSC सेंटर पर बहुत अच्छी आई।"</p>
+                    </div>
+
+                    <!-- Review Card 3 -->
+                    <div class="bg-[#111c38] border border-gray-800 p-4 rounded-2xl shadow-lg">
+                        <div class="flex justify-between items-center mb-2">
+                            <div>
+                                <span class="font-bold text-white text-sm">Vikas Kumar (Patna)</span>
+                                <span class="text-[10px] text-amber-400 font-mono block">IOIS108922</span>
+                            </div>
+                            <div class="text-amber-400 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">"100% लीगल और सच्चा प्लेटफ़ॉर्म! 24/7 AI चैटबॉट और टेलीग्राम अलर्ट्स बहुत फ़ास्ट काम करते हैं।"</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-[#080d1e] py-6 border-t border-gray-800 text-center text-xs text-gray-400 mt-auto">
+        <p>&copy; 2026 IOIS Platform. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function handleFeedbackFormSubmit(e) {
+            e.preventDefault();
+            var name = document.getElementById('fb-name').value.trim();
+            var userid = document.getElementById('fb-userid').value.trim();
+            var rating = document.getElementById('fb-rating').value;
+            var category = document.getElementById('fb-category').value;
+            var message = document.getElementById('fb-message').value.trim();
+
+            if (!name || !userid || !message) {
+                alert("⚠️ कृपया सभी फ़ील्ड्स सही-सही भरें!");
+                return;
+            }
+
+            // Telegram Alert Message
+            var alertMsg = `⭐ *NEW IOIS MEMBER FEEDBACK RECEIVED!*\n\n` +
+                `👤 *Name:* ${name}\n` +
+                `🆔 *Fixed User ID:* \`${userid}\`\n` +
+                `⭐ *Rating:* ${rating}\n` +
+                `📁 *Category:* ${category}\n` +
+                `💬 *Message:* "${message}"\n\n` +
+                `✅ _Feedback synced with Google Sheets & Admin Portal._`;
+
+            // Trigger Telegram Alert
+            if (typeof sendTelegramAlert === "function") {
+                sendTelegramAlert(alertMsg);
+            }
+
+            // Sync with Google Sheet
+            if (typeof syncToGoogleSheet === "function") {
+                syncToGoogleSheet({
+                    action: "feedback",
+                    userid: userid,
+                    name: name,
+                    rating: rating,
+                    category: category,
+                    message: message
+                });
+            }
+
+            alert("✅ धन्यवाद! आपका फ़ीडबैक सफलतापूर्वक सबमिट हो गया है और गूगल शीट व टेलीग्राम पर सिंक हो गया है।");
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
