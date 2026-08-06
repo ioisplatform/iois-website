@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOIS - Member Community Chat Room</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-[#030712] text-white font-sans flex flex-col min-h-screen" onload="loadChatRoom()">
+
+    <nav class="bg-[#080d1e] border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/40'" alt="IOIS" class="w-10 h-10 rounded-full border border-amber-400">
+                <span class="text-xl font-bold text-amber-400">IOIS Live Chat Room</span>
+            </a>
+            <a href="dashboard.html" class="px-3.5 py-1.5 bg-amber-400 text-gray-950 font-bold rounded-xl text-xs">Dashboard</a>
+        </div>
+    </nav>
+
+    <main class="max-w-3xl mx-auto px-4 py-6 flex-1 w-full flex flex-col">
+        <div class="bg-[#111c38] border border-amber-500/40 rounded-3xl p-4 flex-1 flex flex-col shadow-2xl">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-3">
+                <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 bg-green-500 rounded-full animate-ping"></span>
+                    <span class="font-bold text-sm text-teal-400">IOIS Public Member Discussion</span>
+                </div>
+                <span id="active-user-badge" class="text-xs text-amber-400 font-mono font-bold">User: Guest</span>
+            </div>
+
+            <!-- CHAT MESSAGES DISPLAY BOX -->
+            <div id="public-chat-box" class="flex-1 min-h-[350px] max-h-[450px] overflow-y-auto space-y-3 p-2 text-xs">
+                <!-- Messages Loaded Here -->
+            </div>
+
+            <!-- CHAT INPUT FORM -->
+            <form onsubmit="postPublicMessage(event)" class="mt-4 flex gap-2 border-t border-gray-800 pt-3">
+                <input type="text" id="chat-text-input" required placeholder="अपना मैसेज यहाँ लिखें..." class="flex-1 bg-[#080d1e] border border-gray-700 rounded-xl p-3 text-xs text-white outline-none focus:border-amber-400">
+                <button type="submit" class="px-5 py-3 bg-amber-400 text-gray-950 font-extrabold rounded-xl text-xs hover:bg-amber-500">
+                    Send <i class="fa-solid fa-paper-plane ml-1"></i>
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        function loadChatRoom() {
+            var userid = localStorage.getItem('iois_user_id') || 'Guest';
+            var name = localStorage.getItem('iois_user_name') || 'Member';
+            document.getElementById('active-user-badge').innerText = `User: ${name} (${userid})`;
+
+            var messages = JSON.parse(localStorage.getItem('iois_public_chat') || "[]");
+            if (messages.length === 0) {
+                messages = [
+                    { name: "Rahul (Delhi)", id: "IOIS349190", text: "नमस्ते दोस्तों! आज मुझे ₹35 का विथड्रॉल मिला।", time: "10:15 AM" },
+                    { name: "Priya (Jaipur)", id: "IOIS782103", text: "बधाई हो राहुल! मैंने भी आज 2 दोस्तों को जोड़ा।", time: "10:18 AM" }
+                ];
+                localStorage.setItem('iois_public_chat', JSON.stringify(messages));
+            }
+            renderChatMessages(messages);
+        }
+
+        function renderChatMessages(messages) {
+            var box = document.getElementById('public-chat-box');
+            box.innerHTML = "";
+            messages.forEach(m => {
+                box.innerHTML += `
+                    <div class="bg-[#080d1e] border border-gray-800 p-3 rounded-2xl">
+                        <div class="flex justify-between items-center text-[10px] text-gray-400 mb-1">
+                            <span class="font-bold text-amber-400">${m.name} <span class="font-mono text-teal-400">(${m.id})</span></span>
+                            <span>${m.time}</span>
+                        </div>
+                        <p class="text-gray-200 text-xs">${m.text}</p>
+                    </div>
+                `;
+            });
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function postPublicMessage(e) {
+            e.preventDefault();
+            var input = document.getElementById('chat-text-input');
+            var text = input.value.trim();
+            if (!text) return;
+
+            var userid = localStorage.getItem('iois_user_id') || 'Guest';
+            var name = localStorage.getItem('iois_user_name') || 'Member';
+            var time = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+
+            var messages = JSON.parse(localStorage.getItem('iois_public_chat') || "[]");
+            messages.push({ name: name, id: userid, text: text, time: time });
+            localStorage.setItem('iois_public_chat', JSON.stringify(messages));
+            
+            input.value = "";
+            renderChatMessages(messages);
+        }
+    </script>
+</body>
+</html>
