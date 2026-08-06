@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOIS - ताज़ा समाचार एवं डिजिटल अपडेट्स</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-[#030712] text-white font-sans flex flex-col min-h-screen">
+
+    <nav class="bg-[#080d1e] border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="assets/logo.png" onerror="this.src='https://via.placeholder.com/40'" alt="IOIS" class="w-10 h-10 rounded-full border border-amber-400">
+                <span class="text-xl font-bold text-amber-400">IOIS Live News</span>
+            </a>
+            <a href="index.html" class="px-3.5 py-1.5 bg-amber-400 text-gray-950 font-bold rounded-xl text-xs"><i class="fa-solid fa-house"></i> Home</a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
+        <div class="text-center">
+            <span class="bg-red-600 text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">LIVE BREAKING</span>
+            <h1 class="text-3xl font-extrabold text-amber-400 mt-2">ताज़ा समाचार एवं राष्ट्रीय डिजिटल अपडेट्स</h1>
+            <p class="text-xs text-gray-400 mt-1" id="news-date">Loading Today's Date...</p>
+        </div>
+
+        <div class="space-y-4 text-xs md:text-sm">
+            <div class="bg-[#111c38] border border-gray-800 p-5 rounded-2xl">
+                <span class="text-teal-400 font-bold text-xs uppercase">डिजिटल इंडिया & रोज़गार</span>
+                <h3 class="text-lg font-bold text-white my-1">भारत में ऑनलाइन वर्क-फ्रॉम-होम नौकरियों में 40% की भारी बढ़ोतरी</h3>
+                <p class="text-gray-300 leading-relaxed">डिजिटल इंडिया पहल के तहत भारत के ग्रामीण और शहरी क्षेत्रों में ऑनलाइन डेटा एंट्री, एआई प्रॉम्टिंग और कंटेंट राइटिंग की माँग तेज़ी से बढ़ रही है।</p>
+            </div>
+
+            <div class="bg-[#111c38] border border-gray-800 p-5 rounded-2xl">
+                <span class="text-amber-400 font-bold text-xs uppercase">UPI पेमेन्ट अपडेट</span>
+                <h3 class="text-lg font-bold text-white my-1">NPCI द्वारा UPI विथड्रॉल को और अधिक सुरक्षित एवं त्वरित बनाया गया</h3>
+                <p class="text-gray-300 leading-relaxed">भारत में UPI पेमेंट सिस्टम ने नया रिकॉर्ड बनाया है। अब 24x7 रियल-टाइम डायरेक्ट वॉलेट और बैंक पेआउट्स बिना किसी रुकावट के ट्रांसफर हो रहे हैं।</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-[#080d1e] py-6 border-t border-gray-800 text-center text-xs text-gray-400 mt-auto">&copy; 2026 IOIS Platform</footer>
+    <script>document.getElementById('news-date').innerText = new Date().toLocaleDateString('hi-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });</script>
+</body>
+</html>
