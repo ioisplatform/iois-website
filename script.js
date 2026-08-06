@@ -1,5 +1,5 @@
 /* ==========================================================================
-   IOIS PLATFORM - MASTER SCRIPT (100% UNCUT FULL CODE)
+   IOIS PLATFORM - MASTER SCRIPT WITH ADVANCED MULTI-INTENT SMART AI CHATBOT
    Indian Online Income Supporting System
    ========================================================================== */
 
@@ -27,9 +27,9 @@ function injectChatbotWidget() {
                 </div>
                 <button onclick="toggleChatbot()" class="text-gray-400 hover:text-white text-lg">&times;</button>
             </div>
-            <div id="chat-messages" class="h-52 overflow-y-auto space-y-2 pr-1 text-[11px]">
+            <div id="chat-messages" class="h-56 overflow-y-auto space-y-2 pr-1 text-[11px]">
                 <div class="bg-slate-900 p-2.5 rounded-xl text-slate-200 border border-slate-700 leading-relaxed">
-                    👋 नमस्ते! मैं IOIS Live AI सहायक हूँ। पूछें: ताज़ा समाचार, लाइव जॉब्स, अर्निंग प्लान या आज का पंचांग/मौसम/राशिफल!
+                    👋 नमस्ते! मैं IOIS AI सहायक हूँ। मुझसे पूछें: अर्निंग कैसे करें, विथड्रॉल, डिजिटल किट, ताज़ा समाचार, जॉब्स या मौसम का हाल!
                 </div>
             </div>
             <div class="flex gap-1 border-t border-gray-700 pt-2">
@@ -48,7 +48,7 @@ window.toggleChatbot = function() {
     if (w) w.classList.toggle("hidden");
 };
 
-// 2. PAGE-AWARE SMART AI CHATBOT ENGINE
+// 2. ADVANCED MULTI-INTENT AI CHATBOT ENGINE
 window.handleChatbotSend = function () {
     const inputEl = document.getElementById("chat-input");
     const chatMsg = document.getElementById("chat-messages");
@@ -57,6 +57,7 @@ window.handleChatbotSend = function () {
     const userText = inputEl.value.trim();
     if (!userText) return;
 
+    // User Message Display
     chatMsg.innerHTML += `<div class="bg-amber-500/20 text-amber-300 p-2.5 rounded-2xl text-right font-bold ml-6 border border-amber-500/30">${userText}</div>`;
     inputEl.value = "";
     chatMsg.scrollTop = chatMsg.scrollHeight;
@@ -65,40 +66,57 @@ window.handleChatbotSend = function () {
     const lower = userText.toLowerCase();
     let reply = "";
 
-    // A. NEWS QUERIES
-    if (lower.includes("समाचार") || lower.includes("न्यूज़") || lower.includes("news") || lower.includes("खबर") || lower.includes("breaking")) {
-        reply = "📰 *IOIS ताज़ा समाचार (6 अगस्त 2026):*\n• भारत में वर्क-फ्रॉम-होम और डिजिटल फ्रीलांसिंग में 40% की भारी बढ़ोतरी दर्ज की गई।\n• NPCI द्वारा UPI विथड्रॉल स्पीड को 24x7 रियल-टाइम ऑटो-रिफंड के साथ अपग्रेड किया गया।\n• 'news.html' पेज पर जाएँ और लाइव गूगल न्यूज़ फ़ीड पढ़ें!";
-    }
-    
-    // B. JOB QUERIES
-    else if (lower.includes("job") || lower.includes("जॉब") || lower.includes("नौकरी") || lower.includes("wfh") || lower.includes("work")) {
-        reply = "💼 *लाइव जॉब अलर्ट्स (6 अगस्त 2026):*\n1. Data Entry Assistant (WFH) - ₹15,000/माह\n2. Customer Support Specialist (Remote) - ₹18,000/माह\n👉 'jobs.html' पेज पर जाएँ और सीधे Apply Now दबाएँ!";
+    // 💡 INTENT A: EARNINGS, REFERRALS & MONEY
+    if (lower.includes("पैसा") || lower.includes("कमाई") || lower.includes("earn") || lower.includes("income") || lower.includes("paisa") || lower.includes("profit") || lower.includes("मुनाफा") || lower.includes("refer")) {
+        reply = "💰 **IOIS अर्निंग फ़ॉर्मूला:**\n• ₹10 Silver Plan: 2 रेफरल = ₹14 अर्निंग (100% फ़ीस वापस + ₹4 शुद्ध लाभ!)\n• ₹49 Gold Plan: 2 रेफरल = ₹70 अर्निंग (10 रेफरल पर ₹350 = 7 गुना लाभ!)\n• ₹199 Crystal Plan: Level 1 पर ₹120 (60%) + Level 2 पर ₹20 (10%) पैसिव अर्निंग!";
     }
 
-    // C. WEATHER & PANCHANG / RASHIFAL QUERIES
+    // 💸 INTENT B: WITHDRAWAL & PAYOUT
+    else if (lower.includes("withdraw") || lower.includes("विथड्रॉल") || lower.includes("payout") || lower.includes("पेआउट") || lower.includes("upi") || lower.includes("bank") || lower.includes("कहाँ आएगा")) {
+        reply = "⚡ **विथड्रॉल प्रक्रिया:** लॉगिन करके डैशबोर्ड पर जाएँ और 'Request UPI Payout Withdrawal' बटन दबाएँ। 24 घंटे के अंदर आपकी अर्निंग सीधे आपके पंजीकृत UPI ID पर भेज दी जाती है!";
+    }
+
+    // 📦 INTENT C: DIGITAL KIT & DOWNLOAD
+    else if (lower.includes("kit") || lower.includes("किट") || lower.includes("download") || lower.includes("डाउनलोड") || lower.includes("drive") || lower.includes("resume") || lower.includes("pdf")) {
+        reply = "📦 **डिजिटल किट डाउनलोड:** पेमेंट पूरा होने के बाद आपके डैशबोर्ड पर 'Open Google Drive Kit Folder' का बटन मिल जाएगा, जहाँ से आप Resumes, Cover Letters और AI Prompts डाउनलोड कर सकते हैं।";
+    }
+
+    // 🆔 INTENT D: 3D TIRANGA ID CARD
+    else if (lower.includes("card") || lower.includes("कार्ड") || lower.includes("id") || lower.includes("फोटो") || lower.includes("photo")) {
+        reply = "🆔 **3D तिरंगा ID कार्ड:** अपने डैशबोर्ड पर जाएँ। वहाँ 'Download Image (JPG)' या 'Download Printable PDF' बटन दबाकर अपना 3D मैटेलिक कार्ड HD क्वालिटी में डाउनलोड करें!";
+    }
+
+    // 📰 INTENT E: LIVE NEWS
+    else if (lower.includes("समाचार") || lower.includes("न्यूज़") || lower.includes("news") || lower.includes("खबर") || lower.includes("breaking")) {
+        reply = "📰 **ताज़ा समाचार:** 'news.html' पेज पर जाएँ जहाँ Google News RSS फ़ीड से लाइव राष्ट्रीय व डिजिटल समाचार फ़ीड दिखाई जा रही है।";
+    }
+
+    // 💼 INTENT F: JOBS & WORK FROM HOME
+    else if (lower.includes("job") || lower.includes("जॉब") || lower.includes("नौकरी") || lower.includes("wfh") || lower.includes("work")) {
+        reply = "💼 **सत्यापित नौकरियां:** 'jobs.html' पेज पर जाएँ जहाँ Data Entry, Chat Support और Govt Vacancies के आधिकारिक अप्लाई लिंक्स (Govt NCS Portal / Indeed) दिए गए हैं।";
+    }
+
+    // 🌤️ INTENT G: WEATHER, PANCHANG & RASHIFAL
     else if (lower.includes("मौसम") || lower.includes("तापमान") || lower.includes("weather")) {
-        reply = "🌤️ **मौसम का हाल:** 'panchang.html' पेज पर जाएँ, वहाँ '📍 Detect My Live Location' दबाएँ या अपने शहर का नाम टाइप करके अपने इलाके का तापमान जानें!";
+        reply = "🌤️ **मौसम का हाल:** 'panchang.html' पेज पर जाएँ और '📍 Detect My Live Location' दबाएँ या अपने शहर/गाँव का नाम लिखकर लाइव सेटेलाइट तापमान जानें!";
     }
     else if (lower.includes("राशिफल") || lower.includes("राशि") || lower.includes("पंचांग") || lower.includes("tithi") || lower.includes("rashifal")) {
-        reply = "🔮 **दैनिक राशिफल:** 'panchang.html' पेज पर जाएँ और अपनी पसंद की राशि (मेष से मीन) पर क्लिक करके अपना आज का करियर, स्वास्थ्य, शुभ रंग और शुभ अंक विस्तार से पढ़ें!";
+        reply = "🔮 **दैनिक प्रमाणिक राशिफल:** 'panchang.html' पेज पर जाएँ और अपनी पसंदीदा राशि (मेष से मीन) पर क्लिक करके अपना आज का करियर, स्वास्थ्य, शुभ रंग और शुभ अंक पढ़ें!";
     }
 
-    // D. SYSTEM EARNING & PLAN QUERIES
-    else if (lower.includes("पैसा") || lower.includes("कमाई") || lower.includes("earn") || lower.includes("income") || lower.includes("plan")) {
-        reply = "💰 *IOIS अर्निंग फ़ॉर्मूला:*\n• ₹10 Silver Plan: 2 रेफरल = ₹14 (100% फीस वापस + ₹4 लाभ!)\n• ₹49 Gold Plan: 2 रेफरल = ₹70 अर्निंग (10 रेफरल पर ₹350!)\n• ₹199 Crystal Plan: Level 1 पर ₹120 (60%) + Level 2 पर ₹20 (10%) पैसिव अर्निंग!";
-    }
-    else if (lower.includes("withdraw") || lower.includes("विथड्रॉल") || lower.includes("पेआउट")) {
-        reply = "⚡ **विथड्रॉल प्रक्रिया:** डैशबोर्ड पर 'Request UPI Payout Withdrawal' बटन दबाएँ। 24 घंटे के अंदर पैसा सीधे आपके पंजीकृत UPI ID पर भेज दिया जाता है।";
+    // 🛡️ INTENT H: REALITY, TRUST & LEGAL
+    else if (lower.includes("real") || lower.includes("फेक") || lower.includes("fake") || lower.includes("proof") || lower.includes("सच")) {
+        reply = "🛡️ **100% सुरक्षित एवं पारदर्शी:** IOIS भारत का सत्यापित डिजिटल ईकोसिस्टम है। होमपेज पर आप लाइव पेआउट्स और टॉप अर्नर्स का लीडरबोर्ड देख सकते हैं।";
     }
 
-    // E. DASHBOARD & CARD QUERIES
-    else if (currentPath.includes("dashboard") || lower.includes("card") || lower.includes("कार्ड") || lower.includes("download")) {
-        reply = "🆔 **3D डिजिटल कार्ड:** डैशबोर्ड पर 'Download Image (JPG)' या 'Download Printable PDF' बटन दबाकर अपना कार्ड डाउनलोड कर सकते हैं।";
+    // 🔑 INTENT I: REGISTRATION & LOGIN HELP
+    else if (lower.includes("register") || lower.includes("login") || lower.includes("password") || lower.includes("pass") || lower.includes("account")) {
+        reply = "🔑 **अकाउंट मदद:** नया अकाउंट बनाने के लिए 'Join IOIS' दबाएँ। अगर पासवर्ड या User ID भूल गए हैं, तो लॉगिन विंडो में 'Forgot User ID' या 'Forgot Password' से रिकवर कर सकते हैं।";
     }
 
-    // F. DEFAULT GENERAL REPLY
+    // DEFAULT AI RESPONSE
     if (!reply) {
-        reply = "👋 IOIS Live AI असिस्टेंट में आपका स्वागत है! आप मुझसे ताज़ा समाचार, लाइव जॉब्स, पंचांग/मौसम, या ₹10 से ₹999 के अर्निंग प्लांस के बारे में कुछ भी पूछ सकते हैं।";
+        reply = "👋 IOIS Live AI असिस्टेंट में आपका स्वागत है! आप मुझसे पूछ सकते हैं: अर्निंग कैसे करें, विथड्रॉल, डिजिटल किट, 3D कार्ड, ताज़ा समाचार, लाइव जॉब्स या पंचांग/मौसम!";
     }
 
     setTimeout(() => {
