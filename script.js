@@ -1,5 +1,6 @@
 /* ==========================================================================
-   IOIS PLATFORM - UNIVERSAL AUTO-INJECTING PAGE-AWARE AI CHATBOT & SCRIPT
+   IOIS PLATFORM - MASTER SCRIPT (100% UNCUT FULL CODE)
+   Indian Online Income Supporting System
    ========================================================================== */
 
 // 🚀 LIVE TELEGRAM BOT CREDENTIALS
@@ -11,7 +12,7 @@ const GOOGLE_SHEET_API = "https://script.google.com/macros/s/AKfycbzctDXCA4mBL9P
 
 // 1. AUTO-INJECT CHATBOT WIDGET ON ALL PAGES
 function injectChatbotWidget() {
-    if (document.getElementById("chatbot-window")) return; // Already exists
+    if (document.getElementById("chatbot-window")) return;
 
     const botHTML = `
     <div class="fixed bottom-4 right-4 z-50 no-print">
@@ -28,7 +29,7 @@ function injectChatbotWidget() {
             </div>
             <div id="chat-messages" class="h-52 overflow-y-auto space-y-2 pr-1 text-[11px]">
                 <div class="bg-slate-900 p-2.5 rounded-xl text-slate-200 border border-slate-700 leading-relaxed">
-                    👋 नमस्ते! मैं IOIS Live AI सहायक हूँ। मुझसे पूछें: ताज़ा समाचार, लाइव जॉब्स, अर्निंग प्लान या आज का पंचांग/मौसम!
+                    👋 नमस्ते! मैं IOIS Live AI सहायक हूँ। पूछें: ताज़ा समाचार, लाइव जॉब्स, अर्निंग प्लान या आज का पंचांग/मौसम/राशिफल!
                 </div>
             </div>
             <div class="flex gap-1 border-t border-gray-700 pt-2">
@@ -47,7 +48,7 @@ window.toggleChatbot = function() {
     if (w) w.classList.toggle("hidden");
 };
 
-// 2. PAGE-AWARE SMART AI CHATBOT ENGINE WITH LIVE NEWS & SYSTEM KNOWLEDGE
+// 2. PAGE-AWARE SMART AI CHATBOT ENGINE
 window.handleChatbotSend = function () {
     const inputEl = document.getElementById("chat-input");
     const chatMsg = document.getElementById("chat-messages");
@@ -56,7 +57,6 @@ window.handleChatbotSend = function () {
     const userText = inputEl.value.trim();
     if (!userText) return;
 
-    // Display User Question
     chatMsg.innerHTML += `<div class="bg-amber-500/20 text-amber-300 p-2.5 rounded-2xl text-right font-bold ml-6 border border-amber-500/30">${userText}</div>`;
     inputEl.value = "";
     chatMsg.scrollTop = chatMsg.scrollHeight;
@@ -65,33 +65,33 @@ window.handleChatbotSend = function () {
     const lower = userText.toLowerCase();
     let reply = "";
 
-    // 📰 A. LIVE NEWS & BREAKING UPDATES QUERIES
+    // A. NEWS QUERIES
     if (lower.includes("समाचार") || lower.includes("न्यूज़") || lower.includes("news") || lower.includes("खबर") || lower.includes("breaking")) {
-        reply = "📰 *IOIS ताज़ा समाचार (6 अगस्त 2026):*\n• भारत में वर्क-फ्रॉम-होम और डिजिटल फ्रीलांसिंग में 40% की भारी बढ़ोतरी दर्ज की गई।\n• NPCI द्वारा UPI विथड्रॉल स्पीड को 24x7 रियल-टाइम ऑटो-रिफंड के साथ अपग्रेड किया गया।\n• IOIS प्लेटफ़ॉर्म पर सभी 7 तिरंगा कार्ड प्लांस और Google Sheet ऑटो-सिंक लाइव हैं!";
+        reply = "📰 *IOIS ताज़ा समाचार (6 अगस्त 2026):*\n• भारत में वर्क-फ्रॉम-होम और डिजिटल फ्रीलांसिंग में 40% की भारी बढ़ोतरी दर्ज की गई।\n• NPCI द्वारा UPI विथड्रॉल स्पीड को 24x7 रियल-टाइम ऑटो-रिफंड के साथ अपग्रेड किया गया।\n• 'news.html' पेज पर जाएँ और लाइव गूगल न्यूज़ फ़ीड पढ़ें!";
     }
     
-    // 💼 B. LIVE JOB UPDATES QUERIES
+    // B. JOB QUERIES
     else if (lower.includes("job") || lower.includes("जॉब") || lower.includes("नौकरी") || lower.includes("wfh") || lower.includes("work")) {
-        reply = "💼 *लाइव जॉब अलर्ट्स (6 अगस्त 2026):*\n1. Data Entry & Chat Specialist (WFH) - ₹15,000/माह\n2. Digital Telecaller (Remote) - ₹18,000/माह\n👉 'jobs.html' पेज पर जाएँ और सीधे Apply Now दबाएँ!";
+        reply = "💼 *लाइव जॉब अलर्ट्स (6 अगस्त 2026):*\n1. Data Entry Assistant (WFH) - ₹15,000/माह\n2. Customer Support Specialist (Remote) - ₹18,000/माह\n👉 'jobs.html' पेज पर जाएँ और सीधे Apply Now दबाएँ!";
     }
 
-    // 🌤️ C. WEATHER & PANCHANG QUERIES
+    // C. WEATHER & PANCHANG / RASHIFAL QUERIES
     else if (lower.includes("मौसम") || lower.includes("तापमान") || lower.includes("weather")) {
-        reply = "🌤️ *आज का लाइव मौसम का हाल (6 अगस्त 2026):*\n• पटना: 31°C (साफ़ मौसम)\n• नई दिल्ली: 33°C (आंशिक बादल)\n• मुंबई: 30°C (हल्की बारिश)\n👉 विस्तृत जानकारी के लिए 'panchang.html' पेज देखें।";
+        reply = "🌤️ **मौसम का हाल:** 'panchang.html' पेज पर जाएँ, वहाँ '📍 Detect My Live Location' दबाएँ या अपने शहर का नाम टाइप करके अपने इलाके का तापमान जानें!";
     }
-    else if (lower.includes("पंचांग") || lower.includes("राशिफल") || lower.includes("tithi") || lower.includes("rashifal")) {
-        reply = "🔮 *आज का दैनिक पंचांग व राशिफल:*\n• तिथि: शुक्ल पक्ष द्वितीया | नक्षत्र: रोहिणी\n• शुभ मुहूर्त: 11:52 AM - 12:44 PM (अभिजीत)\n• राशिफल: मेष, वृषभ और मिथुन राशि वालों के लिए आज ऑनलाइन काम और रेफरल से धन लाभ के प्रबल योग हैं!";
+    else if (lower.includes("राशिफल") || lower.includes("राशि") || lower.includes("पंचांग") || lower.includes("tithi") || lower.includes("rashifal")) {
+        reply = "🔮 **दैनिक राशिफल:** 'panchang.html' पेज पर जाएँ और अपनी पसंद की राशि (मेष से मीन) पर क्लिक करके अपना आज का करियर, स्वास्थ्य, शुभ रंग और शुभ अंक विस्तार से पढ़ें!";
     }
 
-    // 💰 D. SYSTEM EARNING & PLAN QUERIES
+    // D. SYSTEM EARNING & PLAN QUERIES
     else if (lower.includes("पैसा") || lower.includes("कमाई") || lower.includes("earn") || lower.includes("income") || lower.includes("plan")) {
-        reply = "💰 *IOIS अर्निंग फ़ॉर्मूला:*\n• ₹10 Silver Plan: 2 रेफरल = ₹14 (100% फीस वापस + ₹4 लाभ!)\n• ₹49 Gold Plan: 2 रेफरल = ₹70 अर्निंग (10 रेफरल पर ₹350!)\n• ₹199 Crystal Plan: Level 1 पर ₹120 (60%) + Level 2 पर ₹20 (10%) बिना काम किए पैसिव अर्निंग!";
+        reply = "💰 *IOIS अर्निंग फ़ॉर्मूला:*\n• ₹10 Silver Plan: 2 रेफरल = ₹14 (100% फीस वापस + ₹4 लाभ!)\n• ₹49 Gold Plan: 2 रेफरल = ₹70 अर्निंग (10 रेफरल पर ₹350!)\n• ₹199 Crystal Plan: Level 1 पर ₹120 (60%) + Level 2 पर ₹20 (10%) पैसिव अर्निंग!";
     }
     else if (lower.includes("withdraw") || lower.includes("विथड्रॉल") || lower.includes("पेआउट")) {
-        reply = "⚡ **विथड्रॉल प्रक्रिया:** डैशबोर्ड पर 'Request UPI Payout Withdrawal' बटन दबाएँ। 24 घंटे के अंदर पैसा सीधे आपके पंजीकृत UPI ID पर ट्रांसफर कर दिया जाता है।";
+        reply = "⚡ **विथड्रॉल प्रक्रिया:** डैशबोर्ड पर 'Request UPI Payout Withdrawal' बटन दबाएँ। 24 घंटे के अंदर पैसा सीधे आपके पंजीकृत UPI ID पर भेज दिया जाता है।";
     }
 
-    // 🆔 E. DASHBOARD & CARD QUERIES
+    // E. DASHBOARD & CARD QUERIES
     else if (currentPath.includes("dashboard") || lower.includes("card") || lower.includes("कार्ड") || lower.includes("download")) {
         reply = "🆔 **3D डिजिटल कार्ड:** डैशबोर्ड पर 'Download Image (JPG)' या 'Download Printable PDF' बटन दबाकर अपना कार्ड डाउनलोड कर सकते हैं।";
     }
@@ -144,7 +144,6 @@ window.toggleMobileMenu = function () {
 
 // 6. AUTO REFERRAL DETECT & CHATBOT INJECTION ON DOM LOAD
 document.addEventListener("DOMContentLoaded", function () {
-    // Inject Chatbot Widget on Every Single Page Automatically
     injectChatbotWidget();
 
     try {
