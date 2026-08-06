@@ -12,15 +12,17 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        @keyframes slideIn { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .toast-animate { animation: slideIn 0.5s ease-out forwards; }
     </style>
 </head>
 <body class="bg-[#030712] text-white font-sans flex flex-col min-h-screen relative">
 
-    <!-- Announcement Ticker -->
-    <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-gray-950 py-1.5 px-4 font-extrabold text-xs flex items-center shadow-md">
+    <!-- 1. LIVE ANNOUNCEMENT MARQUEE TICKER -->
+    <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-gray-950 py-1.5 px-4 font-bold text-xs flex items-center shadow-md">
         <span class="bg-red-600 text-white text-[10px] px-2 py-0.5 rounded font-black mr-2 uppercase tracking-wider shrink-0">LIVE UPDATE</span>
         <marquee class="font-bold tracking-wide">
-            📰 ताज़ा समाचार, जॉब्स, मौसम और दैनिक राशिफल चालू हैं! &nbsp;&nbsp;&nbsp;&nbsp; 🔥 ₹10 से जॉइन करके ₹49 वाला गोल्ड प्लान बेचें और पाएँ सीधे ₹35 (71%) अर्निंग! &nbsp;&nbsp;&nbsp;&nbsp; 🚀 100% Verified Indian Digital Ecosystem!
+            🔥 ₹10 से जॉइन करके ₹49 वाला गोल्ड प्लान बेचें और पाएँ सीधे ₹35 (71%) कमीशन! &nbsp;&nbsp;&nbsp;&nbsp; 🎉 सिर्फ 2 रेफरल पर आपकी 100% फीस वापस + शुद्ध लाभ! &nbsp;&nbsp;&nbsp;&nbsp; 🚀 ₹99, ₹199, ₹499 और ₹999 के सभी 7 बड़े प्लांस लाइव हैं! &nbsp;&nbsp;&nbsp;&nbsp; ⚡ आज 1,500+ मेंबर्स को सीधे UPI विथड्रॉल भेजा गया!
         </marquee>
     </div>
 
@@ -35,14 +37,17 @@
                 </div>
             </a>
 
+            <!-- Desktop Links -->
             <div class="hidden md:flex items-center gap-5 text-xs font-semibold text-gray-300">
                 <a href="index.html" class="text-amber-400"><i class="fa-solid fa-house"></i> Home</a>
-                <a href="news.html" class="hover:text-amber-400"><i class="fa-solid fa-newspaper text-teal-400"></i> ताज़ा समाचार</a>
+                <a href="membership.html" class="hover:text-amber-400"><i class="fa-solid fa-layer-group"></i> All 7 Plans</a>
+                <a href="news.html" class="hover:text-amber-400"><i class="fa-solid fa-newspaper text-teal-400"></i> समाचार</a>
                 <a href="jobs.html" class="hover:text-amber-400"><i class="fa-solid fa-briefcase text-amber-400"></i> जॉब्स</a>
-                <a href="panchang.html" class="hover:text-amber-400"><i class="fa-solid fa-cloud-sun text-teal-400"></i> पंचांग/मौसम</a>
-                <a href="chat.html" class="hover:text-amber-400"><i class="fa-solid fa-comments text-amber-400"></i> कम्युनिटी चैट</a>
+                <a href="panchang.html" class="hover:text-amber-400"><i class="fa-solid fa-cloud-sun text-teal-400"></i> मौसम/राशिफल</a>
+                <a href="chat.html" class="hover:text-amber-400"><i class="fa-solid fa-comments text-amber-400"></i> चैट रूम</a>
             </div>
 
+            <!-- Auth Buttons -->
             <div class="hidden md:flex items-center gap-2">
                 <button type="button" onclick="openLoginModal()" class="px-3.5 py-1.5 border border-amber-400 text-amber-400 font-bold rounded-xl text-xs hover:bg-amber-400 hover:text-gray-950 transition">Login</button>
                 <button type="button" onclick="openRegistrationFlow()" class="px-3.5 py-1.5 bg-amber-400 text-gray-950 font-black rounded-xl text-xs">Join IOIS</button>
@@ -51,13 +56,16 @@
             <button type="button" onclick="toggleMobileMenu()" class="md:hidden text-2xl text-amber-400 p-1"><i class="fa-solid fa-bars"></i></button>
         </div>
 
-        <div id="mobile-menu" class="hidden md:hidden bg-[#0e1938] px-4 py-4 border-t border-gray-800 space-y-3 font-medium">
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#0e1938] px-4 py-4 border-t border-gray-800 space-y-3 font-medium text-xs">
             <a href="index.html" class="block text-amber-400"><i class="fa-solid fa-house mr-2"></i> Home</a>
+            <a href="membership.html" class="block text-gray-300"><i class="fa-solid fa-layer-group mr-2"></i> All 7 Membership Plans</a>
             <a href="news.html" class="block text-gray-300"><i class="fa-solid fa-newspaper mr-2 text-teal-400"></i> ताज़ा समाचार</a>
             <a href="jobs.html" class="block text-gray-300"><i class="fa-solid fa-briefcase mr-2 text-amber-400"></i> लाइव जॉब अपडेट्स</a>
             <a href="panchang.html" class="block text-gray-300"><i class="fa-solid fa-cloud-sun mr-2 text-teal-400"></i> पंचांग, राशिफल व मौसम</a>
-            <a href="chat.html" class="block text-gray-300"><i class="fa-solid fa-comments mr-2 text-amber-400"></i> कम्युनिटी चैट</a>
-            <a href="membership.html" class="block text-gray-300">All 7 Membership Plans</a>
+            <a href="chat.html" class="block text-gray-300"><i class="fa-solid fa-comments mr-2 text-amber-400"></i> कम्युनिटी लाइव चैट</a>
+            <a href="about.html" class="block text-gray-300">About IOIS</a>
+            <a href="contact.html" class="block text-gray-300">Helpline & Support</a>
             <div class="pt-3 border-t border-gray-700 flex flex-col gap-2">
                 <button type="button" onclick="openLoginModal()" class="w-full py-2 border border-amber-400 text-amber-400 font-bold rounded-xl text-xs">Login</button>
                 <button type="button" onclick="openRegistrationFlow()" class="w-full py-2 bg-amber-400 text-gray-950 font-bold rounded-xl text-xs">Register</button>
@@ -76,10 +84,25 @@
         </h1>
         
         <p class="text-gray-300 text-xs md:text-sm max-w-2xl mx-auto mb-6">
-            डिजिटल करियर किट, 3D तिरंगा कार्ड और हर रेफरल पर पाएँ <span class="text-teal-400 font-bold">70% से 75% डायरेक्ट विथड्रॉल अर्निंग!</span>
+            मात्र <span class="text-amber-400 font-bold text-base">₹10</span> से शुरू करें! डिजिटल किट, 3D तिरंगा कार्ड और हर रेफरल पर पाएँ <span class="text-teal-400 font-bold text-base">70% से 75% तक की सीधी अर्निंग!</span>
         </p>
 
-        <!-- 🌟 QUICK ACTION UTILITY BUTTONS BAR (ताज़ा समाचार, जॉब्स, मौसम, राशिफल) -->
+        <!-- OPEN REFERRAL POWER BANNER -->
+        <div class="bg-gradient-to-r from-amber-500/20 via-teal-500/20 to-amber-500/20 border-2 border-amber-400 p-4 rounded-2xl max-w-xl mx-auto mb-6 text-left shadow-2xl">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-amber-400 text-gray-950 flex items-center justify-center font-black text-2xl shrink-0 shadow-lg">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                    <h3 class="font-black text-amber-400 text-sm md:text-base">OPEN REFERRAL POWER (खुली अर्निंग)!</h3>
+                    <p class="text-xs text-gray-200 mt-0.5 leading-relaxed">
+                        आप चाहे ₹10 वाले प्लान में हों, अगर आपका दोस्त ₹49 गोल्ड प्लान लेता है तो आपको <strong>पूरा ₹35 कमीशन</strong> मिलेगा! ₹99 वाले पर <strong>₹70</strong> और ₹199 वाले पर <strong>₹120</strong> मिलेंगे!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUICK ACTION UTILITY BUTTONS BAR -->
         <div class="flex flex-wrap justify-center items-center gap-2 max-w-2xl mx-auto mb-8">
             <a href="news.html" class="px-3 py-2 bg-[#111c38] border border-amber-500/40 rounded-xl text-xs font-bold text-amber-400 hover:bg-amber-400 hover:text-gray-950 transition flex items-center gap-1.5 shadow-lg">
                 <i class="fa-solid fa-newspaper text-teal-400"></i> ताज़ा समाचार
@@ -103,79 +126,396 @@
         </button>
     </section>
 
-    <!-- Registration Modal -->
-    <div id="reg-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 hidden z-50 overflow-y-auto">
-        <div class="bg-[#111c38] border-2 border-amber-400/80 rounded-3xl max-w-lg w-full p-6 relative shadow-2xl my-8">
-            <button type="button" onclick="closeModals()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">&times;</button>
-            <h3 class="text-xl font-bold text-amber-400 mb-1 text-center">IOIS Account Registration</h3>
+    <!-- SHOWCASE OF ALL 7 PLANS GRID -->
+    <section class="py-12 bg-[#080d1e] px-4 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-teal-400">IOIS 7-Tier Membership Plans</h2>
+                <p class="text-gray-400 text-xs md:text-sm mt-1">अपनी ज़रूरत के अनुसार बेस्ट प्लान चुनें और तुरंत अर्निंग शुरू करें:</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- 1. Silver -->
+                <div class="p-5 bg-[#111c38] border border-amber-500/30 rounded-2xl text-left relative shadow-xl">
+                    <span class="bg-amber-400 text-gray-950 text-[10px] font-black px-2.5 py-0.5 rounded-full absolute top-3 right-3">STARTER</span>
+                    <h3 class="font-extrabold text-lg text-white">1. Tiranga Silver</h3>
+                    <div class="text-3xl font-black text-amber-400 my-1">₹10</div>
+                    <p class="text-xs text-teal-400 font-bold mb-3">Earn ₹7 Per Refer (70%)</p>
+                    <button type="button" onclick="openRegistrationFlowWithTier('Tiranga Silver Card (₹10)')" class="w-full py-2 bg-amber-400 text-gray-950 font-bold text-xs rounded-lg">Join @ ₹10</button>
+                </div>
+
+                <!-- 2. Gold -->
+                <div class="p-5 bg-[#111c38] border border-amber-500/50 rounded-2xl text-left relative shadow-xl">
+                    <span class="bg-amber-400 text-gray-950 text-[10px] font-black px-2.5 py-0.5 rounded-full absolute top-3 right-3">PRO KIT</span>
+                    <h3 class="font-extrabold text-lg text-amber-400">2. Tiranga Gold Pro</h3>
+                    <div class="text-3xl font-black text-amber-400 my-1">₹49</div>
+                    <p class="text-xs text-teal-400 font-bold mb-3">Earn ₹35 Per Refer (71%)</p>
+                    <button type="button" onclick="openRegistrationFlowWithTier('Tiranga Gold Card (₹49)')" class="w-full py-2 bg-amber-400 text-gray-950 font-bold text-xs rounded-lg">Join @ ₹49</button>
+                </div>
+
+                <!-- 3. Platinum -->
+                <div class="p-5 bg-[#111c38] border border-amber-500/50 rounded-2xl text-left relative shadow-xl">
+                    <span class="bg-amber-400 text-gray-950 text-[10px] font-black px-2.5 py-0.5 rounded-full absolute top-3 right-3">EXECUTIVE</span>
+                    <h3 class="font-extrabold text-lg text-white">3. Tiranga Platinum</h3>
+                    <div class="text-3xl font-black text-amber-400 my-1">₹99</div>
+                    <p class="text-xs text-teal-400 font-bold mb-3">Earn ₹70 Per Refer (71%)</p>
+                    <button type="button" onclick="openRegistrationFlowWithTier('Tiranga Platinum Card (₹99)')" class="w-full py-2 bg-amber-400 text-gray-950 font-bold text-xs rounded-lg">Join @ ₹99</button>
+                </div>
+
+                <!-- 4. Crystal (PASSIVE) -->
+                <div class="p-5 bg-gradient-to-br from-[#111c38] via-amber-950/40 to-[#111c38] border-2 border-amber-400 rounded-2xl text-left relative shadow-2xl">
+                    <span class="bg-teal-400 text-gray-950 text-[10px] font-black px-2.5 py-0.5 rounded-full absolute top-3 right-3">PASSIVE BONUS</span>
+                    <h3 class="font-extrabold text-lg text-amber-400">4. Tiranga Crystal VIP</h3>
+                    <div class="text-3xl font-black text-amber-400 my-1">₹199</div>
+                    <p class="text-xs text-teal-400 font-bold mb-1">Direct: ₹120 (60%)</p>
+                    <p class="text-[11px] text-amber-300 font-bold mb-3">Level 2 Passive: ₹20 (10%)</p>
+                    <button type="button" onclick="openRegistrationFlowWithTier('Tiranga Crystal Card (₹199)')" class="w-full py-2 bg-gradient-to-r from-amber-400 to-teal-400 text-gray-950 font-extrabold text-xs rounded-lg shadow-lg">Join @ ₹199</button>
+                </div>
+
+                <!-- 5. Student Pass -->
+                <div class="p-5 bg-[#111c38] border border-gray-800 rounded-2xl text-left relative shadow-xl">
+                    <span class="bg-blue-500 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full absolute top-3 right-3">EXAM PASS</span>
+                    <h3 class="font-extrabold text-lg text-white">5. Govt Exam Pass</h3>
+                    <div class="text-3xl font-black text-amber-400 my-1">₹299</div>
+                    <p class="text-xs text-teal-400 font-bold mb-1">Direct: ₹220 | L2: ₹20</p>
+                    <p class="text-[10px] text-gray-400 mb-3">10 Yrs Solved Papers + GK</p>
+                    <button type="button" onclick="openRegistrationFlowWithTier('Govt Exam & Student Pass (₹299)')" class="w-full py-2 bg-amber-400 text-gray-950 font-bold text-xs rounded-lg">Join @ ₹299</button>
+                </div>
+
+                <!-- 6. Diamond Agency -->
+                <div class="p-5 bg-[#111c38] border border-gray-800 rounded-2xl text-left relative shadow-xl">
+                    <span class="bg-purple-500 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full absolute top-3 right-3">AGENCY PASS</span>
+                    <h3 class="font-extrabold text-lg text-white">6. Tiranga Diamond</h3>
+                    <div class="text-3xl font-black text-amber-400 my-1">₹499</div>
+                    <p class="text-xs text-teal-400 font-bold mb-1">Direct: ₹375 | L2: ₹25</p>
+                    <p class="text-[10px] text-gray-400 mb-3">5,000+ HR Contacts Directory</p>
+                    <button type="button" onclick="openRegistrationFlowWithTier('Tiranga Diamond Agency Pass (₹499)')" class="w-full py-2 bg-amber-400 text-gray-950 font-bold text-xs rounded-lg">Join @ ₹499</button>
+                </div>
+
+                <!-- 7. VIP Mastermind -->
+                <div class="p-5 bg-gradient-to-br from-[#111c38] via-purple-950/40 to-[#111c38] border-2 border-purple-400 rounded-2xl text-left relative shadow-2xl col-span-1 md:col-span-2">
+                    <span class="bg-purple-400 text-gray-950 text-[10px] font-black px-2.5 py-0.5 rounded-full absolute top-3 right-3">VIP MASTERMIND</span>
+                    <h3 class="font-extrabold text-xl text-purple-300">7. VIP Mastermind Freelancing & AI Pass</h3>
+                    <div class="text-4xl font-black text-amber-400 my-1">₹999 <span class="text-xs text-gray-400 line-through font-normal">₹9,999</span></div>
+                    <p class="text-xs text-teal-400 font-bold mb-1">Direct Income: ₹750 (75%) | Level 2 Passive: ₹50 (5%)</p>
+                    <p class="text-xs text-gray-300 mb-4">Complete Video Courses + International Freelance Outreach Scripts + Personal Desk Support</p>
+                    <button type="button" onclick="openRegistrationFlowWithTier('VIP Mastermind Freelancing & AI Pass (₹999)')" class="w-full py-3 bg-gradient-to-r from-purple-400 via-amber-400 to-teal-400 text-gray-950 font-black text-xs rounded-xl shadow-xl">Join VIP Mastermind @ ₹999</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOP EARNERS LEADERBOARD SECTION -->
+    <section class="py-12 bg-[#030712] px-4 border-t border-gray-800">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-8">
+                <span class="bg-amber-500/10 text-amber-400 text-xs font-bold uppercase px-3 py-1 rounded-full border border-amber-500/30">
+                    <i class="fa-solid fa-trophy mr-1"></i> Weekly High Earners
+                </span>
+                <h2 class="text-2xl font-extrabold text-white mt-2">इस हफ़्ते के टॉप 10 कमाने वाले मेंबर्स</h2>
+                <p class="text-xs text-gray-400 mt-1">100% Verified Live Referral Income Payouts</p>
+            </div>
+
+            <div class="bg-[#111c38] border border-amber-500/30 rounded-2xl p-4 shadow-2xl overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-gray-950 text-amber-400 font-bold uppercase border-b border-gray-800">
+                            <th class="p-3">Rank</th>
+                            <th class="p-3">Member Name</th>
+                            <th class="p-3">Fixed User ID</th>
+                            <th class="p-3">Card Tier</th>
+                            <th class="p-3 text-right">Weekly Income</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-800 text-gray-200">
+                        <tr class="bg-amber-500/10 font-bold">
+                            <td class="p-3 text-amber-400"><i class="fa-solid fa-crown text-amber-400"></i> #1</td>
+                            <td class="p-3">Rahul Sharma (Delhi)</td>
+                            <td class="p-3 font-mono text-amber-400">IOIS349190</td>
+                            <td class="p-3 text-teal-400">Tiranga Gold Pro</td>
+                            <td class="p-3 text-right text-emerald-400 font-black text-sm">₹1,400</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-gray-300">#2</td>
+                            <td class="p-3">Vikas Kumar (Patna)</td>
+                            <td class="p-3 font-mono text-amber-400">IOIS108922</td>
+                            <td class="p-3 text-teal-400">Tiranga Gold Pro</td>
+                            <td class="p-3 text-right text-emerald-400 font-bold">₹950</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-gray-300">#3</td>
+                            <td class="p-3">Priya Singh (Jaipur)</td>
+                            <td class="p-3 font-mono text-amber-400">IOIS782103</td>
+                            <td class="p-3 text-gray-300">Tiranga Silver</td>
+                            <td class="p-3 text-right text-emerald-400 font-bold">₹770</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-gray-300">#4</td>
+                            <td class="p-3">Amit Verma (Lucknow)</td>
+                            <td class="p-3 font-mono text-amber-400">IOIS451099</td>
+                            <td class="p-3 text-teal-400">Tiranga Gold Pro</td>
+                            <td class="p-3 text-right text-emerald-400 font-bold">₹630</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-gray-300">#5</td>
+                            <td class="p-3">Neha Gupta (Indore)</td>
+                            <td class="p-3 font-mono text-amber-400">IOIS902341</td>
+                            <td class="p-3 text-gray-300">Tiranga Silver</td>
+                            <td class="p-3 text-right text-emerald-400 font-bold">₹420</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ALL 7 PLANS RETURN MATRIX SECTION -->
+    <section class="py-12 bg-[#080d1e] px-4 border-t border-gray-800">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-10">
+                <span class="bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase px-4 py-1.5 rounded-full border border-emerald-500/30">
+                    <i class="fa-solid fa-calculator mr-1"></i> All 7 Plans Return Matrix
+                </span>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white mt-3">जानिए हर प्लान में कितनी कमाई है (100% Profit Matrix)</h2>
+                <p class="text-gray-400 text-xs md:text-sm mt-1">2 रेफरल = 100% फीस वापस + मुनाफा! 10 रेफरल = 7 गुना अर्निंग!</p>
+            </div>
+
+            <div class="bg-[#111c38] border border-amber-500/30 rounded-2xl p-4 shadow-2xl overflow-x-auto mb-10">
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-gray-950 text-amber-400 font-bold uppercase border-b border-gray-800">
+                            <th class="p-3">Plan Name (Fee)</th>
+                            <th class="p-3">1 Refer Commission</th>
+                            <th class="p-3">2 Refer Earning (Refund + Profit)</th>
+                            <th class="p-3 text-right">10 Refer Earning</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-800 text-gray-200">
+                        <tr>
+                            <td class="p-3 font-bold text-white">1. Tiranga Silver (₹10)</td>
+                            <td class="p-3 text-teal-400 font-bold">₹7 (70%)</td>
+                            <td class="p-3 text-emerald-400 font-bold">₹14 (₹10 वापस + ₹4 लाभ)</td>
+                            <td class="p-3 text-right text-amber-400 font-black text-sm">₹70 (7x)</td>
+                        </tr>
+                        <tr class="bg-amber-500/10 font-bold">
+                            <td class="p-3 text-amber-400">2. Tiranga Gold Pro (₹49)</td>
+                            <td class="p-3 text-teal-400 font-bold">₹35 (71%)</td>
+                            <td class="p-3 text-emerald-400 font-bold">₹70 (₹49 वापस + ₹21 लाभ)</td>
+                            <td class="p-3 text-right text-amber-400 font-black text-sm">₹350 (7x)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-white">3. Tiranga Platinum (₹99)</td>
+                            <td class="p-3 text-teal-400 font-bold">₹70 (71%)</td>
+                            <td class="p-3 text-emerald-400 font-bold">₹140 (₹99 वापस + ₹41 लाभ)</td>
+                            <td class="p-3 text-right text-amber-400 font-black text-sm">₹700 (7x)</td>
+                        </tr>
+                        <tr class="bg-teal-500/10 font-bold">
+                            <td class="p-3 text-teal-400">4. Tiranga Crystal VIP (₹199)</td>
+                            <td class="p-3 text-teal-400 font-bold">₹120 (60%) + ₹20 L2</td>
+                            <td class="p-3 text-emerald-400 font-bold">₹240 (₹199 वापस + ₹41 लाभ)</td>
+                            <td class="p-3 text-right text-amber-400 font-black text-sm">₹1,200 + L2 Passive</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-white">5. Govt Exam Pass (₹299)</td>
+                            <td class="p-3 text-teal-400 font-bold">₹220 (73%) + ₹20 L2</td>
+                            <td class="p-3 text-emerald-400 font-bold">₹440 (₹299 वापस + ₹141 लाभ)</td>
+                            <td class="p-3 text-right text-amber-400 font-black text-sm">₹2,200 + L2 Passive</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-white">6. Diamond Agency (₹499)</td>
+                            <td class="p-3 text-teal-400 font-bold">₹375 (75%) + ₹25 L2</td>
+                            <td class="p-3 text-emerald-400 font-bold">₹750 (₹499 वापस + ₹251 लाभ)</td>
+                            <td class="p-3 text-right text-amber-400 font-black text-sm">₹3,750 + L2 Passive</td>
+                        </tr>
+                        <tr class="bg-purple-500/10 font-bold">
+                            <td class="p-3 text-purple-300">7. VIP Mastermind (₹999)</td>
+                            <td class="p-3 text-teal-400 font-bold">₹750 (75%) + ₹50 L2</td>
+                            <td class="p-3 text-emerald-400 font-bold">₹1,500 (₹999 वापस + ₹501 लाभ)</td>
+                            <td class="p-3 text-right text-amber-400 font-black text-sm">₹7,500 + L2 Passive</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ALL PLAN CALCULATOR WIDGET -->
+            <div class="bg-[#111c38] border border-teal-500/40 p-6 rounded-2xl max-w-xl mx-auto text-center shadow-2xl">
+                <h3 class="text-lg font-bold text-teal-400 mb-4"><i class="fa-solid fa-coins mr-1"></i> ऑल-प्लांस अर्निंग कैलकुलेटर</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left text-xs mb-4">
+                    <div>
+                        <label class="block text-gray-400 mb-1 font-bold">अपना प्लान चुनें:</label>
+                        <select id="calc-plan" onchange="calculateProfit()" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-white font-bold">
+                            <option value="10">1. ₹10 Tiranga Silver (₹7/Refer)</option>
+                            <option value="49" selected>2. ₹49 Tiranga Gold Pro (₹35/Refer)</option>
+                            <option value="99">3. ₹99 Tiranga Platinum (₹70/Refer)</option>
+                            <option value="199">4. ₹199 Tiranga Crystal (₹120/Refer)</option>
+                            <option value="299">5. ₹299 Govt Exam Pass (₹220/Refer)</option>
+                            <option value="499">6. ₹499 Diamond Agency (₹375/Refer)</option>
+                            <option value="999">7. ₹999 VIP Mastermind (₹750/Refer)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1 font-bold">आप कितने दोस्तों को जोड़ेंगे? (<span id="calc-invites-count" class="text-amber-400">5</span>)</label>
+                        <input type="range" id="calc-invites" min="2" max="50" value="5" oninput="calculateProfit()" class="w-full text-amber-400">
+                    </div>
+                </div>
+
+                <div class="bg-[#080d1e] p-4 rounded-xl border border-gray-800 flex justify-around items-center">
+                    <div>
+                        <span class="text-[10px] text-gray-400 block uppercase font-bold">कुल अर्निंग</span>
+                        <span id="calc-total-earn" class="text-2xl font-black text-amber-400">₹175</span>
+                    </div>
+                    <div class="border-l border-gray-800 h-8"></div>
+                    <div>
+                        <span class="text-[10px] text-gray-400 block uppercase font-bold">शुद्ध लाभ (Net Profit)</span>
+                        <span id="calc-net-profit" class="text-2xl font-black text-emerald-400">₹126</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRANSPARENCY, MERITS & LEGAL DISCLAIMER SECTION -->
+    <section class="py-12 bg-[#030712] px-4 border-t border-gray-800">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-10">
+                <span class="bg-amber-500/10 text-amber-400 text-xs font-bold uppercase px-4 py-1.5 rounded-full border border-amber-500/30">
+                    <i class="fa-solid fa-scale-balanced mr-1"></i> 100% Transparent Guidelines
+                </span>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white mt-3">IOIS प्लेटफ़ॉर्म: फ़ायदे एवं नियम (Merits & Rules)</h2>
+                <p class="text-gray-400 text-xs md:text-sm mt-1">पूर्ण पारदर्शिता और कानूनी सुरक्षा के लिए हमारे मुख्य नियम पढ़ें:</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- MERITS BOX -->
+                <div class="bg-[#111c38] border border-teal-500/40 p-6 rounded-3xl shadow-xl space-y-3">
+                    <h3 class="text-lg font-bold text-teal-400 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-check text-emerald-400"></i> मुख्य फ़ायदे (Merits & Benefits)
+                    </h3>
+                    <ul class="text-xs text-gray-300 space-y-2.5">
+                        <li><i class="fa-solid fa-check text-teal-400 mr-2"></i> <strong>70% से 75% कमीशन:</strong> भारत का सबसे ज़्यादा एफ़िलिएट पेआउट देने वाला सिस्टम।</li>
+                        <li><i class="fa-solid fa-check text-teal-400 mr-2"></i> <strong>2 Referrals = 100% Refund:</strong> सिर्फ 2 रेफरल करते ही पूरी फ़ीस वापस + लाभ!</li>
+                        <li><i class="fa-solid fa-check text-teal-400 mr-2"></i> <strong>Privacy Protected ID Card:</strong> यूज़र का मोबाइल नंबर सुरक्षित रहता है।</li>
+                        <li><i class="fa-solid fa-check text-teal-400 mr-2"></i> <strong>24/7 AI & Telegram System:</strong> ऑटोमैटिक पेमेन्ट अलर्ट्स और असिस्टेंट।</li>
+                    </ul>
+                </div>
+
+                <!-- DEMERITS & RULES BOX -->
+                <div class="bg-[#111c38] border border-red-500/40 p-6 rounded-3xl shadow-xl space-y-3">
+                    <h3 class="text-lg font-bold text-red-400 flex items-center gap-2">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-400"></i> नियम एवं सावधानियाँ (Disclaimers & Rules)
+                    </h3>
+                    <ul class="text-xs text-gray-300 space-y-2.5">
+                        <li><i class="fa-solid fa-xmark text-red-400 mr-2"></i> <strong>नो फ़िक्स ब्याज़ / रिटर्न:</strong> यह कोई इन्वेस्टमेंट या पोंजी स्कीम नहीं है। कमाई पूरी तरह से सेल्स प्रयासों पर निर्भर है।</li>
+                        <li><i class="fa-solid fa-xmark text-red-400 mr-2"></i> <strong>फ़ेक पेमेन्ट बैन:</strong> नकली/एडिटेड पेमेन्ट स्क्रीनशॉट भेजने पर अकाउंट तुरंत हमेशा के लिए ब्लॉक कर दिया जाएगा।</li>
+                        <li><i class="fa-solid fa-xmark text-red-400 mr-2"></i> <strong>डिजिटल फ़ीस नॉन-रिफंडेबल:</strong> Google Drive डिजिटल प्रोडक्ट किट की फ़ीस रिफ़ंड योग्य नहीं है।</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REGISTRATION MODAL -->
+    <div id="reg-modal" class="fixed inset-0 bg-black/85 flex items-center justify-center p-4 hidden z-50 overflow-y-auto">
+        <div class="bg-[#111c38] border border-amber-500/50 rounded-2xl max-w-lg w-full p-6 relative shadow-2xl my-8">
+            <button type="button" onclick="closeModals()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
+            <h3 class="text-xl font-bold text-amber-400 mb-1 text-center"><i class="fa-solid fa-user-plus mr-1"></i> IOIS Member Registration</h3>
             
             <form id="reg-form" novalidate onsubmit="handleDetailsSubmit(event)" class="space-y-3 mt-3">
                 <div>
                     <label class="block text-xs text-amber-400 font-bold mb-1">Select Membership Plan *</label>
-                    <select id="reg-card-tier" class="w-full bg-[#030712] border border-amber-500 rounded-lg p-2.5 text-xs text-white font-bold outline-none">
+                    <select id="reg-card-tier" class="w-full bg-[#080d1e] border border-amber-500 rounded-lg p-2.5 text-xs text-white font-bold outline-none">
                         <option value="Tiranga Silver Card (₹10)">1. Tiranga Silver Card - Digital Starter Kit (₹10)</option>
                         <option value="Tiranga Gold Card (₹49)" selected>2. Tiranga Gold Pro Kit (₹49 - Earn ₹35 Refer)</option>
                         <option value="Tiranga Platinum Card (₹99)">3. Tiranga Platinum Executive (₹99 - Earn ₹70 Refer)</option>
                         <option value="Tiranga Crystal Card (₹199)">4. Tiranga Crystal VIP (₹199 - Earn ₹120 Direct + ₹20 Passive)</option>
+                        <option value="Govt Exam & Student Pass (₹299)">5. Govt Exam & Student Master Pass (₹299)</option>
+                        <option value="Tiranga Diamond Agency Pass (₹499)">6. Tiranga Diamond Reseller Agency Pass (₹499)</option>
+                        <option value="VIP Mastermind Freelancing & AI Pass (₹999)">7. VIP Mastermind Freelancing & AI Pass (₹999)</option>
                     </select>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <input type="text" id="reg-name" placeholder="Full Name *" class="w-full bg-[#030712] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
-                    <input type="email" id="reg-email" placeholder="Email Address *" class="w-full bg-[#030712] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
+                    <input type="text" id="reg-name" placeholder="Full Name *" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
+                    <input type="email" id="reg-email" placeholder="Email Address *" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <input type="tel" id="reg-phone" placeholder="10-digit WhatsApp No. *" class="w-full bg-[#030712] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
-                    <input type="password" id="reg-pass" placeholder="Set Password *" class="w-full bg-[#030712] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
+                    <input type="tel" id="reg-phone" placeholder="10-digit WhatsApp No. *" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
+                    <input type="password" id="reg-pass" placeholder="Set Password *" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
                 </div>
 
-                <textarea id="reg-address" rows="2" placeholder="Full Address *" class="w-full bg-[#030712] border border-gray-700 rounded-lg p-2 text-xs text-white"></textarea>
+                <textarea id="reg-address" rows="2" placeholder="Full Address *" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2 text-xs text-white"></textarea>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <input type="text" id="reg-sponsor-name" placeholder="Sponsor Name" class="w-full bg-[#030712] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
-                    <input type="text" id="reg-sponsor-id" placeholder="Sponsor ID" class="w-full bg-[#030712] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
+                    <input type="text" id="reg-sponsor-name" placeholder="Sponsor Name" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
+                    <input type="text" id="reg-sponsor-id" placeholder="Sponsor ID" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
                 </div>
 
-                <input type="text" id="reg-upi" placeholder="Your Withdrawal UPI ID *" class="w-full bg-[#030712] border border-amber-500/50 rounded-lg p-2.5 text-xs text-white">
-                <input type="file" id="reg-qr-file" accept="image/*" onchange="validateFileSize(this)" class="w-full text-xs text-gray-300 bg-[#030712] border border-gray-700 rounded-lg p-2">
+                <input type="text" id="reg-upi" placeholder="Your Withdrawal UPI ID *" class="w-full bg-[#080d1e] border border-amber-500/50 rounded-lg p-2.5 text-xs text-white">
+                <input type="file" id="reg-qr-file" accept="image/*" onchange="validateFileSize(this)" class="w-full text-xs text-gray-300 bg-[#080d1e] border border-gray-700 rounded-lg p-2">
 
                 <button type="submit" class="w-full py-3 bg-amber-400 text-gray-950 font-black rounded-xl text-xs">Proceed to Payment <i class="fa-solid fa-arrow-right ml-1"></i></button>
             </form>
         </div>
     </div>
 
-    <!-- Step 2 Payment Modal -->
-    <div id="payment-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 hidden z-50">
-        <div class="bg-[#111c38] border border-teal-500/50 rounded-3xl max-w-md w-full p-6 text-center relative shadow-2xl">
+    <!-- STEP 2 PAYMENT MODAL -->
+    <div id="payment-modal" class="fixed inset-0 bg-black/85 flex items-center justify-center p-4 hidden z-50 overflow-y-auto">
+        <div class="bg-[#111c38] border border-teal-500/50 rounded-2xl max-w-md w-full p-6 text-center relative shadow-2xl my-8">
             <button type="button" onclick="closeModals()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
             <h3 class="text-xl font-bold text-teal-400 mb-1">Step 2: Pay & Activate Plan</h3>
-            <p id="pay-amount-desc" class="text-xs text-gray-300 mb-3">पेमेंट करके स्क्रीनशॉट अपलोड करें:</p>
-            <img id="pay-qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=8877490845@spicepay&pn=Vikas%20Kumar&am=10" alt="QR" class="w-36 h-36 mx-auto bg-white p-2 rounded-2xl mb-2">
-            
-            <form onsubmit="handleScreenshotSubmit(event)" class="mt-4 text-left border-t border-gray-800 pt-3">
-                <input type="file" id="ss-file" accept="image/*" required onchange="validateFileSize(this)" class="w-full text-xs text-gray-300 bg-[#030712] border border-gray-700 rounded-lg p-2">
-                <button type="submit" class="w-full py-3 bg-teal-400 font-extrabold text-gray-950 rounded-xl text-xs mt-3">Submit Payment Proof</button>
+            <p id="pay-amount-desc" class="text-xs text-gray-300 mb-3">स्कैन करके पेमेंट करें और स्क्रीनशॉट सबमिट करें:</p>
+
+            <img id="pay-qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=8877490845@spicepay&pn=Vikas%20Kumar&am=10" alt="QR Code" class="w-36 h-36 mx-auto bg-white p-2 rounded-xl mb-2">
+            <p class="text-xs text-amber-400 font-mono font-bold">8877490845@spicepay (Vikas Kumar)</p>
+
+            <form onsubmit="handleScreenshotSubmit(event)" class="mt-4 text-left border-t border-gray-700 pt-3">
+                <input type="file" id="ss-file" accept="image/*" required onchange="validateFileSize(this)" class="w-full text-xs text-gray-300 bg-[#080d1e] border border-gray-700 rounded-lg p-2">
+                <button type="submit" class="w-full py-3 bg-teal-400 font-extrabold text-gray-950 rounded-xl text-sm mt-3">Submit Payment Proof & Access Kit</button>
             </form>
         </div>
     </div>
 
-    <!-- Login Modal -->
-    <div id="login-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 hidden z-50">
-        <div class="bg-[#111c38] border border-amber-500/50 rounded-3xl max-w-md w-full p-6 relative">
+    <!-- LOGIN MODAL -->
+    <div id="login-modal" class="fixed inset-0 bg-black/85 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-[#111c38] border border-amber-500/50 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
             <button type="button" onclick="closeModals()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
-            <h3 class="text-xl font-bold text-amber-400 mb-4 text-center">IOIS Login</h3>
+            <h3 class="text-xl font-bold text-amber-400 mb-4 text-center"><i class="fa-solid fa-lock"></i> IOIS Portal Login</h3>
+            
             <form onsubmit="handleLoginSubmit(event)" class="space-y-3">
-                <input type="text" id="login-userid" placeholder="User ID" class="w-full bg-[#030712] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
-                <input type="password" id="login-pass" placeholder="Password" class="w-full bg-[#030712] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
-                <button type="submit" class="w-full py-3 bg-amber-400 font-bold text-gray-950 rounded-xl text-xs">Login</button>
+                <input type="text" id="login-userid" placeholder="Enter Your Fixed User ID" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
+                <input type="password" id="login-pass" placeholder="Enter Password" class="w-full bg-[#080d1e] border border-gray-700 rounded-lg p-2.5 text-xs text-white">
+                <button type="submit" class="w-full py-3 bg-amber-400 font-extrabold text-gray-950 rounded-xl text-sm mt-2">Login to Dashboard</button>
             </form>
+        </div>
+    </div>
+
+    <!-- FLOATING LIVE PAYOUT TOAST CONTAINER -->
+    <div id="payout-toast" class="fixed bottom-4 left-4 z-40 bg-gradient-to-r from-gray-900 to-[#111c38] border border-amber-500/50 p-3 rounded-2xl shadow-2xl flex items-center gap-3 hidden max-w-xs">
+        <div class="w-10 h-10 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl shrink-0 border border-amber-400"><i class="fa-solid fa-bolt"></i></div>
+        <div>
+            <p id="toast-title" class="font-bold text-xs text-amber-400">🔥 Ramesh (Patna)</p>
+            <p id="toast-desc" class="text-[11px] text-gray-200">Got ₹35 UPI Payout! (12s ago)</p>
         </div>
     </div>
 
     <footer class="bg-[#080d1e] py-8 border-t border-gray-800 text-center text-xs text-gray-400 mt-auto">
         <p>&copy; 2026 IOIS Platform. All rights reserved.</p>
     </footer>
+
+    <!-- INLINE GUARANTEED BUTTON HANDLERS -->
+    <script>
+        function toggleMobileMenu() { var m = document.getElementById("mobile-menu"); if (m) m.classList.toggle("hidden"); }
+        function closeModals() { ["reg-modal", "payment-modal", "login-modal"].forEach(id => document.getElementById(id)?.classList.add("hidden")); }
+        function openRegistrationFlow() { closeModals(); document.getElementById("reg-modal")?.classList.remove("hidden"); }
+        function openRegistrationFlowWithTier(tier) {
+            openRegistrationFlow();
+            var select = document.getElementById("reg-card-tier");
+            if (select) select.value = tier;
+        }
+        function openLoginModal() { closeModals(); document.getElementById("login-modal")?.classList.remove("hidden"); }
+    </script>
 
     <script src="script.js"></script>
 </body>
