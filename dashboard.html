@@ -174,9 +174,10 @@
         <p>&copy; 2026 IOIS Platform. All rights reserved.</p>
     </footer>
 
+    <!-- Master Script Connection -->
     <script src="script.js"></script>
 
-    <!-- CONNECTED DASHBOARD SESSION LOGIC -->
+    <!-- SECURE DASHBOARD LOGIC (No Data Loss) -->
     <script>
         function loadDashboardData() {
             var currentUserId = localStorage.getItem("iois_current_user_id") || localStorage.getItem("iois_user_id");
@@ -193,12 +194,10 @@
             if (rawObj) {
                 userObj = JSON.parse(rawObj);
             } else {
-                // Search in all members array
                 let members = JSON.parse(localStorage.getItem('iois_all_members') || "[]");
                 userObj = members.find(m => m.userid === currentUserId);
             }
 
-            // Fallback values
             var name = userObj ? userObj.name : (localStorage.getItem("iois_user_name") || currentUserId);
             var email = userObj ? userObj.email : (localStorage.getItem("iois_user_email") || "member@iois.in");
             var phone = userObj ? userObj.phone : (localStorage.getItem("iois_user_phone") || "8877490845");
@@ -209,7 +208,6 @@
             var maskedPhone = phone;
             if (phone.length >= 10) { maskedPhone = "+91 " + phone.substring(0, 4) + "****" + phone.substring(8); }
 
-            // Populate Card & Profile
             document.getElementById('card-name').innerText = name;
             document.getElementById('card-id').innerText = currentUserId;
             document.getElementById('card-email').innerText = email;
@@ -217,7 +215,6 @@
             document.getElementById('card-upi').innerText = upi;
             document.getElementById('card-tier-badge').innerText = tier.toUpperCase();
 
-            // Account Status Badge
             var badgeEl = document.getElementById('user-status-badge');
             if (badgeEl) {
                 if (status === "Activated") {
@@ -229,7 +226,6 @@
                 }
             }
 
-            // Populate Edit Form
             document.getElementById('edit-name').value = name;
             document.getElementById('edit-email').value = email;
             document.getElementById('edit-phone').value = phone;
@@ -245,6 +241,61 @@
         }
 
         document.addEventListener("DOMContentLoaded", loadDashboardData);
+
+        function updateUserProfileDetails(event) {
+            event.preventDefault();
+            var currentUserId = localStorage.getItem("iois_current_user_id") || localStorage.getItem("iois_user_id");
+            if (!currentUserId) {
+                alert("Session expired. Please login again.");
+                window.location.href = "index.html";
+                return;
+            }
+
+            var newName = document.getElementById("edit-name").value.trim();
+            var newEmail = document.getElementById("edit-email").value.trim();
+            var newPhone = document.getElementById("edit-phone").value.trim().replace(/\D/g, '');
+            var newUpi = document.getElementById("edit-upi").value.trim();
+
+            if (!newName || !newEmail || !newPhone || !newUpi) {
+                alert("⚠️ कृपया सभी फील्ड्स सही से भरें!");
+                return;
+            }
+
+            var rawObj = localStorage.getItem("iois_user_" + currentUserId);
+            var userObj = rawObj ? JSON.parse(rawObj) : {};
+            
+            userObj.userid = currentUserId;
+            userObj.name = newName;
+            userObj.email = newEmail;
+            userObj.phone = newPhone;
+            userObj.upi = newUpi;
+
+            localStorage.setItem("iois_user_" + currentUserId, JSON.stringify(userObj));
+
+            localStorage.setItem("iois_user_name", newName);
+            localStorage.setItem("iois_user_email", newEmail);
+            localStorage.setItem("iois_user_phone", newPhone);
+            localStorage.setItem("iois_user_upi", newUpi);
+
+            let members = JSON.parse(localStorage.getItem('iois_all_members') || "[]");
+            let index = members.findIndex(m => m.userid === currentUserId);
+            if (index !== -1) {
+                members[index].name = newName;
+                members[index].email = newEmail;
+                members[index].phone = newPhone;
+                members[index].upi = newUpi;
+            } else {
+                members.unshift(userObj);
+            }
+            localStorage.setItem('iois_all_members', JSON.stringify(members));
+
+            if (typeof syncToGoogleSheet === "function") {
+                syncToGoogleSheet({ action: "update", ...userObj });
+            }
+
+            alert("✅ प्रोफाइल सफलतापूर्वक अपडेट हो गई है!");
+            loadDashboardData();
+        }
 
         function downloadIDCardJPG() {
             var cardEl = document.getElementById('id-card-element');
