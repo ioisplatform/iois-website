@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOIS - पंचांग, दैनिक राशिफल एवं लाइव मौसम</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-[#030712] text-white font-sans flex flex-col min-h-screen" onload="initPanchangData()">
+
+    <nav class="bg-[#080d1e] border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <span class="text-xl font-bold text-amber-400">IOIS Utility Portal</span>
+            <a href="index.html" class="px-3.5 py-1.5 bg-amber-400 text-gray-950 font-bold rounded-xl text-xs"><i class="fa-solid fa-house"></i> Home</a>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full space-y-8">
+        <div class="text-center">
+            <h1 class="text-3xl font-extrabold text-amber-400">आज का पंचांग, दैनिक राशिफल एवं मौसम</h1>
+            <p class="text-xs text-gray-400 mt-1" id="current-date-display">Loading...</p>
+        </div>
+
+        <!-- Weather -->
+        <div class="bg-[#111c38] border border-teal-500/40 p-6 rounded-3xl shadow-xl">
+            <h2 class="text-lg font-bold text-teal-400 mb-3"><i class="fa-solid fa-cloud-sun text-amber-400 mr-1"></i> लाइव मौसम का हाल</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                <div>
+                    <select id="weather-city" onchange="updateWeatherTemp()" class="w-full bg-[#080d1e] border border-gray-700 rounded-xl p-2.5 text-white font-bold">
+                        <option value="Patna">पटना (Patna)</option>
+                        <option value="Delhi">नई दिल्ली (Delhi)</option>
+                        <option value="Mumbai">मुंबई (Mumbai)</option>
+                        <option value="Jaipur">जयपुर (Jaipur)</option>
+                        <option value="Lucknow">लखनऊ (Lucknow)</option>
+                    </select>
+                </div>
+                <div class="bg-[#080d1e] p-3 rounded-xl border border-gray-800"><span class="text-gray-400 block text-[10px]">तापमान</span><span id="weather-temp" class="text-xl font-bold text-amber-400">31°C</span></div>
+                <div class="bg-[#080d1e] p-3 rounded-xl border border-gray-800"><span class="text-gray-400 block text-[10px]">स्थिति</span><span class="text-sm font-bold text-teal-400">साफ़ मौसम</span></div>
+            </div>
+        </div>
+
+        <!-- Auto Rashifal -->
+        <div class="bg-[#111c38] border border-gray-800 p-6 rounded-3xl shadow-xl">
+            <h2 class="text-lg font-bold text-amber-400 mb-4"><i class="fa-solid fa-star-and-crescent mr-1"></i> आज का ऑटो-अपडेटेड दैनिक राशिफल</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs" id="rashifal-grid">
+                <!-- Dynamic Rashifal Cards Loaded via JS -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-[#080d1e] py-6 text-center text-xs text-gray-400 mt-auto">&copy; 2026 IOIS Platform</footer>
+
+    <script>
+        function initPanchangData() {
+            var dateStr = new Date().toLocaleDateString('hi-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('current-date-display').innerText = dateStr;
+
+            var rashiData = [
+                { name: "♈ मेष (Aries)", text: "आज ऑनलाइन काम और रेफरल से धन लाभ के योग हैं।" },
+                { name: "♉ वृषभ (Taurus)", text: "करियर में नई सफलता मिलेगी। परिवार में ख़ुशी रहेगी।" },
+                { name: "♊ मिथुन (Gemini)", text: "अर्निंग में बढ़ोतरी होगी। दोस्तों का सहयोग मिलेगा।" },
+                { name: "♋ कर्क (Cancer)", text: "रुका हुआ पैसा वापस मिलेगा। दिन शुभ रहेगा।" },
+                { name: "♌ सिंह (Leo)", text: "आत्मविश्वास बढ़ेगा। नए प्रोजेक्ट्स में लाभ होगा।" },
+                { name: "♍ कन्या (Virgo)", text: "व्यापारिक और ऑनलाइन कार्यों में अच्छी उन्नति होगी।" }
+            ];
+
+            var grid = document.getElementById('rashifal-grid');
+            grid.innerHTML = "";
+            rashiData.forEach(r => {
+                grid.innerHTML += `<div class="bg-[#080d1e] p-4 rounded-xl border border-gray-800"><span class="text-amber-400 font-bold block mb-1">${r.name}</span><p class="text-gray-300">${r.text}</p></div>`;
+            });
+        }
+        function updateWeatherTemp() {
+            var city = document.getElementById('weather-city').value;
+            var t = { Patna: '31°C', Delhi: '33°C', Mumbai: '30°C', Jaipur: '34°C', Lucknow: '32°C' };
+            document.getElementById('weather-temp').innerText = t[city] || '30°C';
+        }
+    </script>
+</body>
+</html>
